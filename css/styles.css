@@ -1,0 +1,49 @@
+
+body {
+	background: #333333;	
+	font-family: Arial;
+}
+
+.title {
+	padding: 20px;
+	border-bottom: 3px dashed rgb(243,102,35);
+}
+
+.menu {
+	border-bottom: 3px dashed rgb(243,102,35);
+}
+
+.menu table {
+	margin: auto;
+}
+
+.menu td {	
+	font-weight: bold;
+	padding: 10px 30px 10px 30px;
+}
+
+.title h2 { 
+	margin: 5px 10px 20px 5px;
+}
+
+
+.main {
+	margin: auto;
+	background: #FFFFFF;
+	width: 900px;
+}
+
+.content {
+	padding: 30px;
+}
+
+.content h1 {
+	margin: auto;
+	color: rgb(243,102,35);
+	font-size: 16pt;
+}
+
+.content h2 {
+	color: rgb(243,102,35);
+	font-size: 14pt;
+}

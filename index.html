@@ -2,17 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
   <title>ICDAR 2019 - CHART Competition</title>
   <meta name="description" content="ICDAR 2019 CHART HARVESTING Competition">
   <!--<meta name="author" content="">-->
-
   <link rel="stylesheet" href="css/styles.css">
-
 </head>
-
 <body>
   <script src="js/main.js"></script>
-  <h1>Under construction!</h1>
+  <div class="main">
+	<div class="title">
+		<a href="http://icdar2019.org/" target="_blank">
+			<h2><b style="color: rgb(243,102,35);">ICDAR </b> 2019</h2>
+		</a>
+		<h1 align="center"><b style="color: rgb(243,102,35);">C</b>ompetition on <b style="color: rgb(243,102,35);">H</b>arvesting <b style="color: rgb(243,102,35);">R</b>aw <b style="color: rgb(243,102,35);">T</b>ables from Infographics </h1>		
+		
+		<table style="margin:auto;">
+			<tr>
+				<td><img src="img/quick_line_chart.png" width="180px"></td>
+				<td><h1 align="center"><b style="color: rgb(243,102,35);">CHART</b>-Infographics 2019</h1></td>
+				<td><img src="img/quick_bar_chart_solid.png" width="180px"></td>
+			</tr>
+		</table>		
+	</div>	
+	<div class="menu">
+		<table>
+			<tr>
+				<td onclick="update_view('home');">Home</td>
+				<td onclick="update_view('tasks');">Tasks</td>
+				<td onclick="update_view('schedule');">Schedule</td>
+				<td onclick="update_view('data_tools');">Tools and Data</td>
+				<td onclick="update_view('contact');">Contact Us</td>
+			</tr>
+		</table>
+	</div>
+	<div class="content">
+		<div id="home" style="display: None;">
+			<h1>Home</h1>
+			<p>
+				Charts are a compact method of displaying and comparing data. In scientific publications, charts and graphs are often used to to summarize results, comparison of methodologies, emphasize the reasoning behind key aspects of the scientific process, and  justification of design choices, to name a few. Automatically extracting data from charts is a key step in understanding the intent behind a chart which could lead to a better understanding of the document itself. 
+			</p>
+			<table style="margin: auto;">
+				<tr>
+					<td><img src="img/charts.png" width="600px"></td>
+				</tr>
+				<tr>
+					<td style="font-size: 10pt; text-align: center;">Chart types to use in the proposed competition. Note that all these were generated from the same tabular data.</td>
+				</tr>
+			</table>
+			
+			<p>
+				The Document Analysis and Recognition (DAR) community has displayed a continued interest in classifying types of charts as well as processing charts to extract data. In the past decade, multiple applications have been built around automatic processing of charts such as retrieval, textual summarization of charts, making charts more accessible on the web, automatically redesigning charts, automatically assessing chart quality, preservation of charts from historical documents, chart data plagiarism detection, bibliometrics, visual question answering and accelerating discovery of new materials.
+			</p>
+			<p>
+				Prior competitions related to this area include DeTEXT which concentrated on detecting text in figures and ImageCLEF competition on medical compound figure separation and multi-label classification. However, these competitions do not concentrate on end-to-end data extraction from scientific charts, but include these as a sub-type of scientific figures in general. 
+			</p>
+			
+			<h2>Competition Outline</h2>
+			<p>
+				This competition is focused on data extraction and key element classification in charts used in scientific documents. More specifically, we have created a benchmark for axes charts (line, area, bar, box, and scatter plots) using a combination of synthetic data and figures from the PubMedCentral open access collection. Additionally, pie charts are considered in one sub-task (classification).
+
+				The competition consists of multiple sub-tasks: chart image classification, extraction of text, text role classification, identifying legend and legend symbols, identifying chart marks such as lines, bars, and scatter marks, and finally extracting tabular data that originally produced the chart. These tasks are independent of each other and could potentially be chained to fulfill the overall task of extraction of tabular data from the chart. Metrics for each individual sub-task are derived from commonly used metrics for detection and classification such as recall-precision and accuracy. End-to-end competing systems will be evaluated on the basis of extraction of tabular data. 
+			</p>
+		</div>
+		<div id="tasks" style="display: None;">
+			<h1>Competition Tasks</h1>
+			<p>
+				Coming Soon.
+			</p>
+		</div>
+		<div id="schedule" style="display: None;">
+			<h1>Competition Schedule</h1>
+			<p>
+				Coming Soon.
+			</p>
+		</div>
+		<div id="data_tools" style="display: None;">
+			<h1>Tools and Data</h1>
+			<p>
+				Coming Soon.
+			</p>
+		</div>
+		<div id="contact" style="display: None;">
+			<h1>Registration and Contact Information</h1>
+			<p>
+				Coming Soon.
+			</p>
+		</div>
+	</div>
+  </div>
+  <script>
+	update_view("home");
+  </script>
 </body>
 </html>
