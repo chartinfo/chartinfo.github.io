@@ -67,7 +67,40 @@
 		<div id="tasks" style="display: None;">
 			<h1>Competition Tasks</h1>
 			<p>
-				Coming Soon.
+				The main task of the competition is data extraction from axes charts in the form of a table with the correct values that originally generated the graph. This task is divided into several sub-tasks that are important steps along the way. Note that since some partial ground truth will be provided for task with dependencies (text role classification depends on text detection and recognition, data extraction depends on all previous tasks), disjoint subsets of the test set will be used to evaluate these tasks independently for fairness. For most tasks, chart image and type of chart (one of line, area, bar, box or scatter) will be provided along with other task-specific inputs.
+			</p>
+			<h2>Chart Image Classification</h2>
+			<p>
+				This first sub-task is to classify chart images by type. The proposed classes are pie, donut (variation of pie), vertical box, horizontal box, grouped vertical bar, grouped horizontal bar, stacked vertical bar, stacked horizontal bar, line, scatter, area. Evaluation will be the average per-class F-measure.  This is found by computing precision and recall for each class (1-vs-all style), computing the F-measure for each class, and then taking the average of these 11 values.
+			</p>
+			<h2>Text Detection and Recognition</h2>
+			<p>
+				This sub-task will concentrate on detecting and recognizing the text within the chart image. Competing systems are expected to produce tight bounding boxes (at the word level) and transcriptions for text. Distinct alphanumeric and numeric sequences will be treated as individual words. Evaluation metrics for detection of bounding boxes will be precision-recall at Intersection Over Union (IOU) of 0.5. Tighter IOU criteria will be used to resolve ties. Same procedure as the ICDAR Robust Reading Competitions will be used to handle split/merged boxes. Transcription errors will be compared on the basis of edit distance from ground truth.
+			</p>
+			<h2>Text Role Classification</h2>
+			<p>
+				This sub-task will focus on identifying the <i>roles</i> of text in a chart image. Bounding boxes around text and transcripts will be provided and competing systems are expected to classify each bounding box into any of the following roles - chart title, X-axis title, Y-axis title, X-axis values, Y-axis values, legend title, legend label, plot label and other text. The evaluation will be based on standard classification metrics such as accuracy and confusion matrix.
+			</p>
+			<h2>Axis Analysis</h2>
+			<p>
+				Competing systems are expected to output tight bounding box containing the axis, as well sets containing X and Y axis ranges (or X-axis values in case of bar charts). Evaluation will be on the basis of Intersection Over Union of ground truth axis box and ground truth axes value sets.
+			</p>
+			<h2>Legend Analysis</h2>
+			<p>
+				Competing systems are expected to output a list of matched pairs of bounding boxes for markers (within the legend area) and label transcriptions. A minimum IOU score of 0.5 is required to recall a legend marker and penalty for transcriptions will be in terms of edit distance from ground truth.
+			</p>
+			<h2>Plot Area Analysis</h2>
+			<p>
+				Given the ground-truth outputs of all previous sub-tasks, segment the plot area into components.
+These components depend on the type of chart, but include Bar, Line point, Scatter Markers, Boxplot Box, Boxplot Min, Boxplot Max, Boxplot Median, Boxplot Fliers (outlier points). The participants are required to output a set of bounding boxes, where each box is assigned to one of the classes above. The evaluation for each of the classes is straightforward (e.g. 50\% IOU w.r.t. ground truth) except for line points. Line and area plots will be handled differently.
+			</p>
+			<h2>Data Extraction</h2>
+			<p>
+				Given the chart image, type and ground truths of the previous sub-tasks, competing systems are expected to output the table that originally generated the chart. This includes correct row and column headers (for multiple plots in the same figure) and corresponding X and Y axis values. Interval metrics can be used to evaluate the produced ranges for X values. Y values accuracy can be determined using MSE and interpolated data using the ground truth table. For box plots, it is not necessary to reproduce the original data as the plot only shows a statistical summary.  Instead, participants are expected to recover the dataset median, upper and lower quartiles (or min/max), and each outlier shown (if any).
+			</p>
+			<h2>End-to-End Data Extraction</h2>
+			<p>
+				This is the main task of the competition and involves data extraction. The competing systems will be evaluated on the metric detailed in the previous sub-task and are free to use their own chart processing procedures.
 			</p>
 		</div>
 		<div id="schedule" style="display: None;">
