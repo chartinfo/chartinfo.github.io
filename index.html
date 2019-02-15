@@ -38,10 +38,12 @@
 	<div class="content">
 		<div id="home" style="display: None;">
 			<h1>Summary</h1>
+			<p>
 			This competition is composed of a series of 7 sub-tasks for chart data extraction, which when put together as a pipeline go from an input chart image to a CSV file representing the data used to create the chart.
 			Entrants in the competition may choose to participate in any number of sub-tasks, which are evaluated in isolation, such that solving previous sub-tasks is not necessary.
-			We hope that such decomposition of the problem of chart understanding will draw broad participation from the Document Analysis and Recognition (DAR) community.
+			We hope that such decomposition of the problem of chart data extraction will draw broad participation from the Document Analysis and Recognition (DAR) community.
 			Additionally, we also evaluate methods that perform the whole chart data extraction pipeline.
+			</p>
 			<h1>Background</h1>
 			<p>
 				Charts are a compact method of displaying and comparing data. In scientific publications, charts and graphs are often used to to summarize results, comparison of methodologies, emphasize the reasoning behind key aspects of the scientific process, and  justification of design choices, to name a few. Automatically extracting data from charts is a key step in understanding the intent behind a chart which could lead to a better understanding of the document itself. 
@@ -56,7 +58,7 @@
 			</table>
 			
 			<p>
-				The Document Analysis and Recognition (DAR) community has displayed a continued interest in classifying types of charts as well as processing charts to extract data. In the past decade, multiple applications have been built around automatic processing of charts such as retrieval, textual summarization of charts, making charts more accessible on the web, automatically redesigning charts, automatically assessing chart quality, preservation of charts from historical documents, chart data plagiarism detection, bibliometrics, visual question answering and accelerating discovery of new materials.
+				The DAR community has displayed a continued interest in classifying types of charts as well as processing charts to extract data. In the past decade, multiple applications have been built around automatic processing of charts such as retrieval, textual summarization of charts, making charts more accessible on the web, automatically redesigning charts, automatically assessing chart quality, preservation of charts from historical documents, chart data plagiarism detection, bibliometrics, visual question answering and accelerating discovery of new materials.
 			</p>
 			<p>
 				Prior competitions related to this area include DeTEXT which concentrated on detecting text in figures and ImageCLEF competition on medical compound figure separation and multi-label classification. However, these competitions do not concentrate on end-to-end data extraction from scientific charts, but include these as a sub-type of scientific figures in general. 
@@ -64,10 +66,45 @@
 			
 			<h2>Competition Outline</h2>
 			<p>
+			Both synthetic (created with matplotlib) and real charts (harvested from <a href='https://www.ncbi.nlm.nih.gov/pmc/'>PubMedCentral</a>) are provided as training data.
+			Near the end of the competition, we will release test data, and competition participants are expected to send in 1) Method results on the test data 2) Summary of method 3) runnable code that can reproduce the results.
+			The organizers will tabulate the overall results and the results for each sub-task to be presented at ICDAR 2019.
+			</p>
+
+			<p> The sub-tasks considered in this competition are </p>
+				<ol>
+					<li> Chart Image Classification (e.g. bar, box, line) </li>
+					<li> Text Detection and Recognition </li>
+					<li> Text Role Classification (e.g. title, x-axis label) </li>
+					<li> Axis Analysis </li>
+					<li> Legend Analysis </li>
+					<li> Plot Area Analysis </li>
+					<li> Data Extraction </li>
+				</ol>
+			<p> 
+			Each subtask is evaluated in isolation, meaning that methods will have access to the ideal output (i.e. Ground Truth) of previous subtasks.
+			For example, the input for the Axis Analysis sub-task is the chart image, chart type, and the text bounding boxes, transcriptions and roles.
+			Each sub-task will have its own evaluaton metric.
+			Additionally, methods may be submitted for the complete data extraction task where subtasks 1-7 are performed together.
+			</p>
+
+			<h2>Registration</h2>
+			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following </p>
+				<ul>
+					<li> Names of participants </li>
+					<li> Primary contact person </li>
+					<li> Affiliation of participants </li>
+					<li> Team Name </li>
+					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
+				</ul>
+			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available </p>
+
+			<!--
+			<p>
 				This competition is focused on data extraction and key element classification in charts used in scientific documents. More specifically, we have created a benchmark for axes charts (line, area, bar, box, and scatter plots) using a combination of synthetic data and figures from the PubMedCentral open access collection. Additionally, pie charts are considered in one sub-task (classification).
 
 				The competition consists of multiple sub-tasks: chart image classification, extraction of text, text role classification, identifying legend and legend symbols, identifying chart marks such as lines, bars, and scatter marks, and finally extracting tabular data that originally produced the chart. These tasks are independent of each other and could potentially be chained to fulfill the overall task of extraction of tabular data from the chart. Metrics for each individual sub-task are derived from commonly used metrics for detection and classification such as recall-precision and accuracy. End-to-end competing systems will be evaluated on the basis of extraction of tabular data. 
-			</p>
+			</p> -->
 		</div>
 		<div id="tasks" style="display: None;">
 			<h1>Competition Tasks</h1>
