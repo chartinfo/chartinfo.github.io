@@ -26,7 +26,7 @@
 	</div>	
 	<div class="menu">
 		<table>
-			<tr>
+			<tr style="cursor: pointer;font-size: 18pt">
 				<td onclick="update_view('home');">Home</td>
 				<td onclick="update_view('tasks');">Tasks</td>
 				<td onclick="update_view('schedule');">Schedule</td>
@@ -44,7 +44,7 @@
 			We hope that such decomposition of the problem of chart data extraction will draw broad participation from the Document Analysis and Recognition (DAR) community.
 			Additionally, we also evaluate methods that perform the whole chart data extraction pipeline.
 			</p>
-			<h1>Background</h1>
+			<h2>Background</h2>
 			<p>
 				Charts are a compact method of displaying and comparing data. In scientific publications, charts and graphs are often used to to summarize results, comparison of methodologies, emphasize the reasoning behind key aspects of the scientific process, and  justification of design choices, to name a few. Automatically extracting data from charts is a key step in understanding the intent behind a chart which could lead to a better understanding of the document itself. 
 			</p>
@@ -84,12 +84,12 @@
 			<p> 
 			Each subtask is evaluated in isolation, meaning that methods will have access to the ideal output (i.e. Ground Truth) of previous subtasks.
 			For example, the input for the Axis Analysis sub-task is the chart image, chart type, and the text bounding boxes, transcriptions and roles.
-			Each sub-task will have its own evaluaton metric.
-			Additionally, methods may be submitted for the complete data extraction task where subtasks 1-7 are performed together.
+			Each sub-task has its own evaluaton metric.
 			</p>
+			<p> Additionally, methods may be submitted for the complete data extraction task where subtasks 1-7 are performed together.  </p>
 
 			<h2>Registration</h2>
-			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following </p>
+			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
 				<ul>
 					<li> Names of participants </li>
 					<li> Primary contact person </li>
@@ -97,7 +97,7 @@
 					<li> Team Name </li>
 					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
 				</ul>
-			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available </p>
+			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
 
 			<!--
 			<p>
@@ -111,31 +111,61 @@
 			<p>
 				The main task of the competition is data extraction from axes charts in the form of a table with the correct values that originally generated the graph. This task is divided into several sub-tasks that are important steps along the way. Note that since some partial ground truth will be provided for task with dependencies (text role classification depends on text detection and recognition, data extraction depends on all previous tasks), disjoint subsets of the test set will be used to evaluate these tasks independently for fairness. For most tasks, chart image and type of chart (one of line, area, bar, box or scatter) are provided along with other task-specific inputs.
 			</p>
-			<h2>Chart Image Classification</h2>
+			<h2>1) Chart Image Classification</h2>
+			<p> This first sub-task is to classify chart images by type. Given the chart image, methods are expected to output one of the following 11 classes. </p>
+			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
+				<tr>
+					<td> Pie </td>
+					<td> Donut </td>
+					<td> Vertical box </td>
+					<td> Horizontal box </td>
+				</tr><tr>
+					<td> Grouped vertical bar </td>
+					<td> Grouped horizontal bar </td>
+					<td> Stacked vertical bar </td>
+					<td> Stacked horizontal bar </td>
+				</tr><tr>
+					<td> Line </td>
+					<td> Area </td>
+					<td> Scatter </td>
+				</tr>
+			</table>
+
+			<h3> Metric </h3>
 			<p>
-				This first sub-task is to classify chart images by type. The proposed classes are pie, donut (variation of pie), vertical box, horizontal box, grouped vertical bar, grouped horizontal bar, stacked vertical bar, stacked horizontal bar, line, scatter, area. Evaluation will be the average per-class F-measure.  This is found by computing precision and recall for each class (1-vs-all style), computing the F-measure for each class, and then taking the average of these 11 values.
+			The evaluation metric will be the average per-class F-measure.
+			Based on the class confusion matrix, we can compute the precision, recall, and F-measure for each class.
+			The overall score is the average of each classes' F-measure.
 			</p>
-			<h2>Text Detection and Recognition</h2>
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image <p>
+			<p> Output: Chart Class <p>
+
+			<h2>2) Text Detection and Recognition</h2>
 			<p>
 				This sub-task concentrates on detecting and recognizing the text within the chart image. Competing systems are expected to produce tight bounding boxes (at the word level) and transcriptions for text. Distinct alphanumeric and numeric sequences are treated as individual words. Evaluation metrics for detection of bounding boxes is precision-recall at Intersection Over Union (IOU) of 0.5. Tighter IOU criteria will be used to resolve ties. Same procedure as the ICDAR Robust Reading Competitions will be used to handle split/merged boxes. Transcription errors will be compared on the basis of edit distance from ground truth.
 			</p>
-			<h2>Text Role Classification</h2>
+			<h3> Metric </h3>
+			<p>
+				Average Character Error Rate (CER) for each word.
+			</p>
+			<h2>3) Text Role Classification</h2>
 			<p>
 				This sub-task focuses on identifying the <i>roles</i> of text in a chart image. Bounding boxes around text and transcripts are provided and competing systems are expected to classify each bounding box into any of the following roles - chart title, X-axis title, Y-axis title, X-axis values, Y-axis values, legend title, legend label, plot label and other text. The evaluation will be based on standard classification metrics such as accuracy and confusion matrix.
 			</p>
-			<h2>Axis Analysis</h2>
+			<h2>4) Axis Analysis</h2>
 			<p>
 				Competing systems are expected to output tight bounding box containing the axis, as well sets containing X and Y axis ranges (or X-axis values in case of bar charts). Evaluation will be on the basis of Intersection Over Union of ground truth axis box and ground truth axes value sets.
 			</p>
-			<h2>Legend Analysis</h2>
+			<h2>5) Legend Analysis</h2>
 			<p>
 				Competing systems are expected to output a list of matched pairs of bounding boxes for markers (within the legend area) and corresponding label transcriptions. A minimum IOU score of 0.5 is required to recall a legend marker and penalty for transcriptions will be in terms of edit distance from ground truth.
 			</p>
-			<h2>Plot Area Analysis</h2>
+			<h2>6) Plot Area Analysis</h2>
 			<p>
 				Given the ground-truth outputs of all previous sub-tasks, segment the plot area into components. These components depend on the type of chart, but include Bar, Line point, Scatter Markers, Boxplot Box, Boxplot Min, Boxplot Max, Boxplot Median, Boxplot Fliers (outlier points). The participants are required to output a set of bounding boxes, where each box is assigned to one of the classes above. The evaluation for each of the classes is straightforward (e.g. 50% IOU w.r.t. ground truth) except for line points. Line and area plots will be handled differently.
 			</p>
-			<h2>Data Extraction</h2>
+			<h2>7) Data Extraction</h2>
 			<p>
 				Given the chart image, type and ground truths of the previous sub-tasks, competing systems are expected to output the table that originally generated the chart. This includes correct row and column headers (for multiple plots in the same figure) and corresponding X and Y axis values. Interval metrics will be used to evaluate the produced ranges for X values. Y values accuracy will be determined using MSE and interpolated data using the ground truth table. For box plots, it is not necessary to reproduce the original data as the plot only shows a statistical summary.  Instead, participants are expected to recover the dataset median, upper and lower quartiles (or min/max), and each outlier shown (if any).
 			</p>
@@ -159,8 +189,21 @@
 		<div id="contact" style="display: None;">
 			<h1>Registration and Contact Information</h1>
 			<p>
-				Coming Soon.
+				For any inquiries, please email us at chartinfo.icdar2019@gmail.com.
 			</p>
+
+			<h2>Registration</h2>
+			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
+				<ul>
+					<li> Names of participants </li>
+					<li> Primary contact person </li>
+					<li> Affiliation of participants </li>
+					<li> Team Name </li>
+					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
+				</ul>
+			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
+
+			<h2> Organizer Information </h2>
 		</div>
 	</div>
   </div>
