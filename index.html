@@ -143,16 +143,54 @@
 
 			<h2>2) Text Detection and Recognition</h2>
 			<p>
-				This sub-task concentrates on detecting and recognizing the text within the chart image. Competing systems are expected to produce tight bounding boxes (at the word level) and transcriptions for text. Distinct alphanumeric and numeric sequences are treated as individual words. Evaluation metrics for detection of bounding boxes is precision-recall at Intersection Over Union (IOU) of 0.5. Tighter IOU criteria will be used to resolve ties. Same procedure as the ICDAR Robust Reading Competitions will be used to handle split/merged boxes. Transcription errors will be compared on the basis of edit distance from ground truth.
+				This sub-task concentrates on detecting and recognizing the text within the chart image. 
+				Competing systems are expected to produce tight bounding boxes (at the word level) and transcriptions for text. 
+				Distinct alphanumeric and numeric sequences are treated as individual words. 
+				A predicted bounding box matches a GT bounding box if their Intersection Over Union (IOU) is at least 0.5, 
+					and tighter IOU criteria will be used to resolve ties when multiple predictions can match a single GT bounding box.
+				<!-- Evaluation metrics for detection of bounding boxes is precision-recall at Intersection Over Union (IOU) of 0.5. Tighter IOU criteria will be used to resolve ties. Same procedure as the ICDAR Robust Reading Competitions will be used to handle split/merged boxes. Transcription errors will be compared on the basis of edit distance from ground truth. -->
 			</p>
 			<h3> Metric </h3>
-			<p>
-				Average Character Error Rate (CER) for each word.
+			<p> Average normalized Character Error Rate (CER) for each word plus (1 - IOU).
+				By normalized CER, we mean that the number of character edits to transform a predicted word to GT word is divided by the length of the GT word.  
+				False positive and false negative word detections will be assigned a normalized CER of 1 and an IOU of 0 to incur the maximum penalty of 2.  
+				We will use the same procedure as the ICDAR Robust Reading Competitions to handle split/merged boxes.
 			</p>
+			<p>
+				For each chart, we will compute the average score for all words in that chart.
+				Then we will average the per-chart scores over the whole dataset to ensure that each image contributes equally to the final score.
+			</p>
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image, Chart Class <p>
+			<p> Output: List of Word Bounding Boxes paired with Transcriptions </p>
+
 			<h2>3) Text Role Classification</h2>
 			<p>
-				This sub-task focuses on identifying the <i>roles</i> of text in a chart image. Bounding boxes around text and transcripts are provided and competing systems are expected to classify each bounding box into any of the following roles - chart title, X-axis title, Y-axis title, X-axis values, Y-axis values, legend title, legend label, plot label and other text. The evaluation will be based on standard classification metrics such as accuracy and confusion matrix.
+				This sub-task focuses on identifying the <i>roles</i> of text in a chart image, and text bounding boxes and transcripts are provided.
+				Competing systems are expected to classify each bounding box into any of the following roles.
 			</p>
+			<table style="width:100%; font-size:11pt; text-align:center; align:center">
+				<tr>
+					<td> Chart title </td>
+					<td> X-axis title </td>
+					<td> Y-axis title </td>
+				</tr><tr>
+					<td> X-axis values (tick labels) </td>
+					<td> Y-axis values (tick labels) </td>
+					<td> Legend title </td>
+				</tr><tr>
+					<td> Legend label </td>
+					<td> Plot label </td>
+					<td> Other text </td>
+				</tr>
+			</table>
+			<h3> Metric </h3>
+			Similar to the evaluation in sub-task 1 (chart classification), the evaluation metric will be the average per-class F-measure.
+
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image, Chart Class, List of Text Bounding Boxes and paired Transcriptions <p>
+			<p> Output: Text role (class) for each Bounding Box </p>
+
 			<h2>4) Axis Analysis</h2>
 			<p>
 				Competing systems are expected to output tight bounding box containing the axis, as well sets containing X and Y axis ranges (or X-axis values in case of bar charts). Evaluation will be on the basis of Intersection Over Union of ground truth axis box and ground truth axes value sets.
