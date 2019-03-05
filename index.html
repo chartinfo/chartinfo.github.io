@@ -39,11 +39,16 @@
 		<div id="home" style="display: None;">
 			<h1>Summary</h1>
 			<p>
-			This competition is composed of a series of 7 sub-tasks for chart data extraction, which when put together as a pipeline go from an input chart image to a CSV file representing the data used to create the chart.
+			This competition is composed of a series of 6 sub-tasks for chart data extraction, which when put together as a pipeline go from an input chart image to a CSV file representing the data used to create the chart.
 			Entrants in the competition may choose to participate in any number of sub-tasks, which are evaluated in isolation, such that solving previous sub-tasks is not necessary.
 			We hope that such decomposition of the problem of chart data extraction will draw broad participation from the Document Analysis and Recognition (DAR) community.
-			Additionally, we also evaluate methods that perform the whole chart data extraction pipeline.
+			Additionally, we also evaluate methods that perform the whole chart data extraction pipeline from the chart image without receiving intermediate inputs.
 			</p>
+			<table style="margin: auto;">
+				<tr>
+					<td><a name="subtaskchart"><img src="img/tasks.png" width="600px"></a></td>
+				</tr>
+			</table>
 			<h2>Background</h2>
 			<p>
 				Charts are a compact method of displaying and comparing data. In scientific publications, charts and graphs are often used to to summarize results, comparison of methodologies, emphasize the reasoning behind key aspects of the scientific process, and  justification of design choices, to name a few. Automatically extracting data from charts is a key step in understanding the intent behind a chart which could lead to a better understanding of the document itself. 
@@ -66,9 +71,23 @@
 			
 			<h2>Competition Outline</h2>
 			<p>
-			Both synthetic (created with matplotlib) and real charts (harvested from <a href='https://www.ncbi.nlm.nih.gov/pmc/'>PubMedCentral</a>) are provided as training data.
-			Near the end of the competition, we will release test data, and competition participants are expected to send in 1) Method results on the test data 2) Summary of method 3) runnable code that can reproduce the results.
-			The organizers will tabulate the overall results and the results for each sub-task to be presented at ICDAR 2019.
+			A large number of synthetic chart images (created with matplotlib) 
+				with corresponding automatically derived annotations are provided as training data for this competition.
+			The data (i.e. CSV files) used to generate the synthetic chart images are taken from real public data sources.
+			For test data, we will use and report metrics on a large set of synthetic data (matplotlib) and 
+				on a smaller set of manually annotated real charts harvested from <a href='https://www.ncbi.nlm.nih.gov/pmc/'>PubMedCentral.</a>
+			</p>
+			<p>
+			On April 15, we will release test data, and by <b>April 30</b> competition participants are expected submit the following:
+			<ol>
+				<li> Predictions on the test data </li>
+				<li> A short system description </li> 
+				<li> Runnable code that reproduces the results (e.g. Docker container, executable, jar file, etc.) </li>
+			</ol>
+
+			The organizers will tabulate the results for each subtask and whole chart pipeline results 
+				and present it at <a href="http://icdar2019.org">ICDAR 2019 in Sydney, Australia.</a>.
+			Note that you <b>do not need to attend ICDAR 2019</b> to participate in this competition.
 			</p>
 
 			<p> The sub-tasks considered in this competition are </p>
@@ -78,15 +97,26 @@
 					<li> Text Role Classification (e.g. title, x-axis label) </li>
 					<li> Axis Analysis </li>
 					<li> Legend Analysis </li>
-					<li> Plot Area Analysis </li>
-					<li> Data Extraction </li>
+					<li> Data Extraction 
+						<ol> 
+							<li type="a"> Plot Element Detection/Classification </li> 
+							<li type="a"> Raw Data Extraction </li> 
+						</ol> 
+					</li>
 				</ol>
 			<p> 
-			Each subtask is evaluated in isolation, meaning that methods will have access to the ideal output (i.e. Ground Truth) of previous subtasks.
-			For example, the input for the Axis Analysis sub-task is the chart image, chart type, and the text bounding boxes, transcriptions and roles.
-			Each sub-task has its own evaluaton metric.
+			Each subtask is evaluated in isolation, meaning that systems have access to the ideal output 
+				(i.e. Ground Truth) of <a href="#subtaskchart">previous subtasks.</a>
+			Subtasks 3-5 are considered parallel tasks and only receive the outputs of subtasks 1 and 2.
+			For example, the input for the Axis Analysis sub-task is the chart image, chart type, text bounding boxes, and text transcriptions.
+			Each sub-task has its own evaluaton metric, detailed on the Tasks page. 
+			
 			</p>
-			<p> Additionally, methods may be submitted for the complete data extraction task where subtasks 1-7 are performed together.  </p>
+			<p>
+				Participants are not obligated to perform all subtasks and may submit test results for any set of subtasks they wish.
+				Additionally, methods may be submitted for the complete data extraction task where systems are only given the chart image (no intermediate inputs)
+					and are expected to produce the raw data used to produce the chart (same output as subtask 6b).
+			</p>
 
 			<h2>Registration</h2>
 			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
@@ -363,9 +393,14 @@
 		</div>
 		<div id="schedule" style="display: None;">
 			<h1>Competition Schedule</h1>
-			<p>
-				Coming Soon.
-			</p>
+			<table style="margin-top:30px">
+				<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
+				<tr> <td> March 1 </td> <td> Registration Opens </td> </tr>
+				<tr> <td> March 11 &nbsp; &nbsp; </td> <td> Release of Training Data </td> </tr>
+				<tr> <td> April 15 </td> <td> Release of Test Data </td> </tr>
+				<tr> <td> <b>April 30</b> </td> <td> <b>Participant Submission of Test Results + Description</b>  </td> </tr>
+				<tr> <td> May 15 </td> <td> Submission of Competition Paper to Competition Chairs </td> </tr>
+			</table>
 		</div>
 		<div id="data_tools" style="display: None;">
 			<h1>Tools and Data</h1>
@@ -391,6 +426,20 @@
 			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
 
 			<h2> Organizer Information </h2>
+				<table width='100%'>
+					<col width="150px">
+					<col width="450px">
+					<tr>
+						<td> <img src="img/chris.jpg" width="130px" align="center"> <p>Chris Tensmeyer</p> </td>
+						<td> 
+							Chris joined Adobe Research in the Document Intelligence Lab in 2018, 
+								and received his PhD in Computer Science from Brigham Young University in 2019.
+							His research interests lie at the intersection of document analysis and deep learning with
+								tasks such as chart and table understanding, layout analysis, and handwriting recognition.
+							He is also interested in deep learning models and training with applications to computer vision and
+								natural language processing.
+						</td>
+				</table>
 		</div>
 	</div>
   </div>
