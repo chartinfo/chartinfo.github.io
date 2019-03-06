@@ -155,7 +155,7 @@
 				Note that since some partial ground truth will be provided for task with dependencies, 
 					disjoint subsets of the test set will be used to evaluate these tasks independently for fairness. 
 				For all tasks, the chart image is provided.
-				Here is a list of the subtasks
+				Here is a list of the subtasks and the main task.
 			</p>
 			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
 				<tr> 
@@ -167,7 +167,7 @@
 					<td> <a href="#task5">5) Legend Analysis</a> </td> 
 					<td> <a href="#task6a">6a) Plot Element Detection/Classification</a> </td> 
 					<td> <a href="#task6b">6b) CSV Extraction</a> </td> 
-					<td> <a href="#task7">7) End-to-End Data Extraction</a> </td> 
+					<td> <a href="#task7"> End-to-End Data Extraction</a> </td> 
 				</tr>
 			</table>
 			<a name='task1'><h2>1) Chart Image Classification</h2></a>
@@ -275,11 +275,23 @@
 				</p>
 					
 				<h3> Metric </h3>
-					<p> TBD </p>
-
+					<p> 
+						We use a <b>modified F-measure</b> to score each axis and then take the average F-measure over all axes.  
+						Each detected tick is scored for correctness, receiving a score between 0 and 1.
+						Precision is then computed as the sum of the scores divided by the number of predictions.
+						Recall is computed as the sum of the scores divided by the number of ground truth ticks.
+					</p>
+					<p>
+						A detected tick receives a score of 1 if the predicted point is close to the corresponding
+							GT tick point, where correspondance between predictioned and GT ticks is based on the
+							text BB and transcription.
+						The threshold for close (scoring 1) and the threshold for far (scoring 0) is based on the distance
+							between tick marks in the chart image.
+						Predictions that are between the close and far thresholds are penalized linearly with distance.
+					</p>
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
-					<p> Output: For each of X-axis and Y-axis, List of triples (tick x position, tick y position, tick value)</p>
+					<p> Output: For each of X-axis and Y-axis, List of tuples (tick x position, tick y position, Text Block BB, Text Transcription)</p>
 
 			<a name='task5'><h2>5) Legend Analysis</h2></a>
 				<p>
@@ -290,7 +302,7 @@
 					Competing systems are expected to associate each legend label text with the corresponding graphical style element within the legend area.
 					Bounding boxes and transcriptions (but not text roles) are given as input.
 					Note that in this task, legend labels are not paired with the corresponding data series found in the plot area.
-					Also, some charts do not have legends.
+					Also, some charts do not have legends, and an empty list should be returned.
 				</p>
 				<h3> Metric </h3>
 					<p>
@@ -300,7 +312,7 @@
 					</p>
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
-					<p> Output: A list of (Text BB, Transcription, Graphical Style Element BB) </p>
+					<p> Output: A list of (Text Block BB, Text Transcription, Graphical Style Element BB) </p>
 
 			<h2>6) Data Extraction</h2>
 				<p>
