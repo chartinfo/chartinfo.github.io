@@ -6,6 +6,23 @@
   <meta name="description" content="ICDAR 2019 CHART HARVESTING Competition">
   <!--<meta name="author" content="">-->
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+	* {
+	  box-sizing: border-box;
+	  }
+		/* Create two equal columns that floats next to each other */
+		.column {
+		  float: left;
+		  width: 50%;
+		  padding: 10px;		
+		}
+		/* Clear floats after the columns */
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+  </style>
 </head>
 <body>
   <script src="js/main.js"></script>
@@ -37,13 +54,30 @@
 	</div>
 	<div class="content">
 		<div id="home" style="display: None;">
-			<h1>Summary</h1>
-			<p>
-			This competition is composed of a series of 6 sub-tasks for chart data extraction, which when put together as a pipeline go from an input chart image to a CSV file representing the data used to create the chart.
-			Entrants in the competition may choose to participate in any number of sub-tasks, which are evaluated in isolation, such that solving previous sub-tasks is not necessary.
-			We hope that such decomposition of the problem of chart data extraction will draw broad participation from the Document Analysis and Recognition (DAR) community.
-			Additionally, we also evaluate methods that perform the whole chart data extraction pipeline from the chart image without receiving intermediate inputs.
-			</p>
+			<div class="row">
+  				<div class="column">
+    				<h1>Summary</h1>
+    					<p>
+    						This competition is composed of a series of 6 sub-tasks for chart data extraction, which when put together as a pipeline go from an input chart image to a CSV file representing the data used to create the chart.
+							Entrants in the competition may choose to participate in any number of sub-tasks, which are evaluated in isolation, such that solving previous sub-tasks is not necessary.
+							We hope that such decomposition of the problem of chart data extraction will draw broad participation from the Document Analysis and Recognition (DAR) community.
+							Additionally, we also evaluate methods that perform the whole chart data extraction pipeline from the chart image without receiving intermediate inputs.
+						</p>
+  				</div>
+  				<div class="column">
+    				<h1>Competition Updates</h1>
+						<table style="margin-top:30px">
+							<!--
+							<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
+							-->
+							<tr> <td> Mar 1 </td> <td> <a href="#RegistrationDetails">Registration</a> is Open!</td> </tr>
+							<tr> <td> Mar 11 </td> <td> Training Data Release </td> </tr>
+							<tr> <td> Apr 15 </td> <td> Test Data Release</td> </tr>
+							<tr> <td> <b>Apr 30</b> </td> <td> <b>Results and System Descriptions due</b>  </td> </tr>
+							<tr> <td> May 15 </td> <td> Competition Report Deadline</td> </tr>
+						</table>
+  				</div>
+			</div>
 			<table style="margin: auto;">
 				<tr>
 					<td><a name="subtaskchart"><img src="img/tasks.png" width="600px"></a></td>
@@ -116,19 +150,17 @@
 				Participants are not obligated to perform all subtasks and may submit test results for any set of subtasks they wish.
 				Additionally, methods may be submitted for the complete data extraction task where systems are only given the chart image (no intermediate inputs)
 					and are expected to produce the raw data used to produce the chart (same output as subtask 6b).
-			</p>
-
-			<h2>Registration</h2>
-			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
-				<ul>
-					<li> Names of participants </li>
-					<li> Primary contact person </li>
-					<li> Affiliation of participants </li>
-					<li> Team Name </li>
-					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
-				</ul>
-			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
-
+			</p>						
+				<h2>Registration</h2>			
+				<p> <a id="RegistrationDetails"></a> To register, please send an email to chartinfo.icdar2019@gmail.com. Please include the following: </p>
+					<ul>
+						<li> Names of participants </li>
+						<li> Primary contact person </li>
+						<li> Affiliation of participants </li>
+						<li> Team Name </li>
+						<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
+					</ul>
+				<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
 			<!--
 			<p>
 				This competition is focused on data extraction and key element classification in charts used in scientific documents. More specifically, we have created a benchmark for axes charts (line, area, bar, box, and scatter plots) using a combination of synthetic data and figures from the PubMedCentral open access collection. Additionally, pie charts are considered in one sub-task (classification).
@@ -155,7 +187,8 @@
 				Note that since some partial ground truth will be provided for task with dependencies, 
 					disjoint subsets of the test set will be used to evaluate these tasks independently for fairness. 
 				For all tasks, the chart image is provided.
-				Here is a list of the subtasks and the main task.
+				
+				<a id="TaskList">Here is a list of the subtasks and the main task.</a>
 			</p>
 			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
 				<tr> 
@@ -203,6 +236,8 @@
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image <p>
 					<p> Output: Chart Class <p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
+
 
 			<a name='task2'><h2>2) Text Detection and Recognition</h2></a>
 				<p>
@@ -231,6 +266,7 @@
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image, Chart Class <p>
 					<p> Output: List of (Text Block BB, Text Transcription) </p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task3'><h2>3) Text Role Classification</h2></a>
 				<p>
@@ -259,6 +295,7 @@
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
 					<p> Output: List of (Text Block BB, Text Transcription, Text role) </p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task4'><h2>4) Axis Analysis</h2></a>
 				<p>
@@ -292,6 +329,7 @@
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
 					<p> Output: For each of X-axis and Y-axis, List of tuples (tick x position, tick y position, Text Block BB, Text Transcription)</p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task5'><h2>5) Legend Analysis</h2></a>
 				<p>
@@ -313,6 +351,7 @@
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
 					<p> Output: A list of (Text Block BB, Text Transcription, Graphical Style Element BB) </p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<h2>6) Data Extraction</h2>
 				<p>
@@ -352,7 +391,7 @@
 						<b>The score is max(0, 1 - (D/T)^2)</b>, where D is the Euclidean distance between the predicted and GT points.
 						The distance threshold, T, is determined to be 5% of the smallest image dimension.
 						Because there are many ways to pair predicted and GT points, we will find the minimum cost pairing
-							(i.e. sovle this bi-partite graph matching problem).
+							(i.e. solve this bi-partite graph matching problem).
 					</p>
 					<p> 
 						For Boxplot elements, we will use <b>distance between the predicted point and the line segment.</b>
@@ -363,6 +402,7 @@
 				<h3> Input/Output </h3>
 					<p> Input: Outputs of tasks 1-5 </p>
 					<p> Output: List of (Element Class, Element Representation) </p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task6b'><h2>6b) Raw Data Extraction</h2></a>
 				<p>
@@ -390,6 +430,7 @@
 					<p> Input: Outputs of tasks 1-5. </p>
 					<p> Output: Set of Data Series.  Data Series = (name, [(x_1, y_1), ..., (x_n, y_n)]) </p>
 					<p> The output of 6a is <b>not</b> given as an input to 6b. </p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task7'><h1>End-to-End Data Extraction</h1></a>
 			<p>
@@ -402,6 +443,7 @@
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image. </p>
 					<p> Output: See output of sub-task 6b. </p>
+				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 		</div>
 		<div id="schedule" style="display: None;">
 			<h1>Competition Schedule</h1>
@@ -417,8 +459,18 @@
 		<div id="data_tools" style="display: None;">
 			<h1>Tools and Data</h1>
 			<p>
-				Coming Soon.
+				Please register to receive the download link.				
 			</p>
+			<h2>Registration</h2>
+			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
+				<ul>
+					<li> Names of participants </li>
+					<li> Primary contact person </li>
+					<li> Affiliation of participants </li>
+					<li> Team Name </li>
+					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
+				</ul>
+			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
 		</div>
 		<div id="contact" style="display: None;">
 			<h1>Registration and Contact Information</h1>
