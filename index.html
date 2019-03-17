@@ -192,13 +192,26 @@
 						<td> Scatter </td>
 					</tr>
 				</table>
+				<p> 
+					For bar charts that have a single set of bars (single data series), 
+						it is visually ambigious whether it a Grouped or Stacked bar chart, though their
+						ground truth class indicates one of these classes.
+					In this case we accept either prediction, as long as the orientation (vertical or horizontal)
+					is correct.
+					For example, a vertical bar chart with a single data series can be classified as either
+					<i>Grouped vertical bar</i> or <i>Stacked vertical bar</i>.
+				</p>
 				<p> Note that <b>pie and donut plots are not used</b> for the remaining sub-tasks. </p>
 
 				<h3> Metric </h3>
 					<p>
-					The evaluation metric will be the <b>average per-class F-measure.</b>
-					Based on the class confusion matrix, we can compute the precision, recall, and F-measure for each class.
-					The overall score is the average of each classes' F-measure.
+						The evaluation metric will be the <b>average per-class F-measure.</b>
+						Based on the class confusion matrix, we can compute the precision, recall, and F-measure for each class.
+						The overall score is the average of each classes' F-measure.
+					</p>
+					<p>
+						To account for charts with multiple possible labels (i.e. single data series bar charts), the per-class
+							precision and recall is modified to not penalize ambiguous cases.
 					</p>
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image <p>
@@ -230,7 +243,7 @@
 					</p>
 				<h3> Input/Output </h3>
 					<p> Input: Chart Image, Chart Class <p>
-					<p> Output: List of (Text Block BB, Text Transcription) </p>
+					<p> Output: List of (Text Block BBs, Text Transcription) </p>
 
 			<a name='task3'><h2>3) Text Role Classification</h2></a>
 				<p>
@@ -241,24 +254,20 @@
 				<table style="width:100%; font-size:11pt; text-align:center; align:center">
 					<tr>
 						<td> Chart title </td>
-						<td> X-axis title </td>
-						<td> Y-axis title </td>
-					</tr><tr>
+						<td> Axis title </td>
 						<td> X-axis values (tick labels) </td>
+					</tr><tr>
 						<td> Y-axis values (tick labels) </td>
 						<td> Legend title </td>
-					</tr><tr>
 						<td> Legend label </td>
-						<td> Plot label (e.g. data point labels) </td>
-						<td> Other text </td>
 					</tr>
 				</table>
 				<h3> Metric </h3>
 					<p>Similar to the evaluation in sub-task 1 (chart classification), the evaluation metric will be the <b>average per-class F-measure.</b></p>
 
 				<h3> Input/Output </h3>
-					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
-					<p> Output: List of (Text Block BB, Text Transcription, Text role) </p>
+					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
+					<p> Output: List of (Text Block Id, Text role) </p>
 
 			<a name='task4'><h2>4) Axis Analysis</h2></a>
 				<p>
@@ -290,8 +299,8 @@
 						Predictions that are between the close and far thresholds are penalized linearly with distance.
 					</p>
 				<h3> Input/Output </h3>
-					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
-					<p> Output: For each of X-axis and Y-axis, List of tuples (tick x position, tick y position, Text Block BB, Text Transcription)</p>
+					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
+					<p> Output: For each of X-axis and Y-axis, List of tuples (tick x position, tick y position, Text Block Id)</p>
 
 			<a name='task5'><h2>5) Legend Analysis</h2></a>
 				<p>
@@ -310,9 +319,14 @@
 							we compute the <b>IOU</b> of the predicted BB to the GT graphical style element BB.
 						We then divide the sum of the IOU by max(#predicted, #GT) for each image, and then average this value over all images.
 					</p>
+					<p>
+						For charts that have no legend, it is expected that participant systems return an empty list to receive the max score
+							for that chart.
+						When there is no legened, specifying any output results in a score of 0 for that chart.
+					</p>
 				<h3> Input/Output </h3>
-					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription) </p>
-					<p> Output: A list of (Text Block BB, Text Transcription, Graphical Style Element BB) </p>
+					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
+					<p> Output: A list of (Text Block Id, Graphical Style Element BB) </p>
 
 			<h2>6) Data Extraction</h2>
 				<p>
@@ -340,7 +354,8 @@
 				</table>
 				<p> 
 					Even though boxplot elements are visually line segments, we allow for any point on that line segment.  
-					Other plot elements, such as boxplot outlier points, are not evaluated and should not be contained in the output for this sub-task.
+					Other plot elements, such as boxplot outlier points and error bars, 
+						are not evaluated and should not be contained in the output for this sub-task.
 					Note that the chart class is given as input to this task and that each plot element can be found in only one class of chart.
 				</p>
 				<h3> Metric </h3>
@@ -350,7 +365,7 @@
 						For each element, we compute a score between 0 and 1, where 1 represents an exact prediction, 
 							and predictions farther away than a distance threshold, T, receive a score of 0.
 						<b>The score is max(0, 1 - (D/T)^2)</b>, where D is the Euclidean distance between the predicted and GT points.
-						The distance threshold, T, is determined to be 5% of the smallest image dimension.
+						The distance threshold, T, is determined to be <b>1%</b> of the smallest image dimension.
 						Because there are many ways to pair predicted and GT points, we will find the minimum cost pairing
 							(i.e. sovle this bi-partite graph matching problem).
 					</p>
@@ -358,7 +373,8 @@
 						For Boxplot elements, we will use <b>distance between the predicted point and the line segment.</b>
 						For Bar chart bars, we will use the <b>distances between corresponding BB corners.</b>
 					</p>
-					<p> For each chart, the scores will be summed and divided by max(#GT, #Predictions).  Then these scores will be averaged across all images. </p>
+					<p> For each chart, the scores will be summed and divided by max(#GT, #Predictions).  
+						Then these scores will be averaged across all images. </p>
 
 				<h3> Input/Output </h3>
 					<p> Input: Outputs of tasks 1-5 </p>
