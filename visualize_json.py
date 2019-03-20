@@ -3,15 +3,15 @@ import sys
 import cv2
 import json
 
+if len(sys.argv) < 4:
+    print("Usage: python visualize_json.py json_annotation input_im output_im")
+    exit()
+
 def find_by_id(_id, objs):
     for obj in objs:
         if obj['id'] == _id:
             return obj
     return None
-
-if len(sys.argv) < 4:
-    print("Usage: python visualize_json.py json_annotation input_im output_im")
-    exit()
 
 in_json_file = sys.argv[1]
 in_im_file = sys.argv[2]
@@ -21,6 +21,7 @@ in_obj = json.load(open(in_json_file))
 im = cv2.imread(in_im_file, 1)
 h,w,_ = im.shape
 
+# role_colors is also used to color lineplot lines
 role_colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255),
            (255, 128, 0)] 
 patch_color = (255, 0, 128)
@@ -104,11 +105,12 @@ for boxplot in in_obj['task6']['output']['visual elements']['boxplots']:
         cv2.circle(im, (x, y), 3, color, thickness=-1)
 
 idx = 0
-for pt in in_obj['task6']['output']['visual elements']['line points']:
-    x = pt['x']
-    y = pt['y']
-    color = element_colors[idx % len(element_colors)]
-    cv2.circle(im, (x, y), 2, color, thickness=-1)
+for line in in_obj['task6']['output']['visual elements']['lines']:
+    for pt in line:
+        x = pt['x']
+        y = pt['y']
+        color = role_colors[idx % len(role_colors)]
+        cv2.circle(im, (x, y), 2, color, thickness=-1)
     idx += 1
 
 idx = 0

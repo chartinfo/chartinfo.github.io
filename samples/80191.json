@@ -1284,7 +1284,7 @@
             "visual elements": {
                 "bars": [],
                 "boxplots": [],
-                "line points": [],
+                "lines": [],
                 "scatter points": [
                     {
                         "x": 355,

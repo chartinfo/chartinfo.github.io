@@ -1624,7 +1624,7 @@
                         }
                     }
                 ],
-                "line points": [],
+                "lines": [],
                 "scatter points": []
             }
         }

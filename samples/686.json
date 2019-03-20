@@ -1324,7 +1324,7 @@
                     }
                 ],
                 "boxplots": [],
-                "line points": [],
+                "lines": [],
                 "scatter points": []
             }
         }
