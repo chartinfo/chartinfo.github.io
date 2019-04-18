@@ -419,7 +419,12 @@
 						For Bar chart bars, we will use the <b>distances between corresponding BB corners.</b>
 					</p>
 					<p> For each chart, the scores will be summed and divided by max(#GT, #Predictions).  
-						Then these scores will be averaged across all images. </p>
+						Then these scores will be averaged across all images. 
+					</p>
+					<p>
+						For line plots, individual lines must be segmented from each other, and will be scored similarly as lines in 6b,
+							except the units of predicted values should be in pixels for this task.
+					</p>
 
 				<h3> Input/Output </h3>
 					<p> Input: Outputs of tasks 1-5 </p>
@@ -446,7 +451,7 @@
 						If the data series names are not specified in the chart image, then the predicted names are <b>ignored for evaluation purposes</b>.
 					</p>
 
-					<p> TBD </p>
+					<p> See this <a href="metrics/metric.pdf">PDF</a> for details </p>
 
 				<h3> Input/Output </h3>
 					<p> Input: Outputs of tasks 1-5. </p>
