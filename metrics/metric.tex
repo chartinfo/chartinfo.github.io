@@ -50,10 +50,12 @@ Generally $I$ will be linear interpolation/extrapolation, though higher order in
 The error corresponding to any $u_i$ is relative to the magnitude of $v_i$ and is capped at 1 to deal with cases where the magnitude of $v_i$ is very small (or 0).
 An alternative error formulation would be
 \begin{equation} \label{eq:cont_error_alt}
- Error(v_i, u_i, P, \delta) = \min \Big(1, \Big| \frac{v_i - I(P, u_i)}{v_i + \delta} \Big|\Big)
+ Error(v_i, u_i, P, \epsilon) = \min \Big(1, \Big| \frac{v_i - I(P, u_i)}{v_i + \epsilon} \Big|\Big)
 \end{equation}
-where $\delta$ is a small hyperparameter that controls the minimum size of detectable errors.
-That is, absolute errors smaller than $\delta$ are decreasingly penalized regardless of how big or small $|v_i|$ is.
+where $\epsilon$ is a small hyperparameter that controls the minimum size of detectable errors.
+That is, absolute errors smaller than $\epsilon$ are decreasingly penalized regardless of how big or small $|v_i|$ is.
+We set $\epsilon$ to be the range (max minus min) of the GT data points divided by 100.
+
 
 Because Eq.~\ref{eq:cont_recall} is a weight average of errors, where the maximum individual error is 1 and where weights are proportional to the interval length and sum to 1, the maximum Recall is 1 and since it is non-negative, the minimum is 0.
 
@@ -64,9 +66,12 @@ Instead of using the units of the axis, each $(x_n, y_n), (u_m, v_m)$ is express
 
 For this metric, we must match the predicted points $P = \{(x_n,y_n)\}$ to the ground truth points $G = \{(u_m, v_m)\}$.
 First, we define a capped distance function to define pairwise-wise point comparisons:
-\begin{equation}
-D(x_n, y_n, u_m, v_m) = \min \Big(1, \frac{\sqrt{(u_m - x_n)^2 + (v_m - y_n)^2}}{\sqrt{u_m^2 + v_m^2}} \Big)
+\begin{equation} \label{eq:point_dist}
+D(x_n, y_n, u_m, v_m) = \min \Big(1, \frac{\sqrt{(u_m - x_n)V^{-1}(v_m - y_n)}}{\gamma} \Big)
 \end{equation}
+where $V^{-1}$ is the inverse of the covariance matrix of $G$, and $\gamma$ is a hyperparameter.
+Note that Eq.~\ref{eq:point_dist} corresponds to a scaled Mahalanobis distance.
+Scaling the distance computation by the inverse covariance matrix normalizes data series to have the same variance, and thus have more comparable distances.
 
 Then, we create the pairwise cost matrix $\mathbf{C}$, where $\mathbf{C}_{n,m} = D(x_n, y_n, u_m, v_m)$.
 If $\mathbf{C}$ is not square, then it can be padded with $1$s to make it square, so that each dimension is of size $K = \max(N,M)$.
@@ -105,11 +110,11 @@ Equivalently, we could just run pairwise string equality between all $x$'s and a
 
 For fuzzy matching, we can just redefine D to be
 \begin{equation} \label{eq:discrete_fuzzy}
-D(x,y,u,v) = 1 - ((1 - L(u, x)^\alpha) (1 - \min \Big(1, \Big| \frac{v - y}{v} \Big| \Big)))
+D(x,y,u,v) = 1 - ((1 - L(u, x)^\alpha) (1 - \min \Big(1, \Big| \frac{v - y}{\gamma\sigma^2} \Big| \Big)))
 \end{equation}
-where $L$ is the normalized edit distance between $u$ and $x$, and $alpha$ is a hyperparameter that controls how important it is to closely match the text.
-$\alpha < 1$ means less sensitive and $\alpha > 1$ means more sensitive to getting the text correct.
-For $\alpha = \infty$, Eq.~\ref{eq:discrete_fuzzy} reduces to Eq.~\ref{eq:discrete_exact}.
+where $L$ is the normalized edit distance between $u$ and $x$, $alpha$ is a hyperparameter that controls how important it is to closely match the text, $\sigma^2$ is the variance of the $v$ values of $G$, and $\gamma$ is a hyperparameter (default 1).
+$\alpha < 1$ means more sensitive and $\alpha > 1$ means less sensitive to textual differences.
+In the limit of  $\alpha \rightarrow 0$, Eq.~\ref{eq:discrete_fuzzy} reduces to Eq.~\ref{eq:discrete_exact}.
 
 \subsection{Box Plot}
 
