@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage{amsmath}
+\usepackage{amssymb}
 
 \begin{document}
 
@@ -64,16 +65,16 @@ Instead of using the units of the axis, each $(x_n, y_n), (u_m, v_m)$ is express
 
 \subsection{Point Set}
 
-For this metric, we must match the predicted points $P = \{(x_n,y_n)\}$ to the ground truth points $G = \{(u_m, v_m)\}$.
+For this metric, we must match the predicted points $P = \{p_i\}$ to the ground truth points $G = \{g_i\}$, where $p_i, g_i \in \mathbb{R}^2$.
 First, we define a capped distance function to define pairwise-wise point comparisons:
 \begin{equation} \label{eq:point_dist}
-D(x_n, y_n, u_m, v_m) = \min \Big(1, \frac{\sqrt{(u_m - x_n)V^{-1}(v_m - y_n)}}{\gamma} \Big)
+D(p_i, g_i) = \min \Big(1, \frac{\sqrt{(g_i - p_i)V^{-1}(g_i - p_i)}}{\gamma} \Big)
 \end{equation}
 where $V^{-1}$ is the inverse of the covariance matrix of $G$, and $\gamma$ is a hyperparameter.
 Note that Eq.~\ref{eq:point_dist} corresponds to a scaled Mahalanobis distance.
 Scaling the distance computation by the inverse covariance matrix normalizes data series to have the same variance, and thus have more comparable distances.
 
-Then, we create the pairwise cost matrix $\mathbf{C}$, where $\mathbf{C}_{n,m} = D(x_n, y_n, u_m, v_m)$.
+Then, we create the pairwise cost matrix $\mathbf{C}$, where $\mathbf{C}_{n,m} = D(p_n,g_m)$.
 If $\mathbf{C}$ is not square, then it can be padded with $1$s to make it square, so that each dimension is of size $K = \max(N,M)$.
 Padded entries correspond to points that have no matches.
 We then solve the job-assignment problem to find the minimum cost pairing that associates each GT point with a predicted point:
