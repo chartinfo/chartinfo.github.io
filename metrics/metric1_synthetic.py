@@ -56,4 +56,4 @@ if __name__ == '__main__':
         eval_task1(sys.argv[1], sys.argv[2])
     except Exception as e:
         print(e)
-        print('Usage Guide: python eval_task1.py <result_folder> <ground_truth_folder>')
+        print('Usage Guide: python metric1_synthetic.py <result_folder> <ground_truth_folder>')
