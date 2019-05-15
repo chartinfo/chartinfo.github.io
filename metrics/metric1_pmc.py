@@ -57,7 +57,7 @@ def eval_task1(result_folder, gt_folder):
 
 if __name__ == '__main__':
     try:
-        eval_task1(sys.argv[2], sys.argv[3])
+        eval_task1(sys.argv[1], sys.argv[2])
     except Exception as e:
         print(e)
         print('Usage Guide: python eval_task1.py <result_folder> <ground_truth_folder>')
