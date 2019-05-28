@@ -41,8 +41,8 @@ def eval_task1(result_folder, gt_folder):
         total_fmeasure += f_measure
         metrics[label] = (recall, precision, f_measure)
         print('Recall for class {}: {}'.format(label, recall))
-        print('Recall for class {}: {}'.format(label, precision))
-        print('Recall for class {}: {}'.format(label, f_measure))
+        print('Precision for class {}: {}'.format(label, precision))
+        print('F-Measure for class {}: {}'.format(label, f_measure))
     total_recall /= len(gt_label_map)
     total_precision /= len(gt_label_map)
     total_fmeasure /= len(gt_label_map)
