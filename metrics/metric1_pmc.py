@@ -17,9 +17,10 @@ def eval_task1(result_folder, gt_folder):
             pred = result['task1']['output']
             if 'chart_type' in pred:
                 pred = result['task1']['output']['chart_type']
-            pred = pred.lower().strip()
+            pred = pred.lower()
             if 'stacked' in pred or 'grouped' in pred:
                 pred = ' '.join(pred.split(' ')[1:])
+            pred = pred.strip()
         except Exception as e:
             print(e)
             print('invalid result json format in {} please check against provided samples'.format(result_file))
@@ -48,8 +49,8 @@ def eval_task1(result_folder, gt_folder):
         if 'bar' in label:
             print('Grouped/Stacked will be ignored in PMC eval, only Horizontal/Vertical is considered')
         print('Recall for class {}: {}'.format(label, recall))
-        print('Recall for class {}: {}'.format(label, precision))
-        print('Recall for class {}: {}'.format(label, f_measure))
+        print('Precision for class {}: {}'.format(label, precision))
+        print('F-measure for class {}: {}'.format(label, f_measure))
     total_recall /= len(gt_label_map)
     total_precision /= len(gt_label_map)
     total_fmeasure /= len(gt_label_map)

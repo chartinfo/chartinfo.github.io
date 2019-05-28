@@ -46,14 +46,14 @@ def eval_task3(result_folder, gt_folder):
         intersection = gt_instances.intersection(res_instances)
         recall = len(intersection) / float(len(gt_instances))
         precision = len(intersection) / float(len(res_instances))
-        f_measure = 2 * recall * precision / (recall + precision)
+        f_measure = 2 * recall * precision / (recall + precision + 1e-9)
         total_recall += recall
         total_precision += precision
         total_fmeasure += f_measure
         metrics[label] = (recall, precision, f_measure)
         print('Recall for class {}: {}'.format(label, recall))
-        print('Recall for class {}: {}'.format(label, precision))
-        print('Recall for class {}: {}'.format(label, f_measure))
+        print('Precision for class {}: {}'.format(label, precision))
+        print('F-measure for class {}: {}'.format(label, f_measure))
     total_recall /= len(gt_label_map)
     total_precision /= len(gt_label_map)
     total_fmeasure /= len(gt_label_map)
