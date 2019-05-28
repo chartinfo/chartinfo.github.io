@@ -1,14 +1,38 @@
 import os
 import json
 import sys
+import numpy as np
+import matplotlib.pyplot as plt
 
+def confusion_matrix(confusion, unique_labels):
+    label_idx_map = {label : i for i, label in enumerate(unique_labels)}
+    idx_label_map = {i : label for label, i in label_idx_map.items()}
+    cmat = np.zeros((len(label_idx_map), len(label_idx_map)))
+    for ID, pair in confusion.items():
+        truth, pred = pair
+        if pred is None:
+            continue
+        t = label_idx_map[truth]
+        p = label_idx_map[pred]
+        cmat[t, p] += 1
+    norm = cmat.sum(axis=1).reshape(-1, 1)
+    cmat /= norm
+    return cmat, idx_label_map
 
 def eval_task1(result_folder, gt_folder):
     gt_label_map = {}
     result_label_map = {}
     metrics = {}
+    confusion = {}
     result_files = os.listdir(result_folder)
     gt_files = os.listdir(gt_folder)
+    for gt_file in gt_files:
+        gt_id = ''.join(gt_file.split('.')[:-1])
+        with open(os.path.join(gt_folder, gt_file), 'r') as f:
+            gt = json.load(f)
+            truth = gt['task1']['output']['chart_type'].lower().strip()
+        gt_label_map[truth] = gt_label_map[truth] + [gt_id] if truth in gt_label_map else [gt_id]
+        confusion[gt_id] = [truth, None]
     for result_file in result_files:
         result_id = ''.join(result_file.split('.')[:-1])
         with open(os.path.join(result_folder, result_file), 'r') as f:
@@ -23,12 +47,7 @@ def eval_task1(result_folder, gt_folder):
             print('invalid result json format in {} please check against provided samples'.format(result_file))
             continue
         result_label_map[pred] = result_label_map[pred] + [result_id] if pred in result_label_map else [result_id]
-    for gt_file in gt_files:
-        gt_id = ''.join(gt_file.split('.')[:-1])
-        with open(os.path.join(gt_folder, gt_file), 'r') as f:
-            gt = json.load(f)
-            truth = gt['task1']['output']['chart_type'].lower().strip()
-        gt_label_map[truth] = gt_label_map[truth] + [gt_id] if truth in gt_label_map else [gt_id]
+        confusion[result_id][1] = pred
     total_recall = 0.
     total_precision = 0.
     total_fmeasure = 0.
@@ -52,6 +71,37 @@ def eval_task1(result_folder, gt_folder):
     print('Average Recall across {} classes: {}'.format(len(gt_label_map), total_recall))
     print('Average Precision across {} classes: {}'.format(len(gt_label_map), total_precision))
     print('Average F-Measure across {} classes: {}'.format(len(gt_label_map), total_fmeasure))
+
+    print('Computing Confusion Matrix')
+    classes = list(gt_label_map.keys())
+    cm, idx_label_map = confusion_matrix(confusion, classes)
+    fig, ax = plt.subplots()
+    im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+    ax.figure.colorbar(im, ax=ax)
+    # We want to show all ticks...
+    ax.set(xticks=np.arange(cm.shape[1]),
+           yticks=np.arange(cm.shape[0]),
+           # ... and label them with the respective list entries
+           xticklabels=classes, yticklabels=classes,
+           title='Confusion Matrix',
+           ylabel='True label',
+           xlabel='Predicted label')
+
+    # Rotate the tick labels and set their alignment.
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+             rotation_mode="anchor")
+
+    # Loop over data dimensions and create text annotations.
+    fmt = '.2f'
+    thresh = cm.max() / 2.
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            ax.text(j, i, format(cm[i, j], fmt),
+                    ha="center", va="center",
+                    color="white" if cm[i, j] > thresh else "black")
+    fig.tight_layout()
+    fig.savefig('confusion_matrix.png', bbox_inches='tight')
+    plt.show()
 
 
 if __name__ == '__main__':
