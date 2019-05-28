@@ -14,7 +14,10 @@ def eval_task1(result_folder, gt_folder):
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
-            pred = result['task1']['output']['chart_type'].lower().strip()
+            pred = result['task1']['output']
+            if 'chart_type' in pred:
+                pred = result['task1']['output']['chart_type']
+            pred = pred.lower().strip()
             if 'stacked' in pred or 'grouped' in pred:
                 pred = ' '.join(pred.split(' ')[1:])
         except Exception as e:
@@ -37,7 +40,7 @@ def eval_task1(result_folder, gt_folder):
         intersection = gt_imgs.intersection(res_imgs)
         recall = len(intersection) / float(len(gt_imgs))
         precision = len(intersection) / float(len(res_imgs))
-        f_measure = 2 * recall * precision / (recall + precision)
+        f_measure = 2 * recall * precision / (recall + precision + 1e-9)
         total_recall += recall
         total_precision += precision
         total_fmeasure += f_measure
