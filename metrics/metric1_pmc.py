@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-def confusion_matrix(confusion, unique_labels):
+def get_confusion_matrix(confusion, unique_labels):
     label_idx_map = {label : i for i, label in enumerate(unique_labels)}
     idx_label_map = {i : label for label, i in label_idx_map.items()}
     cmat = np.zeros((len(label_idx_map), len(label_idx_map)))
@@ -19,7 +19,38 @@ def confusion_matrix(confusion, unique_labels):
     cmat /= norm
     return cmat, idx_label_map
 
-def eval_task1(result_folder, gt_folder):
+
+def plot_confusion_matrix(cm, classes, output_img_path):
+    fig, ax = plt.subplots()
+    im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+    ax.figure.colorbar(im, ax=ax)
+    # We want to show all ticks...
+    ax.set(xticks=np.arange(cm.shape[1]),
+           yticks=np.arange(cm.shape[0]),
+           # ... and label them with the respective list entries
+           xticklabels=classes, yticklabels=classes,
+           title='Confusion Matrix',
+           ylabel='True label',
+           xlabel='Predicted label')
+
+    # Rotate the tick labels and set their alignment.
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+             rotation_mode="anchor")
+
+    # Loop over data dimensions and create text annotations.
+    fmt = '.2f'
+    thresh = cm.max() / 2.
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            ax.text(j, i, format(cm[i, j], fmt),
+                    ha="center", va="center",
+                    color="white" if cm[i, j] > thresh else "black")
+    # fig.tight_layout()
+    fig.savefig(output_img_path, bbox_inches='tight')
+    plt.show()
+
+
+def eval_task1(gt_folder, result_folder, output_img_path):
     gt_label_map = {}
     result_label_map = {}
     metrics = {}
@@ -60,7 +91,10 @@ def eval_task1(result_folder, gt_folder):
         intersection = gt_imgs.intersection(res_imgs)
         recall = len(intersection) / float(len(gt_imgs))
         precision = len(intersection) / float(len(res_imgs))
-        f_measure = 2 * recall * precision / (recall + precision + 1e-9)
+        if recall == 0 and precision == 0:
+            f_measure = 0.
+        else:
+            f_measure = 2 * recall * precision / (recall + precision)
         total_recall += recall
         total_precision += precision
         total_fmeasure += f_measure
@@ -78,42 +112,15 @@ def eval_task1(result_folder, gt_folder):
     print('Average F-Measure across {} classes: {}'.format(len(gt_label_map), total_fmeasure))
 
     print('Computing Confusion Matrix')
-    classes = list(gt_label_map.keys())
-
-    cm, idx_label_map = confusion_matrix(confusion, classes)
-    fig, ax = plt.subplots()
-    im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
-    ax.figure.colorbar(im, ax=ax)
-    # We want to show all ticks...
-    ax.set(xticks=np.arange(cm.shape[1]),
-           yticks=np.arange(cm.shape[0]),
-           # ... and label them with the respective list entries
-           xticklabels=classes, yticklabels=classes,
-           title='Confusion Matrix',
-           ylabel='True label',
-           xlabel='Predicted label')
-
-    # Rotate the tick labels and set their alignment.
-    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
-             rotation_mode="anchor")
-
-    # Loop over data dimensions and create text annotations.
-    fmt = '.2f'
-    thresh = cm.max() / 2.
-    for i in range(cm.shape[0]):
-        for j in range(cm.shape[1]):
-            ax.text(j, i, format(cm[i, j], fmt),
-                    ha="center", va="center",
-                    color="white" if cm[i, j] > thresh else "black")
-    fig.tight_layout()
-    fig.savefig('confusion_matrix.png', bbox_inches='tight')
-    plt.show()
+    classes = sorted(list(gt_label_map.keys()).sort())
+    cm, idx_label_map = get_confusion_matrix(confusion, classes)
+    plot_confusion_matrix(cm, classes, output_img_path)
 
 
 if __name__ == '__main__':
     try:
-        eval_task1(sys.argv[1], sys.argv[2])
+        eval_task1(sys.argv[1], sys.argv[2], sys.argv[3])
     except Exception as e:
         print(e)
-        print('Usage Guide: python metric1_pmc.py <result_folder> <ground_truth_folder>')
+        print('Usage Guide: python metric1_pmc.py <ground_truth_folder>  <result_folder> <confusion_matrix_path>')
 
