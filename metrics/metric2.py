@@ -100,6 +100,6 @@ if __name__ == '__main__':
         eval_task2(sys.argv[1], sys.argv[2])
     except Exception as e:
         print(e)
-        print('Usage Guide: python eval_task1.py <ground_truth_folder> <result_folder>')
+        print('Usage Guide: python eval_task2.py <ground_truth_folder> <result_folder>')
 
 

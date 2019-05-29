@@ -125,4 +125,4 @@ if __name__ == '__main__':
         eval_task3(sys.argv[1], sys.argv[2], sys.argv[3])
     except Exception as e:
         print(e)
-        print('Usage Guide: python metric1_pmc.py <ground_truth_folder>  <result_folder> <confusion_matrix_path>')
+        print('Usage Guide: python metric3.py <ground_truth_folder> <result_folder> <confusion_matrix_path>')
