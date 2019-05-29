@@ -62,10 +62,8 @@ def eval_task4(gt_folder, result_folder, img_folder):
         lt, ht = LOW_THRESHOLD * min(w, h), HIGH_THRESHOLD * min(w, h)
         score_x = get_axis_score(gt_x, res_x, lt, ht)
         score_y = get_axis_score(gt_y, res_y, lt, ht)
-        total_recall += score_x / len(gt_x)
-        total_recall += score_y / len(gt_y)
-        total_precision += score_x / len(res_x)
-        total_precision += score_y / len(res_y)
+        total_recall += (score_x + score_y ) / (len(gt_x) + len(gt_y))
+        total_precision += (score_x + score_y ) / (len(res_x) + len(res_y))
     total_recall /= len(gt_files)
     total_precision /= len(gt_files)
     if total_recall == 0 and total_precision == 0:
