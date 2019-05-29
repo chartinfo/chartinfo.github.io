@@ -76,7 +76,11 @@ def eval_task3(gt_folder, result_folder, output_img_path):
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
-            text_roles = result['task3']['output']['text_roles']
+            # this is due to wrong json format in a submission
+            if 'text_roles' in result['task3']['output']:
+                text_roles = result['task3']['output']['text_roles']
+            else:
+                text_roles = result['task3']['output']['text_blocks']
             for text_role in text_roles:
                 text_id = text_role['id']
                 role = text_role['role'].lower().strip()
