@@ -13,6 +13,8 @@ def get_confusion_matrix(confusion, unique_labels):
         truth, pred = pair
         if pred is None or pred not in label_idx_map:
             continue
+        if truth not in label_idx_map:
+            continue
         t = label_idx_map[truth]
         p = label_idx_map[pred]
         cmat[t, p] += 1
@@ -65,8 +67,8 @@ def eval_task3(gt_folder, result_folder, output_img_path):
         for text_role in text_roles:
             text_id = text_role['id']
             role = text_role['role'].lower().strip()
-            # VALUE LABEL IN PMC IS NOT PRESENT IN SYNTHETIC, TO BE CONSIDERED AS OTHER FOR EVAL
-            if role == 'value_label':
+            # SOME LABELS IN PMC NOT PRESENT IN SYNTHETIC, TO BE CONSIDERED AS OTHER FOR EVAL
+            if role not in ['legend_label', 'chart_title', 'tick_label', 'axis_title']:
                 role = 'other'
             gt_label_map[role] = gt_label_map[role] + ['{}__sep__{}'.format(gt_id, text_id)] \
                 if role in gt_label_map else ['{}__sep__{}'.format(gt_id, text_id)]
@@ -84,6 +86,9 @@ def eval_task3(gt_folder, result_folder, output_img_path):
             for text_role in text_roles:
                 text_id = text_role['id']
                 role = text_role['role'].lower().strip()
+                # SOME LABELS IN PMC NOT PRESENT IN SYNTHETIC, TO BE CONSIDERED AS OTHER FOR EVAL
+                if role not in ['legend_label', 'chart_title', 'tick_label', 'axis_title']:
+                    role = 'other'
                 result_label_map[role] = result_label_map[role] + ['{}__sep__{}'.format(result_id, text_id)]\
                     if role in result_label_map else ['{}__sep__{}'.format(result_id, text_id)]
                 confusion['{}__sep__{}'.format(result_id, text_id)][1] = role
@@ -94,6 +99,7 @@ def eval_task3(gt_folder, result_folder, output_img_path):
     total_recall = 0.
     total_precision = 0.
     total_fmeasure = 0.
+
     for label, gt_instances in gt_label_map.items():
         res_instances = set(result_label_map[label])
         gt_instances = set(gt_instances)
