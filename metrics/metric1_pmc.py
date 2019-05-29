@@ -72,6 +72,8 @@ def eval_task1(gt_folder, result_folder, output_img_path):
             pred = result['task1']['output']
             if 'chart_type' in pred:
                 pred = result['task1']['output']['chart_type']
+            if isinstance(pred, list):
+                pred = pred[0]
             pred = pred.lower()
             if 'stacked' in pred or 'grouped' in pred:
                 pred = ' '.join(pred.split(' ')[1:])
@@ -112,7 +114,7 @@ def eval_task1(gt_folder, result_folder, output_img_path):
     print('Average F-Measure across {} classes: {}'.format(len(gt_label_map), total_fmeasure))
 
     print('Computing Confusion Matrix')
-    classes = sorted(list(gt_label_map.keys()).sort())
+    classes = sorted(list(gt_label_map.keys()))
     cm, idx_label_map = get_confusion_matrix(confusion, classes)
     plot_confusion_matrix(cm, classes, output_img_path)
 
