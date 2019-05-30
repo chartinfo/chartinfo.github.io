@@ -4,6 +4,8 @@ import json
 import numpy as np
 import editdistance
 
+from metrics.unicodeit import replace
+
 IOU_THRESHOLD = 0.5
 
 
@@ -31,6 +33,8 @@ def sanitize_text(text):
     text = text.replace('\n', ' ')
     text = text.replace('\r', ' ')
     text = text.lower().strip()
+    if '\\' in text or '_{' in text or '^{' in text:
+        text = replace([text])[0]
     return text
 
 
@@ -45,7 +49,8 @@ def extract_bboxes(js):
         x2, y2 = x1 + w, y1 + h
         if 'id' in text_block:
             ids += [text_block['id']]
-        text = sanitize_text(text_block['text'])
+        raw_text = text_block['text']
+        text = sanitize_text(raw_text)
         texts += [text]
         bboxes += [(x1, y1, x2, y2)]
     bboxes = np.asarray(bboxes)
