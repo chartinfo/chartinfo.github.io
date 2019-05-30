@@ -4,6 +4,13 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+def get_ambiguous_ids(filepath):
+    with open(filepath, 'r') as f:
+        ids = [line.strip().split('.')[0] for line in f.readlines()]
+    return ids
+
+
 def confusion_matrix(confusion, unique_labels):
     label_idx_map = {label : i for i, label in enumerate(unique_labels)}
     idx_label_map = {i : label for label, i in label_idx_map.items()}
@@ -50,7 +57,7 @@ def plot_confusion_matrix(cm, classes, output_img_path):
     plt.show()
 
 
-def eval_task1(gt_folder, result_folder, output_img_path):
+def eval_task1(gt_folder, result_folder, output_img_path, ambiguous_ids=list()):
     gt_label_map = {}
     result_label_map = {}
     metrics = {}
@@ -62,6 +69,9 @@ def eval_task1(gt_folder, result_folder, output_img_path):
         with open(os.path.join(gt_folder, gt_file), 'r') as f:
             gt = json.load(f)
             truth = gt['task1']['output']['chart_type'].lower().strip()
+            # If we are looking at an ambiguous sample, convert grouped or stacked to grouped
+            if gt_id in ambiguous_ids:
+                truth = ' '.join(['grouped'] + truth.split(' ')[1:])
         gt_label_map[truth] = gt_label_map[truth] + [gt_id] if truth in gt_label_map else [gt_id]
         confusion[gt_id] = [truth, None]
     for result_file in result_files:
@@ -73,6 +83,10 @@ def eval_task1(gt_folder, result_folder, output_img_path):
             if 'chart_type' in pred:
                 pred = result['task1']['output']['chart_type']
             pred = pred.lower().strip()
+            # If we are looking at an ambiguous sample, convert grouped or stacked to grouped
+            # if the predicted type has stacked or grouped, otherwise ignore
+            if result_id in ambiguous_ids and ('grouped' in pred or 'stacked' in pred):
+                pred = ' '.join(['grouped'] + pred.split(' ')[1:])
         except Exception as e:
             print(e)
             print('invalid result json format in {} please check against provided samples'.format(result_file))
@@ -114,7 +128,11 @@ def eval_task1(gt_folder, result_folder, output_img_path):
 
 if __name__ == '__main__':
     try:
-        eval_task1(sys.argv[1], sys.argv[2], sys.argv[3])
+        if len(sys.argv) == 5:
+            ambiguous_ids = get_ambiguous_ids(sys.argv[4])
+        else:
+            ambiguous_ids = []
+        eval_task1(sys.argv[1], sys.argv[2], sys.argv[3], ambiguous_ids)
     except Exception as e:
         print(e)
-        print('Usage Guide: python metric1_synthetic.py <ground_truth_folder> <result_folder> <confusion_matrix_path>')
+        print('Usage Guide: python metric1_synthetic.py <ground_truth_folder> <result_folder> <confusion_matrix_path> <ambiguous id path>')
