@@ -4,6 +4,9 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
+ATEAM_LABELS = ['legend_label', 'chart_title', 'tick_label', 'axis_title', 'other', 'legend_title']
+SYNTH_LABELS = ['legend_label', 'chart_title', 'tick_label', 'axis_title']
+
 
 def get_confusion_matrix(confusion, unique_labels):
     label_idx_map = {label : i for i, label in enumerate(unique_labels)}
@@ -57,6 +60,7 @@ def eval_task3(gt_folder, result_folder, output_img_path):
     result_label_map = {}
     metrics = {}
     confusion = {}
+    ignore = set()
     result_files = os.listdir(result_folder)
     gt_files = os.listdir(gt_folder)
     for gt_file in gt_files:
@@ -67,28 +71,32 @@ def eval_task3(gt_folder, result_folder, output_img_path):
         for text_role in text_roles:
             text_id = text_role['id']
             role = text_role['role'].lower().strip()
-            # SOME LABELS IN PMC NOT PRESENT IN SYNTHETIC, TO BE CONSIDERED AS OTHER FOR EVAL
-            if role not in ['legend_label', 'chart_title', 'tick_label', 'axis_title']:
-                role = 'other'
+            # SOME LABELS IN PMC NOT PRESENT IN SYNTHETIC, TO BE CONSIDERED AS DONT CARE FOR EVAL
+            if role not in SYNTH_LABELS:
+                ignore.add('{}__sep__{}'.format(gt_id, text_id))
+                continue
             gt_label_map[role] = gt_label_map[role] + ['{}__sep__{}'.format(gt_id, text_id)] \
                 if role in gt_label_map else ['{}__sep__{}'.format(gt_id, text_id)]
             confusion['{}__sep__{}'.format(gt_id, text_id)] = [role, None]
+    print(len(ignore))
+    unique_roles = set()
     for result_file in result_files:
         result_id = ''.join(result_file.split('.')[:-1])
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
-            # this is due to wrong json format in a submission
             if 'text_roles' in result['task3']['output']:
                 text_roles = result['task3']['output']['text_roles']
+            # this is due to wrong json format in a submission
             else:
                 text_roles = result['task3']['output']['text_blocks']
             for text_role in text_roles:
                 text_id = text_role['id']
                 role = text_role['role'].lower().strip()
-                # SOME LABELS IN PMC NOT PRESENT IN SYNTHETIC, TO BE CONSIDERED AS OTHER FOR EVAL
-                if role not in ['legend_label', 'chart_title', 'tick_label', 'axis_title']:
-                    role = 'other'
+                # SOME LABELS IN PMC NOT PRESENT IN SYNTHETIC, TO BE CONSIDERED AS DONT CARE FOR EVAL
+                unique_roles.add(role)
+                if '{}__sep__{}'.format(result_id, text_id) in ignore:
+                    continue
                 result_label_map[role] = result_label_map[role] + ['{}__sep__{}'.format(result_id, text_id)]\
                     if role in result_label_map else ['{}__sep__{}'.format(result_id, text_id)]
                 confusion['{}__sep__{}'.format(result_id, text_id)][1] = role
@@ -100,10 +108,13 @@ def eval_task3(gt_folder, result_folder, output_img_path):
     total_precision = 0.
     total_fmeasure = 0.
 
+    # print(unique_roles)
+
     for label, gt_instances in gt_label_map.items():
         res_instances = set(result_label_map[label])
         gt_instances = set(gt_instances)
         intersection = gt_instances.intersection(res_instances)
+        print(label, len(gt_instances), len(res_instances), len(intersection))
         recall = len(intersection) / float(len(gt_instances))
         precision = len(intersection) / float(len(res_instances))
         if recall == 0 and precision == 0:
