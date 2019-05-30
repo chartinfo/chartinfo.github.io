@@ -51,6 +51,8 @@ def extract_bboxes(js):
             ids += [text_block['id']]
         raw_text = text_block['text']
         text = sanitize_text(raw_text)
+        if '__' in text:
+            continue
         texts += [text]
         bboxes += [(x1, y1, x2, y2)]
     bboxes = np.asarray(bboxes)
