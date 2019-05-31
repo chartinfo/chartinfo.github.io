@@ -4,8 +4,8 @@ import cv2
 import json
 import numpy as np
 
-LOW_THRESHOLD = 0.0025
-HIGH_THRESHOLD = 0.02
+LOW_THRESHOLD = 0.02
+HIGH_THRESHOLD = 0.04
 
 
 def extract_tick_point_pairs(js):
@@ -61,13 +61,12 @@ def eval_task4(gt_folder, result_folder, img_folder):
         with open(os.path.join(result_folder, gt_id + '.json'), 'r') as f:
             res = json.load(f)
         res_x, res_y = extract_tick_point_pairs(res)
+        print(gt_id)
         im_file = '{}/{}.{}'.format(img_folder, gt_id, 'png')
         im_file = im_file if os.path.isfile(im_file) else '{}/{}.{}'.format(img_folder, gt_id, 'jpg')
-        # print(im_file)
         h, w, _ = cv2.imread(im_file).shape
-        lt, ht = LOW_THRESHOLD * min(w, h), HIGH_THRESHOLD * min(w, h)
-        # diag = ((h ** 2) + (w ** 2)) ** 0.5
-        # lt, ht = LOW_THRESHOLD * diag, HIGH_THRESHOLD * diag
+        diag = ((h ** 2) + (w ** 2)) ** 0.5
+        lt, ht = LOW_THRESHOLD * diag, HIGH_THRESHOLD * diag
         score_x = get_axis_score(gt_x, res_x, lt, ht)
         score_y = get_axis_score(gt_y, res_y, lt, ht)
         recall_x = score_x / len(gt_x) if len(gt_x) > 0 else 1.
@@ -76,7 +75,7 @@ def eval_task4(gt_folder, result_folder, img_folder):
         precision_y = score_y / len(res_y) if len(res_y) > 0 else 1.
         precision_x = 0. if len(gt_x) == 0 and len(res_y) > 0 else precision_x
         precision_y = 0. if len(gt_y) == 0 and len(res_y) > 0 else precision_y
-        # print(recall_x, recall_y, precision_x, precision_y)
+        print(recall_x, recall_y, precision_x, precision_y)
         total_recall += (recall_x + recall_y) / 2.
         total_precision += (precision_x + precision_y) / 2.
     total_recall /= len(gt_files)
