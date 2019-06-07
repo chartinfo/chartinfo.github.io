@@ -4,22 +4,20 @@ import cv2
 import json
 import numpy as np
 
-LOW_THRESHOLD = 0.02
-HIGH_THRESHOLD = 0.04
+LOW_THRESHOLD = 0.01
+HIGH_THRESHOLD = 0.02
 
 
 def extract_tick_point_pairs(js):
     def get_coords(tpp):
         ID = tpp['id']
         x, y = tpp['tick_pt']['x'], tpp['tick_pt']['y']
-        if ID is None or ID == 'null':
-            print(ID)
         return (ID, (x, y))
     axes = js['task4']['output']['axes']
     tpp_x = [get_coords(tpp) for tpp in axes['x-axis']]
-    tpp_x = {ID: coords for ID, coords in tpp_x if ID != 'null'}
+    tpp_x = {ID: coords for ID, coords in tpp_x if ID is not None}
     tpp_y = [get_coords(tpp) for tpp in axes['y-axis']]
-    tpp_y = {ID: coords for ID, coords in tpp_y if ID != 'null'}
+    tpp_y = {ID: coords for ID, coords in tpp_y if ID is not None}
     return tpp_x, tpp_y
 
 
@@ -67,6 +65,7 @@ def eval_task4(gt_folder, result_folder, img_folder):
         h, w, _ = cv2.imread(im_file).shape
         diag = ((h ** 2) + (w ** 2)) ** 0.5
         lt, ht = LOW_THRESHOLD * diag, HIGH_THRESHOLD * diag
+        # lt, ht = LOW_THRESHOLD * min(w, h), HIGH_THRESHOLD * min(w, h)
         score_x = get_axis_score(gt_x, res_x, lt, ht)
         score_y = get_axis_score(gt_y, res_y, lt, ht)
         recall_x = score_x / len(gt_x) if len(gt_x) > 0 else 1.
