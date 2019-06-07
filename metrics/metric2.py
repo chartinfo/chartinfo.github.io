@@ -4,7 +4,7 @@ import json
 import numpy as np
 import editdistance
 
-from metrics.unicodeit import replace
+from unicodeit import replace
 
 IOU_THRESHOLD = 0.5
 
