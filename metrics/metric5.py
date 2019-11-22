@@ -57,7 +57,14 @@ def metric_5(pred_legend_pairs, gt_legend_pairs, gt_type, debug=False):
         iou = compute_iou(gt_pair['bb'], pred_pair['bb'])
         if debug:
             print("Text element ID %d IOU: %f" % (gt_pair['id'], iou))
+            ious_matched.append(iou)
         score += iou
+
+    if debug:
+        num_unmatched_gt = len(gt_matched) - sum(map(bool, gt_matched))
+        num_unmatched_pred = len(pred_matched) - sum(pred_matched)
+        unmatched_gt_histo[num_unmatched_gt] += 1
+        unmatched_pred_histo[num_unmatched_pred] += 1
                 
     norm_score = score / max(len(gt_legend_pairs), len(pred_legend_pairs))
     return norm_score
@@ -72,6 +79,11 @@ if __name__ == "__main__":
 
     try:
         debug = sys.argv[3]
+        if debug:
+            import collections
+            unmatched_gt_histo = collections.Counter()
+            unmatched_pred_histo = collections.Counter()
+            ious_matched = list()
     except:
         debug = False
 
@@ -106,5 +118,20 @@ if __name__ == "__main__":
     else:
         print("Error: pred_file and gt_file must both be files or both be directories")
         exit()
+
+    if debug:
+        print('UnMatched GT histo:', unmatched_gt_histo.most_common())
+        print('UnMatched Pred histo:', unmatched_pred_histo.most_common())
+        import matplotlib
+        matplotlib.use('AGG')
+        import matplotlib.pyplot as plt
+        n, bins, patches = plt.hist(ious_matched, bins=20, range=(0,1), log=True)
+        print(len(ious_matched))
+        print(list(zip(bins, n)))
+        plt.xlabel('IOU')
+        plt.ylabel('Count')
+        plt.xlim([0,1])
+        plt.grid(True)
+        plt.savefig('tmp.png')
 
 
