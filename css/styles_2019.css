@@ -1,18 +1,16 @@
 
 body {
 	background: #333333;	
-	font-family: Verdana;
+	font-family: Arial;
 }
 
 .title {
 	padding: 20px;
-	background: rgb(204, 204, 204);	
-	color: rgb(50, 44, 44);
+	border-bottom: 3px dashed rgb(243,102,35);
 }
 
 .menu {
-	background: rgb(176,13,14);
-	color: rgb(255,255,255);
+	border-bottom: 3px dashed rgb(243,102,35);
 }
 
 .menu table {
@@ -49,11 +47,11 @@ h1 {
 
 .content h1 {
 	margin: auto;
-	color: rgb(176,13,14);
+	color: rgb(243,102,35);
 	font-size: 16pt;
 }
 
 .content h2 {
-	color: rgb(176,13,14);
+	color: rgb(243,102,35);
 	font-size: 14pt;
 }

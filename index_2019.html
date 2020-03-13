@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>ICPR 2020 - CHART Competition</title>
-  <meta name="description" content="ICPR 2020 CHART HARVESTING Competition">
+  <title>ICDAR 2019 - CHART Competition</title>
+  <meta name="description" content="ICDAR 2019 CHART HARVESTING Competition">
   <!--<meta name="author" content="">-->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles_2019.css">
   <style>
 	  div {
   		text-align: justify;
@@ -31,51 +31,23 @@
 <body>
   <script src="js/main.js"></script>
   <div class="main">
-	<div class="title">		
-		<!--
+	<div class="title">
+		<a href="http://icdar2019.org/" target="_blank">
+			<h2><b style="color: rgb(243,102,35);">ICDAR </b> 2019</h2>
+		</a>
+		<h1 align="center"><b style="color: rgb(243,102,35);">C</b>ompetition on <b style="color: rgb(243,102,35);">Ha</b>rvesting <b style="color: rgb(243,102,35);">R</b>aw <b style="color: rgb(243,102,35);">T</b>ables from Infographics </h1>		
+		
 		<table style="margin:auto;">
 			<tr>
-				<td width="200px">
-					<a href="https://www.micc.unifi.it/icpr2020/" target="_blank">
-						<img src="img/icpr_logo.png" alt="ICPR 2020" style="width: 128px; height: 128px;">
-					</a>
-				</td>
-				<td>
-					<h1 align="center"><b style="color: rgb(176,13,14);">C</b>ompetition on <b style="color: rgb(176,13,14);">Ha</b>rvesting <b style="color: rgb(176,13,14);">R</b>aw <b style="color: rgb(176,13,14);">T</b>ables<br />from Infographics </h1>		
-				</td>
-			</tr>
-		</table>
-		-->
-		<table style="margin:auto;">
-			<tr>
-				<td style="text-align: center; vertical-align: bottom; height: 210px;">
-					<a href="https://www.micc.unifi.it/icpr2020/" target="_blank">
-						<img src="img/icpr_logo.png" alt="ICPR 2020" style="width: 164px; height: 164px;">
-					</a>
-				</td>
-				<td rowspan="2" style="vertical-align: top;">
-					<img src="img/big_line_chart.png" style="width: 480px; height: 360px;">
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align: center; height: 165px; vertical-align: top;">
-					<h1 style="margin-top: 5px;"><b style="color: rgb(176,13,14);">CHART</b>-Infographics<br />2020</h1>
-				</td>				
-			</tr>			
-		</table>
-		<!--
-		<table style="margin:auto;">
-			<tr>
-				<td><img src="img/icpr_line_chart.png" width="180px"></td>
-				<td><h1 align="center"><b style="color: rgb(176,13,14);">CHART</b>-Infographics 2019</h1></td>
-				<td><img src="img/icpr_bar_chart.png" width="180px"></td>
+				<td><img src="img/quick_line_chart.png" width="180px"></td>
+				<td><h1 align="center"><b style="color: rgb(243,102,35);">CHART</b>-Infographics 2019</h1></td>
+				<td><img src="img/quick_bar_chart_solid.png" width="180px"></td>
 			</tr>
 		</table>		
-		-->
 	</div>	
 	<div class="menu">
 		<table>
-			<tr style="cursor: pointer;font-size: 14pt">
+			<tr style="cursor: pointer;font-size: 18pt">
 				<td onclick="update_view('home');">Home</td>
 				<td onclick="update_view('tasks');">Tasks</td>
 				<td onclick="update_view('schedule');">Schedule</td>
@@ -86,10 +58,8 @@
 	</div>
 	<div class="content">
 		<div id="home" style="display: None;">
-			<h1 align="center" style="color: rgb(50,44,44);"><b style="color: rgb(176,13,14);">C</b>ompetition on <b style="color: rgb(176,13,14);">Ha</b>rvesting <b style="color: 		rgb(176,13,14);">R</b>aw <b style="color: rgb(176,13,14);">T</b>ables from Infographics </h1>
-			<br />
 			<div class="row">
-  				<div class="column">					
+  				<div class="column">
     				<h1>Summary</h1>
     					<p>
     						This competition is composed of a series of 6 sub-tasks for chart data extraction, which when put together as a pipeline go from an input chart image to a CSV file representing the data used to create the chart.
@@ -100,16 +70,18 @@
   				</div>
   				<div class="column">
     				<h1>Competition Updates</h1>
-					<table style="margin-top:10px" cellspacing="10px">
-						<!--
-						<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
-						-->
-						<tr> <td style="text-align:top;"> Mar 13 </td> 
-							<td> <a href="#RegistrationDetails">Registration</a> Opening soon!</td> </tr>						
-						<tr> <td style="text-align:top;"> Mar 13 </td> <td> CHART-2019 PMC Dataset <br />available <a href="http://tc11.cvc.uab.es/datasets/ICDAR-CHART-2019-PMC_1">Here</a> </td></tr>						
-						<tr> <td style="text-align:top;"> Mar 13 </td> <td> CHART-2019 Synth Dataset <br />available <a href="http://tc11.cvc.uab.es/datasets/CHART2019-S_1">Here</a> </td></tr>
-						<tr> <td style="text-align:top;"> Mar 13 </td> <td> Previous CHART-Info <a href="index_2019.html">here</a></td> </tr>
-					</table>
+					<h2> Training Data is Now Available </h2>
+						<table style="margin-top:30px">
+							<!--
+							<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
+							-->
+							<tr> <td> Mar 1 </td> <td> <a href="#RegistrationDetails">Registration</a> is Open!</td> </tr>
+							<tr> <td> Mar 18 </td> <td> Please check Tools and Data for samples. </td> </tr>
+							<tr> <td> Mar 22 </td> <td> Training Data Release </td> </tr>
+							<tr> <td> Apr 30 </td> <td> Test Data Release</td> </tr>
+							<tr> <td> May 6 </td> <td> Half Page Description of System due</td> </tr>
+							<tr> <td> <b>May 21</b> </td> <td> <b>Results due</b> by email  </td> </tr>
+						</table>
   				</div>
 			</div>
 			<table style="margin: auto;">
@@ -121,12 +93,12 @@
 			<p>
 				Charts are a compact method of displaying and comparing data. In scientific publications, charts and graphs are often used to to summarize results, comparison of methodologies, emphasize the reasoning behind key aspects of the scientific process, and  justification of design choices, to name a few. Automatically extracting data from charts is a key step in understanding the intent behind a chart which could lead to a better understanding of the document itself. 
 			</p>
-			<table align="center" style="margin: auto;">
+			<table style="margin: auto;">
 				<tr>
 					<td><img src="img/charts.png" width="600px"></td>
 				</tr>
 				<tr>
-					<td style="font-size: 10pt; text-align: center; width: 600px;">Example chart types to use in the proposed competition. Note that all these were generated from the same tabular data.</td>
+					<td style="font-size: 10pt; text-align: center;">Example chart types to use in the proposed competition. Note that all these were generated from the same tabular data.</td>
 				</tr>
 			</table>
 			
@@ -146,7 +118,7 @@
 				on a smaller set of manually annotated real charts harvested from <a href='https://www.ncbi.nlm.nih.gov/pmc/'>PubMedCentral.</a>
 			</p>
 			<p>
-			On June 15, 2020, we will release test data, and by <b>June 22</b> competition participants are expected submit the following:
+			On April 30, we will release test data, and by <b>May 21</b> competition participants are expected submit the following:
 			<ol>
 				<li> Predictions on the test data </li>
 				<li> A short system description </li> 
@@ -154,8 +126,8 @@
 			</ol>
 
 			The organizers will tabulate the results for each subtask and whole chart pipeline results 
-				and present it at <a href="https://www.micc.unifi.it/icpr2020/">ICPR 2020 in Milan, Italy.</a>.
-			Note that you <b>do not need to attend ICPR 2020</b> to participate in this competition.
+				and present it at <a href="http://icdar2019.org">ICDAR 2019 in Sydney, Australia.</a>.
+			Note that you <b>do not need to attend ICDAR 2019</b> to participate in this competition.
 			</p>
 
 			<p> The sub-tasks considered in this competition are </p>
@@ -185,25 +157,26 @@
 				Additionally, methods may be submitted for the complete data extraction task where systems are only given the chart image (no intermediate inputs)
 					and are expected to produce the raw data used to produce the chart (same output as subtask 6b).
 			</p>						
-			
-			<h2>Registration</h2>	
-			<!-- 
-			<p> <a id="RegistrationDetails"></a> To register, please send an email to chartinfo.icdar2019@gmail.com. Please include the following: </p>
-				<ul>
-					<li> Names of participants </li>
-					<li> Primary contact person </li>
-					<li> Affiliation of participants </li>
-					<li> Team Name </li>
-					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
-				</ul>
-			-->
-			<p> <a id="RegistrationDetails">Registration</a> will open soon!</p>
-			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
-			<h2>Acknowledgements</h2>
+				<h2>Registration</h2>			
+				<p> <a id="RegistrationDetails"></a> To register, please send an email to chartinfo.icdar2019@gmail.com. Please include the following: </p>
+					<ul>
+						<li> Names of participants </li>
+						<li> Primary contact person </li>
+						<li> Affiliation of participants </li>
+						<li> Team Name </li>
+						<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
+					</ul>
+				<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
+				<h2>Acknowledgements</h2>
+				<p>
+					The creation of our manually curated real CHART dataset was partially supported by the National Science Foundation under Grant No.1640867 (OAC/DMR).
+				</p>
+			<!--
 			<p>
-				The creation of our manually curated real CHART dataset was partially supported by the National Science Foundation under Grant No.1640867 (OAC/DMR).
-			</p>
-			
+				This competition is focused on data extraction and key element classification in charts used in scientific documents. More specifically, we have created a benchmark for axes charts (line, area, bar, box, and scatter plots) using a combination of synthetic data and figures from the PubMedCentral open access collection. Additionally, pie charts are considered in one sub-task (classification).
+
+				The competition consists of multiple sub-tasks: chart image classification, extraction of text, text role classification, identifying legend and legend symbols, identifying chart marks such as lines, bars, and scatter marks, and finally extracting tabular data that originally produced the chart. These tasks are independent of each other and could potentially be chained to fulfill the overall task of extraction of tabular data from the chart. Metrics for each individual sub-task are derived from commonly used metrics for detection and classification such as recall-precision and accuracy. End-to-end competing systems will be evaluated on the basis of extraction of tabular data. 
+			</p> -->
 		</div>
 		<div id="tasks" style="display: None;">
 			<h1>Competition Tasks</h1>
@@ -507,11 +480,11 @@
 			<h1>Competition Schedule</h1>
 			<table style="margin-top:30px">
 				<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
-				<tr> <td> Apr 15 </td> <td> Training Data Release </td> </tr>
-				<tr> <td> Jun 15 </td> <td> Test Data Release</td> </tr>
-				<tr> <td> Jun 15 </td> <td> Half Page Description of System due</td> </tr>
-				<tr> <td> <b>Jun 22</b> </td> <td> <b>Results due</b> by email  </td> </tr>
-				<tr> <td> <b>Jul 15</b> </td> <td> <b>Winners</b> Announcement  </td> </tr>
+				<tr> <td> March 1 </td> <td> Registration Opens </td> </tr>
+				<tr> <td> March 11 &nbsp; &nbsp; </td> <td> Release of Training Data </td> </tr>
+				<tr> <td> Apr 30 </td> <td> Test Data Release</td> </tr>
+				<tr> <td> May 6 </td> <td> Half Page Description of System due</td> </tr>
+				<tr> <td> <b>May 22</b> </td> <td> <b>Results due</b>  </td> </tr>
 			</table>
 		</div>
 		<div id="data_tools" style="display: None;">
@@ -530,43 +503,11 @@
 				In the samples, we have also included a visualization of the JSON annotations on the image.
 				These visualizations were generated with this <a href="visualize_json.py">python script.</a>
 			</p>
-			
-			<h2>Datasets from ICDAR CHART-Infographics 2019</h2>
-			<p>
-				Datasets from the previous edition of our competition are publicly available and can be used
-				as reference for the up-coming training and testing datasets. 
-			</p>
-			<p>
-				ICDAR CHART-Infographics 2019 - Synthethic dataset <a href="http://tc11.cvc.uab.es/datasets/CHART2019-S_1">(CHART2019-S)</a>
-			</p>
-			<p>
-				ICDAR CHART-Infographics 2019 - PubMedCentral dataset <a href="http://tc11.cvc.uab.es/datasets/ICDAR-CHART-2019-PMC_1">(CHART2019-PMC)</a>
-			</p>
 
 			<h2>Training Data</h2>
 			<p>
 				Please register to receive the download link for training data
 			</p>
-			<h2>Registration</h2>
-			<p> Registration will be open soon!</p>
-			<!-- <p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
-				<ul>
-					<li> Names of participants </li>
-					<li> Primary contact person </li>
-					<li> Affiliation of participants </li>
-					<li> Team Name </li>
-					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
-				</ul>-->
-			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
-		</div>
-		<div id="contact" style="display: None;">
-			<h1>Registration and Contact Information</h1>
-			<!--
-			<p>
-				For any inquiries, please email us at chartinfo.icdar2019@gmail.com.
-			</p>
-			-->
-			<!--
 			<h2>Registration</h2>
 			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
 				<ul>
@@ -576,10 +517,23 @@
 					<li> Team Name </li>
 					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
 				</ul>
-			-->
+			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
+		</div>
+		<div id="contact" style="display: None;">
+			<h1>Registration and Contact Information</h1>
 			<p>
-				Registration opening Soon. 
+				For any inquiries, please email us at chartinfo.icdar2019@gmail.com.
 			</p>
+
+			<h2>Registration</h2>
+			<p> To register, please send an email to chartinfo.icdar2019@gmail.com.  Please include the following. </p>
+				<ul>
+					<li> Names of participants </li>
+					<li> Primary contact person </li>
+					<li> Affiliation of participants </li>
+					<li> Team Name </li>
+					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
+				</ul>
 			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
 
 			<h2> Organizer Information </h2>
