@@ -82,10 +82,13 @@
 						<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
 						-->
 						<tr> 
-						    <td style="text-align:top;"> Sept 07 </td> <td><b>UB PMC Train Dataset</b> <br />has been updated!</td>
+						    <td style="text-align:top;"> Sept 23 </td> <td><b>UB PMC Train Dataset</b> <br />has been updated! (v1.2)</td>
 						</tr>
 						<tr>
-							<td style="text-align:top;"> Sept 07 </td> <td> <a href="#RegistrationDetails">Registration</a> is still open!</td>
+							<td style="text-align:top;"> Sept 23 </td> <td> <a href="#RegistrationDetails">Registration</a> is still open!</td>
+						</tr>
+						<tr> 
+						    <td style="text-align:top;"> Sept 07 </td> <td><b>UB PMC Train Dataset</b> <br />has been updated! (v1.1)</td>
 						</tr>
 						<tr> 
 						    <td style="text-align:top;"> Jul 27 </td> <td> Training sets now available <br />for registered participants </td>
@@ -126,22 +129,29 @@
 			
 			<h2>Competition Outline</h2>
 			<p>
-			A large number of synthetic chart images (created with matplotlib) 
-				with corresponding automatically derived annotations are provided as training data for this competition.
-			The data (i.e. CSV files) used to generate the synthetic chart images are taken from real public data sources.
-			For test data, we will use and report metrics on a large set of synthetic data (matplotlib) and 
-				on a smaller set of manually annotated real charts harvested from <a href='https://www.ncbi.nlm.nih.gov/pmc/'>PubMedCentral.</a>
+			For ICPR 2020, we are providing <b>two sets</b> of datasets. Each set has its own training and testing datasets. The first set is <b>Adobe Synth</b> and the second set is <b>UB PMC</b>. Each of these sets of datasets represent a different type of challenges of the CHART recognition process. These datasets sets are <b>independent</b> of each other, and we will provide separated ranking for each task for each testing dataset.  
 			</p>
+			
+			<h3>Adobe Synthethic Datasets</h3>
 			<p>
-			On June 15, 2020, we will release test data, and by <b>June 22</b> competition participants are expected submit the following:
+				The first set of datasets is based on a large number of synthetic chart images (created with matplotlib) 
+				with corresponding automatically derived annotations. The data (i.e. CSV files) used to generate the synthetic chart images are taken from real public data sources.
+			</p>
+			
+			<h3>UB PMC Datasets</h3>
+			<p>
+				The second set of datasets is based on a smaller number of chart images extracted from Open-Access publications found in the <a href='https://www.ncbi.nlm.nih.gov/pmc/'>PubMedCentral.</a> (PMC). This year we only picked images released under a Creative Commons By Attribution license (CC-BY), which allows us to redistribute them to the competition participants. Each image has a file name which can be used to easily find the original publication where the image appears. A team of human annotators was hired to annotate the chart images in a semi-automatic fashion.  
+			</p>
+			<h3>Evaluation</h3>
+			<p>
+			On October 19, 2020, we will release the test datasets, and by <b>October 26</b> competition participants are expected submit the following:
 			<ol>
-				<li> Predictions on the test data </li>
+				<li> Predictions on each test dataset </li>
 				<li> A short system description </li> 
-				<li> Runnable code that reproduces the results (e.g. Docker container, executable, jar file, etc.) </li>
+				<li> Runnable code that reproduces the results (e.g. Docker container, executable, jar file, etc.) or any other proof that results have been generated using a real software system</li>
 			</ol>
 
-			The organizers will tabulate the results for each subtask and whole chart pipeline results 
-				and present it at <a href="https://www.micc.unifi.it/icpr2020/">ICPR 2020 in Milan, Italy.</a>.
+			The organizers will tabulate the results for each subtask for each dataset and present it at <a href="https://www.micc.unifi.it/icpr2020/">ICPR 2020 in Milan, Italy.</a>.
 			Note that you <b>do not need to attend ICPR 2020</b> to participate in this competition.
 			</p>
 
@@ -168,7 +178,7 @@
 			
 			</p>
 			<p>
-				Participants are not obligated to perform all subtasks and may submit test results for any set of subtasks they wish.
+				Participants are not obligated to perform all subtasks or all datasets and may submit test results for any set of subtasks or datasets they wish.
 				Additionally, methods may be submitted for the complete data extraction task where systems are only given the chart image (no intermediate inputs)
 					and are expected to produce the raw data used to produce the chart (same output as subtask 6b).
 			</p>						
@@ -228,24 +238,36 @@
 				<p> 
 					Knowing the type of chart greatly affects what processing needs to be done.
 					Thus, the first sub-task is to classify chart images by type. 
-					Given the chart image, methods are expected to output one of the following 10 classes. 
+					Given the chart image, methods are expected to output the chart class. 
+					We are providing two datasets, each one has a different set 
+					of classes as follows. We expect participants to develop <b>two versions</b> of their
+					classification system, one for each set of datasets, which will be <b>evaluated independently</b>.
 				</p>
+				
+				<p> Note that many classes included in this first task such as <b>pie and donut plots are not used</b> for the remaining sub-tasks. </p>
+				
+				<h3>Classes of Chart Images on Adobe Synthetic Datasets</h3>
 				<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
 					<tr>
-						<td> Pie </td>
-						<td> Donut </td>
-						<td> Vertical box </td>
-						<td> Horizontal box </td>
-					</tr><tr>
-						<td> Grouped vertical bar </td>
-						<td> Grouped horizontal bar </td>
-						<td> Stacked vertical bar </td>
-						<td> Stacked horizontal bar </td>
-					</tr><tr>
-						<td> Line </td>
-						<td> Scatter </td>
+						<td>Area</td>
+						<td>Donut</td>
+						<td>Horizontal Box</td>
+						<td>Horizontal Grouped Bar</td>
+					</tr>
+					<tr>
+						<td>Horizontal Stacked Bar</td>
+						<td>Line</td>
+						<td>Pie</td>
+						<td>Polar</td>
+					</tr>
+					<tr>
+						<td>Scatter</td>
+						<td>Vertical Box</td>
+						<td>Vertical Grouped Bar</td>
+						<td>Vertical Stacked Bar</td>
 					</tr>
 				</table>
+				
 				<p> 
 					For bar charts that have a single set of bars (single data series), 
 						it is visually ambigious whether it a Grouped or Stacked bar chart, though their
@@ -255,7 +277,35 @@
 					For example, a vertical bar chart with a single data series can be classified as either
 					<i>Grouped vertical bar</i> or <i>Stacked vertical bar</i>.
 				</p>
-				<p> Note that <b>pie and donut plots are not used</b> for the remaining sub-tasks. </p>
+				
+				<h3>Classes of Chart Images on UB PMC Datasets</h3>
+				<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
+					<tr>
+						<td>Area</td>
+						<td>Heatmap</td>
+						<td>Horizontal Bar</td>
+						<td>Horizontal Interval</td>
+					</tr>
+					<tr>
+						<td>Line</td>
+						<td>Manhattan</td>
+						<td>Map</td>
+						<td>Pie</td>
+					</tr>
+					<tr>
+						<td>Scatter</td>
+						<td>Scatter-Line</td>
+						<td>Surface</td>
+						<td>Venn</td>
+					</tr>
+					<tr>
+						<td>Vertical Bar</td>
+						<td>Vertical Box</td>
+						<td>Vertical Interval</td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+				
 
 				<h3> Metric </h3>
 					<p>
@@ -308,17 +358,25 @@
 					This sub-task focuses on identifying the role of each text block in a chart image, and text bounding boxes and transcripts are provided as input.
 					Competing systems are expected to classify each bounding box into one of the following roles.
 				</p>
+				
 				<table style="width:100%; font-size:11pt; text-align:center; align:center">
 					<tr>
-						<td> Chart title </td>
-						<td> Axis title </td>
-						<td> X-axis values (tick labels) </td>
+						<td> Chart Title </td>
+						<td> Axis Title </td>
+						<td> Tick Label (x and y axes values) </td>
 					</tr><tr>
-						<td> Y-axis values (tick labels) </td>
-						<td> Legend title </td>
-						<td> Legend label </td>
+						<td> Tick Grouping (x and y axes) </td>
+						<td> Legend Title </td>
+						<td> Legend Label </td>
+					</tr><tr>
+						<td> Value Label </td>
+						<td> Data Marker Label </td>
+						<td> Other </td>
 					</tr>
 				</table>
+				<p>
+					*For <b>Adobe Synth Datasets</b>, only a <b>subset</b> of these classes are used. 
+				</p>
 				<h3> Metric </h3>
 					<p>Similar to the evaluation in sub-task 1 (chart classification), the evaluation metric will be the <b>average per-class F-measure.</b></p>
 
@@ -503,23 +561,27 @@
 			<h1>Tools and Data</h1>
 
 			<h2>Sample Data</h2>
-			<p>
-				We have sample data for each chart type for <a href="samples.zip">download.</a>
-				Each chart has a PNG image produced by matplotlib, and an associated JSON file that contains
-					the annotations for each sub-task.
-				The input and expected output for each sub-task is specified in the JSON file.
+			<p> 
+				Below you can find samples from each training set. 
+				We provide a few chart images with their corresponding annotations in a JSON file. 
+				The inputs and expected outputs for each sub-task are specified in the JSON file. 
 				Key values that begin with an underscore (_) are not required output, but are given as part of
 					the ground truth annotations, in case this information is useful.
 			</p>
 			<p>
-				In the samples, we have also included a visualization of the JSON annotations on the image.
+				<b>Adobe Synth Datasets. </b> We have sample data for each chart type for <a href="synth_sample.zip">download.</a>
+				Each chart has a PNG image produced by matplotlib. In the samples, we have also included a visualization of the JSON annotations on the image.
 				These visualizations were generated with this <a href="visualize_json.py">python script.</a>
 			</p>
+			<p>
+				<b>UB PMC Datasets. </b> We have sample data for the main each chart types for <a href="UB_PMC_sample.zip">download.</a> Each chart has a JPEG image as given by the PubMedCentral. 
+			</p>
+			
 			
 			<h2>Datasets from ICDAR CHART-Infographics 2019</h2>
 			<p>
 				Datasets from the previous edition of our competition are publicly available and can be used
-				as reference for the up-coming training and testing datasets. 
+				as reference only. Note that most annotations from the ICDAR 2019 PubMedCentral dataset <b>have been improved and are already included</b> in the novel UB PMC Training Dataset that we are providing this year. 
 			</p>
 			<p>
 				ICDAR CHART-Infographics 2019 - Synthethic dataset <a href="http://tc11.cvc.uab.es/datasets/CHART2019-S_1">(CHART2019-S)</a>
@@ -528,13 +590,6 @@
 				ICDAR CHART-Infographics 2019 - PubMedCentral dataset <a href="http://tc11.cvc.uab.es/datasets/ICDAR-CHART-2019-PMC_1">(CHART2019-PMC)</a>
 			</p>
 
-			<h2>Training Data</h2>
-			<p>
-				The synthetic chart dataset is available <a href="http://tc11.cvc.uab.es/datasets/CHART2019-S_1">Here</a>. 
-			</p>
-			<p>
-				The PubMedCentral testing dataset is available <a href="http://tc11.cvc.uab.es/datasets/ICDAR-CHART-2019-PMC_1">Here</a>. 
-			</p>
 			<h2>Chart Annotation Tools</h2>
 			<p>
 				The tools used for the annotation of chart images can be found <a href="https://github.com/kdavila/ChartInfo_annotation_tools">here</a>
@@ -563,18 +618,20 @@
 					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
 				</ul>
 			</p>
-			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
+			<p> Upon registration, you will be sent additional information to obtain the training and test data that we have made available only to registered participants. </p>
 
 			<h2> Organizer Information </h2>
 				<table width='100%'>
 					<col width="150px">
 					<col width="450px">
 					<tr>
-						<td> <img src="img/bhargava.jpeg" width="130px" align="center"><p> Bhargava Urala </p> </td>
+						<td> <img src="img/kenny.jpg" width="130px" align="center"><p> Kenny Davila </p> </td>
 						<td> 
-							Bhargava is a Ph.D. candidate at the Department of Computer Science, University at Buffalo, SUNY. 
-							His primary research interest is detecting, recognizing and retrieving text in images and videos. 
-							He has published in ICFHR, ICML, ICPR, MOCR and GREC, including articles on automated data extraction from scientific plots.
+							Kenny is a Post-doctoral Associate at the Center for Unified Biometrics and Sensors, University at Buffalo, SUNY. 
+							He has created and released open source tools for labeling and evaluation of Lecture Video Summarization approaches, 
+								included with the release of the AccessMath Lecture Video Dataset, 
+								as well as a baseline method for summarization of lecture videos (ICDAR 2017).
+							His open source visual search engine (Tangent-V) received the Best Paper Award at ICFHR 2018.
 						</td>
 					</tr>
 					<tr>
@@ -586,16 +643,6 @@
 								tasks such as chart and table understanding, layout analysis, and handwriting recognition.
 							He is also interested in deep learning models and training with applications to computer vision and
 								natural language processing.
-						</td>
-					</tr>
-					<tr>
-						<td> <img src="img/kenny.jpg" width="130px" align="center"><p> Kenny Davila </p> </td>
-						<td> 
-							Kenny is a Post-doctoral Associate at the Center for Unified Biometrics and Sensors, University at Buffalo, SUNY. 
-							He has created and released open source tools for labeling and evaluation of Lecture Video Summarization approaches, 
-								included with the release of the AccessMath Lecture Video Dataset, 
-								as well as a baseline method for summarization of lecture videos (ICDAR 2017).
-							His open source visual search engine (Tangent-V) received the Best Paper Award at ICFHR 2018.
 						</td>
 					</tr>
 					<tr>

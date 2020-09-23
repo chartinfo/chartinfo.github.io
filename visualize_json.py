@@ -23,7 +23,7 @@ h,w,_ = im.shape
 
 # role_colors is also used to color lineplot lines
 role_colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255),
-           (255, 128, 0)] 
+           (255, 128, 0), (128, 255, 0)] 
 patch_color = (255, 0, 128)
 patch_connect = (255, 128, 0)
 element_colors = [(0, 255, 128), (128, 255, 0), (0, 128, 255), (128, 0, 255), (128, 128, 0), (128, 0, 128), (0, 128, 128) ]
@@ -40,7 +40,11 @@ if chart_type in ['Pie', 'Donut']:
 
 # task 2 & 3
 for text_block in in_obj['task2']['output']['text_blocks']:
-    bb = text_block['bb']
+    if 'bb' in text_block:
+        bb = text_block['bb']
+    else:
+        bb = text_block['polygon']
+        
     _id = text_block['id']
     obj = find_by_id(_id, in_obj['task3']['output']['text_roles'])
     assert obj is not None
@@ -48,8 +52,17 @@ for text_block in in_obj['task2']['output']['text_blocks']:
     role = obj['role']
     color = role_colors[text_role_mapping[role]]
     p1 = (int(bb['x0']), int(bb['y0']))
-    p2 = (int(bb['x0'] + bb['width']), int(bb['y0'] + bb['height']))
-    cv2.rectangle(im, p1, p2, color, thickness=2)
+    p2 = (int(bb['x1']), int(bb['y1']))
+    p3 = (int(bb['x2']), int(bb['y2']))
+    p4 = (int(bb['x3']), int(bb['y3']))
+    # p2 = (int(bb['x0'] + bb['width']), int(bb['y0'] + bb['height']))
+    # cv2.rectangle(im, p1, p2, color, thickness=2)
+    cv2.line(im, p1, p2, color, thickness=2)
+    cv2.line(im, p2, p3, color, thickness=2)
+    cv2.line(im, p3, p4, color, thickness=2)
+    cv2.line(im, p4, p1, color, thickness=2)
+    
+    
     #if role == 'axis_title':
     cv2.putText(im, text_block['text'], p2, cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), thickness=2, bottomLeftOrigin=False)
 
