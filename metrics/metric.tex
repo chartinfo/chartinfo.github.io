@@ -74,6 +74,9 @@ where $V^{-1}$ is the inverse of the covariance matrix of $G$, and $\gamma$ is a
 Note that Eq.~\ref{eq:point_dist} corresponds to a scaled Mahalanobis distance.
 Scaling the distance computation by the inverse covariance matrix normalizes data series to have the same variance, and thus have more comparable distances.
 
+However, some data series have extremely small variance (e.g. exactly 0), so in order to avoid over-penalizing such cases, we ensure that the diagonal elements of $V^{-1}$ have a maximum value of 400 divided by the squared mean of the corresponding dimension of the GT data.
+This corresponds to enforcing that the maximum penalty, i.e. 1, of $D$ can only occur if the predicted value is at least 5\% different that the GT value.
+
 Then, we create the pairwise cost matrix $\mathbf{C}$, where $\mathbf{C}_{n,m} = D(p_n,g_m)$.
 If $\mathbf{C}$ is not square, then it can be padded with $1$s to make it square, so that each dimension is of size $K = \max(N,M)$.
 Padded entries correspond to points that have no matches.

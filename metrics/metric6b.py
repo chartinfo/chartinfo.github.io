@@ -73,8 +73,10 @@ def compare_discrete(pred_ds, gt_ds, alpha, gamma):
 
     pred_vals = arr_to_np_1d(pred_ds)
     gt_vals = arr_to_np_1d(gt_ds)
+    gt_mean = gt_vals.mean(axis=0)
     VI = 1 / np.cov(gt_vals.T)
-    value_match_scores = 1 - np.minimum(1, scipy.spatial.distance.cdist(pred_vals, gt_vals, metric='mahalanobis', VI=VI) / gamma)
+    VI[0,0] = min(400 / gt_mean ** 2, VI[0,0])
+    value_match_scores = 1 - np.fmin(1, scipy.spatial.distance.cdist(pred_vals, gt_vals, metric='mahalanobis', VI=VI) / gamma)
     
     cost_mat = 1 - (name_match_scores * value_match_scores)
     return get_score(cost_mat)
@@ -98,12 +100,19 @@ def arr_to_np_1d(ds):
 def compare_scatter(pred_ds, gt_ds, gamma):
     pred_ds = arr_to_np(pred_ds)
     gt_ds = arr_to_np(gt_ds)
+    gt_means = gt_ds.mean(axis=0)
 
     V = np.cov(gt_ds.T)
-    VI = np.linalg.inv(V).T
+    print(V)
+    try:
+        VI = np.linalg.inv(V).T
+        print(VI)
+        for i in range(VI.shape[0]):
+            VI[i,i] = min(VI[i,i], 400 / gt_means[i] ** 2)
+    except:
+        VI = np.asarray([ [400 / gt_means[0] ** 0, 0], [0, 400 / gt_means[1]] ])
 
-    cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
-    #print(cost_mat)
+    cost_mat = np.fmin(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
     return get_score(cost_mat)
 
 
