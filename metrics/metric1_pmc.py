@@ -19,7 +19,6 @@ def get_confusion_matrix(confusion, unique_labels):
     cmat /= norm
     return cmat, idx_label_map
 
-
 def plot_confusion_matrix(cm, classes, output_img_path):
     fig, ax = plt.subplots()
     im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
@@ -50,7 +49,7 @@ def plot_confusion_matrix(cm, classes, output_img_path):
     plt.show()
 
 
-def eval_task1(gt_folder, result_folder, output_img_path):
+def eval_task1(gt_folder, result_folder, output_img_path, class_auto_mapping):
     gt_label_map = {}
     result_label_map = {}
     metrics = {}
@@ -69,21 +68,42 @@ def eval_task1(gt_folder, result_folder, output_img_path):
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
-            pred = result['task1']['output']
-            if 'chart_type' in pred:
-                pred = result['task1']['output']['chart_type']
+            if not 'task1' in result:
+                print("results file {0:s} does not follow a supported format".format(result_file))
+                continue
+
+            if 'output' in result['task1']:
+                if 'chart_type' in result['task1']['output']:
+                    # IDEAL/expected format ....
+                    pred = result['task1']['output']['chart_type']
+                else:
+                    # try raw value in output
+                    pred = result['task1']['output']
+            else:
+                # less ideal format, try directly value at task1
+                pred = result['task1']
+
             if isinstance(pred, list):
                 pred = pred[0]
+
             pred = pred.lower()
+
             if 'stacked' in pred or 'grouped' in pred:
                 pred = ' '.join(pred.split(' ')[1:])
             pred = pred.strip()
+
+            # check for synonym classes ...
+            if pred in class_auto_mapping:
+                pred = class_auto_mapping[pred]
         except Exception as e:
             print(e)
             print('invalid result json format in {} please check against provided samples'.format(result_file))
             continue
         result_label_map[pred] = result_label_map[pred] + [result_id] if pred in result_label_map else [result_id]
         confusion[result_id][1] = pred
+        # print(confusion[result_id])
+
+    # compute the overall statistics
     total_recall = 0.
     total_precision = 0.
     total_fmeasure = 0.
@@ -118,11 +138,31 @@ def eval_task1(gt_folder, result_folder, output_img_path):
     cm, idx_label_map = get_confusion_matrix(confusion, classes)
     plot_confusion_matrix(cm, classes, output_img_path)
 
+def main():
+    if len(sys.argv) < 4:
+        print("Usage:")
+        print("\tpython metric1_pmc.py <ground_truth_folder> <result_folder> <confusion_matrix_path> [mapping]")
+        return
+
+    gt_folder = sys.argv[1]
+    result_folder = sys.argv[2]
+    confusion_matrix_path = sys.argv[3]
+
+    if len(sys.argv) >= 5:
+        auto_mappings_filename = sys.argv[4]
+        with open(auto_mappings_filename, "r") as mappings_file:
+            class_auto_mapping = json.load(mappings_file)
+    else:
+        class_auto_mapping = {}
+
+    eval_task1(gt_folder, result_folder, confusion_matrix_path, class_auto_mapping)
+    """
+    try:
+        eval_task1(gt_folder, result_folder, confusion_matrix_path)
+    except Exception as e:
+        print("Error evaluating results: ")
+        print(e)
+    """
 
 if __name__ == '__main__':
-    try:
-        eval_task1(sys.argv[1], sys.argv[2], sys.argv[3])
-    except Exception as e:
-        print(e)
-        print('Usage Guide: python metric1_pmc.py <ground_truth_folder> <result_folder> <confusion_matrix_path>')
-
+    main()
