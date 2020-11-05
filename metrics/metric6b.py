@@ -74,8 +74,7 @@ def compare_discrete(pred_ds, gt_ds, alpha, gamma):
     pred_vals = arr_to_np_1d(pred_ds)
     gt_vals = arr_to_np_1d(gt_ds)
     gt_mean = gt_vals.mean(axis=0)
-    VI = 1 / np.cov(gt_vals.T)
-    VI[0,0] = min(400 / gt_mean ** 2, VI[0,0])
+    VI = min(400 / gt_mean ** 2, 1 / np.cov(gt_vals.T))
     value_match_scores = 1 - np.fmin(1, scipy.spatial.distance.cdist(pred_vals, gt_vals, metric='mahalanobis', VI=VI) / gamma)
     
     cost_mat = 1 - (name_match_scores * value_match_scores)
