@@ -63,7 +63,21 @@ def sanitize_text(text):
 
 
 def extract_bboxes(js):
-    text_blocks = js['task2']['output']['text_blocks']
+    if not 'task2' in js:
+        raise Exception("No Task 2 output found")
+
+    if 'output' in js['task2']:
+        # check
+        if 'text_blocks' in js['task2']['output']:
+            # expected format
+            text_blocks = js['task2']['output']['text_blocks']
+        else:
+            # try recovery
+            text_blocks = js['task2']['output']
+    else:
+        # try recovery
+        text_blocks = js['task2']
+
     bboxes = []
     ids = []
     texts = []
@@ -122,9 +136,14 @@ def eval_task2(gt_folder, result_folder):
         gt_quads, gt_ids, gt_texts = extract_bboxes(gt)
 
         # read the corresponding result
-        with open(os.path.join(result_folder, gt_id + '.json'), 'r') as f:
-            res = json.load(f)
-        res_quads, res_ids, res_texts = extract_bboxes(res)
+        try:
+            with open(os.path.join(result_folder, gt_id + '.json'), 'r') as f:
+                res = json.load(f)
+            res_quads, res_ids, res_texts = extract_bboxes(res)
+        except Exception as e:
+            print("Error processing: " + gt_id)
+            print(e)
+            continue
 
         # iou = bbox_iou(gt_bboxes, res_bboxes)
         iou = quadrilateral_IOU(gt_quads, res_quads)
