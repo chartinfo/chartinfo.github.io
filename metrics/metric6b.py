@@ -211,12 +211,12 @@ def metric_6b(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=
         is_discrete = any(map(lambda ds: check_discrete(ds['data']), gt_data_series))
         if is_discrete:
             compare = lambda ds1, ds2: compare_discrete(ds1, ds2, alpha, gamma)
-        elif gt_type == 'Scatter':
+        elif gt_type.lower() == 'scatter':
             compare = lambda ds1, ds2: compare_scatter(ds1, ds2, gamma)
-        elif gt_type == 'Line':
+        elif gt_type.lower() == 'line':
             compare = compare_continuous
         else:
-            raise Exception("Odd Case")
+            raise Exception("Odd Case: " + gt_type)
 
     pred_no_names = list(map(lambda ds: ds['data'], pred_data_series))
     gt_no_names = list(map(lambda ds: ds['data'], gt_data_series))
