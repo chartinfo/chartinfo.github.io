@@ -25,15 +25,18 @@ def compute_iou(bb1, bb2):
     union = (ax2 - ax1) * (ay2 - ay1) + (bx2 - bx1) * (by2 - by1) - inter
 
     iou = inter / float(union) if union else 0
-    return iou
+    # Taking the first box as the ground truth ...
+    recall = inter / (bb1['width'] * bb1['height'])
+
+    return iou, recall
 
 
 def metric_5(pred_legend_pairs, gt_legend_pairs, gt_type, debug=False):
     if len(gt_legend_pairs) == 0: 
         if len(pred_legend_pairs) == 0:
-            return 1
+            return 1.0, 1.0
         else:
-            return 0
+            return 0.0, 0.0
 
     gt_matched = []
     pred_matched = [False] * len(pred_legend_pairs)
@@ -51,14 +54,16 @@ def metric_5(pred_legend_pairs, gt_legend_pairs, gt_type, debug=False):
         gt_matched.append(match)
 
     score = 0
+    recall_score = 0
     for gt_pair, pred_pair in zip(gt_legend_pairs, gt_matched):
         if pred_pair is None:
             continue
-        iou = compute_iou(gt_pair['bb'], pred_pair['bb'])
+        iou, recall = compute_iou(gt_pair['bb'], pred_pair['bb'])
         if debug:
             print("Text element ID %d IOU: %f" % (gt_pair['id'], iou))
             ious_matched.append(iou)
         score += iou
+        recall_score += recall
 
     if debug:
         num_unmatched_gt = len(gt_matched) - sum(map(bool, gt_matched))
@@ -67,7 +72,9 @@ def metric_5(pred_legend_pairs, gt_legend_pairs, gt_type, debug=False):
         unmatched_pred_histo[num_unmatched_pred] += 1
                 
     norm_score = score / max(len(gt_legend_pairs), len(pred_legend_pairs))
-    return norm_score
+    norm_recall_score = recall_score / max(len(gt_legend_pairs), len(pred_legend_pairs))
+
+    return norm_score, norm_recall_score
 
 
 if __name__ == "__main__":
@@ -95,10 +102,11 @@ if __name__ == "__main__":
         gt_outputs = gt_json['task5']['output']['legend_pairs']
         gt_type = gt_json['task1']['output']['chart_type']
 
-        score = metric_5(pred_outputs, gt_outputs, gt_type, debug)
-        print(score)
+        iou_score, recall_score = metric_5(pred_outputs, gt_outputs, gt_type, debug)
+        print((iou_score, recall_score))
     elif os.path.isdir(pred_infile) and os.path.isdir(gt_infile):
-        scores = []
+        iou_scores = []
+        recall_scores = []
         for x in os.listdir(pred_infile):
             pred_file = os.path.join(pred_infile, x)
             gt_file = os.path.join(gt_infile, x)
@@ -110,11 +118,17 @@ if __name__ == "__main__":
             gt_outputs = gt_json['task5']['output']['legend_pairs']
             gt_type = gt_json['task1']['output']['chart_type']
 
-            score = metric_5(pred_outputs, gt_outputs, gt_type, debug)
-            scores.append(score)
-            print("%s: %f" % (x, score))
-        avg_score = sum(scores) / len(scores)
-        print("Average Score: %f" % avg_score)
+            iou_score, recall_score = metric_5(pred_outputs, gt_outputs, gt_type, debug)
+            iou_scores.append(iou_score)
+            recall_scores.append(recall_score)
+
+            print("%s: %f, %f" % (x, iou_score, recall_score))
+
+        avg_iou_score = sum(iou_scores) / len(iou_scores)
+        avg_recall_score = sum(recall_scores) / len(recall_scores)
+
+        print("Average IOU-based Score: %f" % avg_iou_score)
+        print("Average Recall-based Score: %f" % avg_recall_score)
     else:
         print("Error: pred_file and gt_file must both be files or both be directories")
         exit()
