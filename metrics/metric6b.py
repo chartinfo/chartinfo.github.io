@@ -215,6 +215,8 @@ def metric_6b(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=
             compare = lambda ds1, ds2: compare_scatter(ds1, ds2, gamma)
         elif gt_type.lower() == 'line':
             compare = compare_continuous
+        elif 'bar' in gt_type.lower():
+            compare = lambda ds1, ds2: compare_discrete(ds1, ds2, alpha, gamma)
         else:
             raise Exception("Odd Case: " + gt_type)
 
