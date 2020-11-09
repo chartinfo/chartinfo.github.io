@@ -4,6 +4,7 @@ import sys
 import json
 import math
 import itertools
+import collections
 import editdistance
 import numpy as np
 import scipy.optimize
@@ -146,7 +147,10 @@ def compare_scatter(pred_ds, gt_ds, gamma):
         #print(VI)
         for i in range(VI.shape[0]):
             VI[i,i] = min(VI[i,i], 400 / gt_means[i] ** 2)
+        #print("Inverted!")
     except:
+        #print("Could not invert")
+        #print(V)
         VI = np.asarray([ [400 / gt_means[0] ** 0, 0], [0, 400 / gt_means[1]] ])
 
     cost_mat = np.fmin(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
@@ -339,7 +343,8 @@ if __name__ == "__main__":
         score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta, gamma, debug)
         print(score)
     elif os.path.isdir(pred_infile) and os.path.isdir(gt_infile):
-        scores = []
+        all_scores = []
+        scores_by_type = collections.defaultdict(list)
         idx = 0
         for x in os.listdir(pred_infile):
             pred_file = os.path.join(pred_infile, x)
@@ -365,11 +370,16 @@ if __name__ == "__main__":
             #pprint(gt_outputs)
 
             score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta, gamma, debug)
-            scores.append(score)
+            all_scores.append(score)
+            scores_by_type[gt_type].append(score)
+
             print("%s: %f" % (x, score))
             idx += 1
-        avg_score = sum(scores) / len(scores)
-        print("Average Score: %f" % avg_score)
+        for chart_type, scores in scores_by_type.items():
+            avg_score = sum(scores) / len(scores)
+            print("Average Score for %s: %f" % (chart_type, avg_score))
+        avg_score = sum(all_scores) / len(all_scores)
+        print("Average Total Score: %f" % avg_score)
     else:
         print("Error: pred_file and gt_file must both be files or both be directories")
         exit()
