@@ -9,14 +9,69 @@ import numpy as np
 import scipy.optimize
 import scipy.spatial.distance
 
+def pprint(obj):
+    print(json.dumps(obj, indent=4, sort_keys=True))
+
+
+def preprocess(outputs, gt_type):
+    # normalize box json format
+    if 'box' in gt_type:
+        if len(outputs) >= 1 and isinstance(outputs[0]['data'], list):
+            if debug:
+                print("Converting Box format")
+            outputs = convert_box_dataseries(outputs)
+            #pprint(outputs)
+
+    # remove tuples whose y-values are not numbers
+    new_outputs = []
+    for ds in outputs:
+        if isinstance(ds['data'], list):
+            new_ds = {'data': [], 'name': ds['name']}
+            for datapoint in ds['data']:
+                if 'y2' in datapoint:
+                    datapoint['y'] = datapoint['y2']
+                    del datapoint['y2']
+                if 'y' in datapoint:
+                    if not is_number(datapoint['y']):
+                        if debug:
+                            print("Omitting %r from data series %s" % (datapoint, new_ds['name']))
+                        continue
+                new_ds['data'].append(datapoint)
+            new_outputs.append(new_ds)
+        else:
+            new_outputs.append(ds)
+    return new_outputs
+
+def convert_box_dataseries(outputs):
+    new_outputs = []
+    for idx in range(len(outputs)):
+        global_name = outputs[idx]['name']
+        for ds in outputs[idx]['data']:
+            if 'x' in ds:
+                name = ds['x']
+                del ds['x']
+            elif 'y' in ds:
+                name = ds['y']
+                del ds['y']
+            else:
+                name = global_name
+            new_ds = {'name': name, 'data': ds}
+            new_outputs.append(new_ds)
+    return new_outputs
+
+
+def is_number(s):
+    try:
+        float(s)
+    except ValueError:
+        return False
+    return True
 
 
 def check_discrete(xy_list):
     for point in xy_list:
         x = point['x']
-        try:
-            float(x)
-        except:
+        if not is_number(x):
             return True
     return False
 
@@ -31,6 +86,7 @@ def euclid(p1, p2):
 
 def box_to_discrete(ds):
     out = []
+    #print(ds)
     for x in ['first_quartile', 'max', 'min', 'median', 'third_quartile']: 
         out.append( {'x': x, 'y': ds[x]} )
     return out
@@ -42,31 +98,9 @@ def compare_box(pred_ds, gt_ds, alpha, gamma):
     return compare_discrete(pred_ds, gt_ds, alpha, gamma)
 
 
-def compare_discrete_old(pred_ds, gt_ds, alpha):
-    epsilon = 0.1
-    for point in itertools.chain(pred_ds, gt_ds):
-        mag = abs(float(point['y']))
-        epsilon = min(mag, epsilon)
-
-    def norm_dist(p1, p2):
-        try:
-            x1 = p1['x']
-            y1 = float(p1['y'])
-            x2 = p2['x']
-            y2 = float(p2['y'])
-            label_score = 1 - norm_edit_dist(x1, x2) ** alpha
-            value_score = 1 - min(1, abs( (y1 - y2) / abs(y1 + epsilon)))
-            return 1 - (label_score * value_score)
-        except:
-            raise
-            return 1
-    cost_mat = create_dist_mat(gt_ds, pred_ds, norm_dist)
-    #print(cost_mat)
-    return get_score(cost_mat)
-
-
 def compare_discrete(pred_ds, gt_ds, alpha, gamma):
-    pred_names = list(map(lambda ds: ds['x'], pred_ds))
+    #print("compare_discrete")
+    pred_names = list(map(lambda ds: str(ds['x']), pred_ds))
     gt_names = list(map(lambda ds: ds['x'], gt_ds))
     name_compare = lambda s1, s2: 1 - norm_edit_dist(s1, s2) ** alpha
     name_match_scores = create_dist_mat(pred_names, gt_names, name_compare)
@@ -78,6 +112,9 @@ def compare_discrete(pred_ds, gt_ds, alpha, gamma):
     value_match_scores = 1 - np.fmin(1, scipy.spatial.distance.cdist(pred_vals, gt_vals, metric='mahalanobis', VI=VI) / gamma)
     
     cost_mat = 1 - (name_match_scores * value_match_scores)
+    #if np.isnan(cost_mat).any():
+    #    print(pred_ds)
+    #    print(gt_ds)
     return get_score(cost_mat)
 
 
@@ -97,36 +134,22 @@ def arr_to_np_1d(ds):
 
 
 def compare_scatter(pred_ds, gt_ds, gamma):
+    #print("compare_scatter")
     pred_ds = arr_to_np(pred_ds)
     gt_ds = arr_to_np(gt_ds)
     gt_means = gt_ds.mean(axis=0)
 
     V = np.cov(gt_ds.T)
-    print(V)
+    #print(V)
     try:
         VI = np.linalg.inv(V).T
-        print(VI)
+        #print(VI)
         for i in range(VI.shape[0]):
             VI[i,i] = min(VI[i,i], 400 / gt_means[i] ** 2)
     except:
         VI = np.asarray([ [400 / gt_means[0] ** 0, 0], [0, 400 / gt_means[1]] ])
 
     cost_mat = np.fmin(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
-    return get_score(cost_mat)
-
-
-def compare_scatter_old(pred_ds, gt_ds):
-    epsilon = 0.1
-    p0 = {'x' : 0, 'y': 0}
-    for point in itertools.chain(pred_ds, gt_ds):
-        mag = euclid(point, p0)
-        epsilon = min(mag, epsilon)
-
-    def norm_euclid(p1, p2):
-        return min(1, euclid(p1, p2) / (epsilon + euclid(p1, p0)))
-
-    cost_mat = create_dist_mat(gt_ds, pred_ds, norm_euclid)
-    #print(cost_mat)
     return get_score(cost_mat)
 
 
@@ -145,7 +168,9 @@ def get_cont_recall(p_xs, p_ys, g_xs, g_ys, epsilon):
     total_interval = 0
     for i in range(g_xs.shape[0]):
         x = g_xs[i]
-        if i == 0:
+        if g_xs.shape[0] == 1:
+            interval = 1
+        elif i == 0:
             interval = (g_xs[i+1] - x) / 2
         elif i == (g_xs.shape[0] - 1):
             interval = (x - g_xs[i-1]) / 2
@@ -157,17 +182,35 @@ def get_cont_recall(p_xs, p_ys, g_xs, g_ys, epsilon):
         error = min(1, abs( (y - y_interp) / (abs(y) + epsilon)))
         total_score += (1 - error) * interval
         total_interval += interval
-    assert np.isclose(total_interval, g_xs[-1] - g_xs[0])
-    return total_score / total_interval
+    if g_xs.shape[0] != 1:
+        assert np.isclose(total_interval, g_xs[-1] - g_xs[0])
+    return total_score / total_interval if total_interval else 0
 
 
 def compare_continuous(pred_ds, gt_ds):
-    pred_ds = sorted(pred_ds, key=lambda p: float(p['x']))
-    gt_ds = sorted(gt_ds, key=lambda p: float(p['x']))
+    #print("compare_cont")
+    # filter out any string `x`s.  string y's were already filtered
+    # TODO: is this the right thing to do?
+    pred_ds = [p for p in pred_ds if is_number(p['x'])]
+    gt_ds = [p for p in gt_ds if is_number(p['x'])]
+
+    pred_ds = list(sorted(pred_ds, key=lambda p: float(p['x'])))
+    gt_ds = list(sorted(gt_ds, key=lambda p: float(p['x'])))
+    if not pred_ds and not gt_ds:
+        # empty matches empty
+        return 1.
+    elif not pred_ds and gt_ds:
+        # empty does not match non-empty
+        return 0.
+    elif pred_ds and not gt_ds:
+        # empty does not match non-empty
+        return 0.
+
     p_xs = np.array([float(ds['x']) for ds in pred_ds])
     p_ys = np.array([float(ds['y']) for ds in pred_ds])
     g_xs = np.array([float(ds['x']) for ds in gt_ds])
     g_ys = np.array([float(ds['y']) for ds in gt_ds])
+
 
     epsilon = (g_ys.max() - g_ys.min()) / 100.
     recall = get_cont_recall(p_xs, p_ys, g_xs, g_ys, epsilon)
@@ -177,7 +220,15 @@ def compare_continuous(pred_ds, gt_ds):
 
 
 def norm_edit_dist(s1, s2):
-    return editdistance.eval(s1, s2) / float(max(len(s1), len(s2), 1))
+    if s2.startswith('[unnamed category #'):
+        if s1 in [None, ''] or s1.startswith('[unnamed category #'):
+            return 0
+
+    try:
+        return editdistance.eval(s1, s2) / float(max(len(s1), len(s2), 1))
+    except:
+        print(repr(s1), repr(s2))
+        raise
 
 
 def create_dist_mat(seq1, seq2, compare):
@@ -227,9 +278,12 @@ def metric_6b(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=
         print("Data Series Match Scores:")
         print(ds_match_scores)
 
-    pred_names = list(map(lambda ds: ds['name'], pred_data_series))
-    gt_names = list(map(lambda ds: ds['name'], gt_data_series))
+    pred_names = list(map(lambda ds: str(ds['name']), pred_data_series))
+    gt_names = list(map(lambda ds: str(ds['name']), gt_data_series))
     name_compare = lambda s1, s2: 1 - norm_edit_dist(s1, s2) ** alpha
+    #print("HERE")
+    #print(pred_names)
+    #print(gt_names)
     name_match_costs = create_dist_mat(pred_names, gt_names, name_compare)
     if debug:
         print("\nName Match Scores:")
@@ -237,7 +291,7 @@ def metric_6b(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=
 
     mat1 = 1 - (ds_match_scores / beta)
     mat2 = 1 - (name_match_costs * ds_match_scores)
-    cost_mat = np.minimum(mat1, mat2)
+    cost_mat = np.fmin(mat1, mat2)
     if debug:
         print("\nCost Matrix:")
         print(cost_mat)
@@ -276,13 +330,25 @@ if __name__ == "__main__":
         gt_outputs = gt_json['task6']['output']['data series']
         gt_type = gt_json['task1']['output']['chart_type']
 
+        if debug:
+            print("GT Chart Type:", gt_type)
+
+        pred_outputs = preprocess(pred_outputs, gt_type)
+        gt_outputs = preprocess(gt_outputs, gt_type)
+
         score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta, gamma, debug)
         print(score)
     elif os.path.isdir(pred_infile) and os.path.isdir(gt_infile):
         scores = []
+        idx = 0
         for x in os.listdir(pred_infile):
             pred_file = os.path.join(pred_infile, x)
             gt_file = os.path.join(gt_infile, x)
+            if debug:
+                print()
+                print("Idx:", idx)
+                print("Pred File:", pred_file)
+                print("GT File:", gt_file)
 
             pred_json = json.load(open(pred_file))
             gt_json = json.load(open(gt_file))
@@ -290,10 +356,18 @@ if __name__ == "__main__":
             pred_outputs = pred_json['task6']['output']['data series']
             gt_outputs = gt_json['task6']['output']['data series']
             gt_type = gt_json['task1']['output']['chart_type']
+            if debug:
+                print("GT Chart Type:", gt_type)
+
+            #pprint(gt_outputs)
+            pred_outputs = preprocess(pred_outputs, gt_type)
+            gt_outputs = preprocess(gt_outputs, gt_type)
+            #pprint(gt_outputs)
 
             score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta, gamma, debug)
             scores.append(score)
             print("%s: %f" % (x, score))
+            idx += 1
         avg_score = sum(scores) / len(scores)
         print("Average Score: %f" % avg_score)
     else:

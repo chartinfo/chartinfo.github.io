@@ -3,6 +3,7 @@ import json
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import traceback
 
 
 def get_ambiguous_ids(filepath):
@@ -17,7 +18,7 @@ def confusion_matrix(confusion, unique_labels):
     cmat = np.zeros((len(label_idx_map), len(label_idx_map)))
     for ID, pair in confusion.items():
         truth, pred = pair
-        if pred is None:
+        if pred is None or pred not in label_idx_map:
             continue
         t = label_idx_map[truth]
         p = label_idx_map[pred]
@@ -57,7 +58,11 @@ def plot_confusion_matrix(cm, classes, output_img_path):
     plt.show()
 
 
-def eval_task1(gt_folder, result_folder, output_img_path, ambiguous_ids=list()):
+def eval_task1(gt_folder, result_folder, output_img_path, ambiguous_ids=None, class_auto_mapping=None):
+    if ambiguous_ids is None:
+        ambiguous_ids = []
+    if class_auto_mapping is None:
+        class_auto_mapping = {}
     gt_label_map = {}
     result_label_map = {}
     metrics = {}
@@ -66,7 +71,8 @@ def eval_task1(gt_folder, result_folder, output_img_path, ambiguous_ids=list()):
     gt_files = os.listdir(gt_folder)
     for gt_file in gt_files:
         gt_id = ''.join(gt_file.split('.')[:-1])
-        with open(os.path.join(gt_folder, gt_file), 'r') as f:
+        gt_file_resolved = os.path.join(gt_folder, gt_file)
+        with open(gt_file_resolved, 'r') as f:
             gt = json.load(f)
             truth = gt['task1']['output']['chart_type'].lower().strip()
             # If we are looking at an ambiguous sample, convert grouped or stacked to grouped
@@ -74,25 +80,50 @@ def eval_task1(gt_folder, result_folder, output_img_path, ambiguous_ids=list()):
                 truth = ' '.join(['grouped'] + truth.split(' ')[1:])
         gt_label_map[truth] = gt_label_map[truth] + [gt_id] if truth in gt_label_map else [gt_id]
         confusion[gt_id] = [truth, None]
+    #print(gt_label_map.keys())
     for result_file in result_files:
         result_id = ''.join(result_file.split('.')[:-1])
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
-            pred = result['task1']['output']
-            if 'chart_type' in pred:
-                pred = result['task1']['output']['chart_type']
+
+            if 'output' in result['task1']:
+                if 'chart_type' in result['task1']['output']:
+                    # IDEAL/expected format ....
+                    pred = result['task1']['output']['chart_type']
+                else:
+                    # try raw value in output
+                    pred = result['task1']['output']
+            else:
+                # less ideal format, try directly value at task1
+                pred = result['task1']
+
+            if isinstance(pred, list):
+                pred = pred[0]
+
+            pred = pred.lower()
+
+
+            #pred = result['task1']['output']
+            #if 'chart_type' in pred:
+            #    pred = result['task1']['output']['chart_type']
             pred = pred.lower().strip()
+
             # If we are looking at an ambiguous sample, convert grouped or stacked to grouped
             # if the predicted type has stacked or grouped, otherwise ignore
             if result_id in ambiguous_ids and ('grouped' in pred or 'stacked' in pred):
                 pred = ' '.join(['grouped'] + pred.split(' ')[1:])
+
+            # check for synonym classes ...
+            if pred in class_auto_mapping:
+                pred = class_auto_mapping[pred]
         except Exception as e:
             print(e)
             print('invalid result json format in {} please check against provided samples'.format(result_file))
             continue
         result_label_map[pred] = result_label_map[pred] + [result_id] if pred in result_label_map else [result_id]
         confusion[result_id][1] = pred
+    #print(result_label_map.keys())
     total_recall = 0.
     total_precision = 0.
     total_fmeasure = 0.
@@ -128,11 +159,22 @@ def eval_task1(gt_folder, result_folder, output_img_path, ambiguous_ids=list()):
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) == 5:
+        print(sys.argv)
+        if len(sys.argv) >= 5:
             ambiguous_ids = get_ambiguous_ids(sys.argv[4])
         else:
             ambiguous_ids = []
-        eval_task1(sys.argv[1], sys.argv[2], sys.argv[3], ambiguous_ids)
+
+        if len(sys.argv) >= 6:
+            auto_mappings_filename = sys.argv[5]
+            with open(auto_mappings_filename, "r") as mappings_file:
+                class_auto_mapping = json.load(mappings_file)
+        else:
+            class_auto_mapping = {}
+
+        eval_task1(sys.argv[1], sys.argv[2], sys.argv[3], ambiguous_ids, class_auto_mapping)
     except Exception as e:
         print(e)
-        print('Usage Guide: python metric1_synthetic.py <ground_truth_folder> <result_folder> <confusion_matrix_path> <ambiguous id path>')
+        traceback.print_exc()
+        print('Usage Guide: python metric1_synthetic.py <ground_truth_folder> <result_folder> <confusion_matrix_path> <ambiguous id path> <class mapping file>')
+

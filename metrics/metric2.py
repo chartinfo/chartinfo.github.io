@@ -175,7 +175,10 @@ def eval_task2(gt_folder, result_folder):
 
     total_iou_score /= len(os.listdir(gt_folder))
     total_text_score /= len(os.listdir(gt_folder))
-    hmean_score = 2 * total_iou_score * total_text_score / (total_iou_score + total_text_score)
+    try:
+        hmean_score = 2 * total_iou_score * total_text_score / (total_iou_score + total_text_score)
+    except ZeroDivisionError:
+        hmean_score = 0
 
     print('Total IOU Score over all ground truth images: {}'.format(total_iou_score))
     print('Total OCR Score over all ground truth images: {}'.format(total_text_score))
