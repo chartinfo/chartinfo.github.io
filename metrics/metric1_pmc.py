@@ -104,9 +104,17 @@ def eval_task1(gt_folder, result_folder, output_img_path, class_auto_mapping):
         # print(confusion[result_id])
 
     # compute the overall statistics
-    total_recall = 0.
-    total_precision = 0.
-    total_fmeasure = 0.
+    total_recall = 0.0
+    total_precision = 0.0
+    total_fmeasure = 0.0
+
+    all_recall = []
+    all_precision = []
+    all_fmeasure = []
+
+    total_images = 0
+    total_correct = 0
+
     for label, gt_imgs in gt_label_map.items():
         res_imgs = set(result_label_map[label])
         gt_imgs = set(gt_imgs)
@@ -114,24 +122,47 @@ def eval_task1(gt_folder, result_folder, output_img_path, class_auto_mapping):
         recall = len(intersection) / float(len(gt_imgs))
         precision = len(intersection) / float(len(res_imgs))
         if recall == 0 and precision == 0:
-            f_measure = 0.
+            f_measure = 0.0
         else:
-            f_measure = 2 * recall * precision / (recall + precision)
+            f_measure = 2.0 * recall * precision / (recall + precision)
+
+        all_recall.append(recall)
+        all_precision.append(precision)
+        all_fmeasure.append(f_measure)
+
         total_recall += recall
         total_precision += precision
         total_fmeasure += f_measure
+
         metrics[label] = (recall, precision, f_measure)
+
         if 'bar' in label:
             print('Grouped/Stacked will be ignored in PMC eval, only Horizontal/Vertical is considered')
+
         print('Recall for class {}: {}'.format(label, recall))
         print('Precision for class {}: {}'.format(label, precision))
         print('F-measure for class {}: {}'.format(label, f_measure))
+
+        total_images += len(gt_imgs)
+        total_correct += len(intersection)
+
     total_recall /= len(gt_label_map)
     total_precision /= len(gt_label_map)
     total_fmeasure /= len(gt_label_map)
+
+    all_recall = np.array(all_recall)
+    all_precision = np.array(all_precision)
+    all_fmeasure = np.array(all_fmeasure)
+
     print('Average Recall across {} classes: {}'.format(len(gt_label_map), total_recall))
     print('Average Precision across {} classes: {}'.format(len(gt_label_map), total_precision))
     print('Average F-Measure across {} classes: {}'.format(len(gt_label_map), total_fmeasure))
+
+    print('Average Recall across {} classes: {} ({})'.format(len(gt_label_map), all_recall.mean(), all_recall.std()))
+    print('Average Precision across {} classes: {} ({})'.format(len(gt_label_map), all_precision.mean(), all_precision.std()))
+    print('Average F-Measure across {} classes: {} ({})'.format(len(gt_label_map), all_fmeasure.mean(), all_fmeasure.std()))
+
+    print("Overall Accuracy: {} / {} = {}".format(total_correct, total_images, total_correct / total_images))
 
     print('Computing Confusion Matrix')
     classes = sorted(list(gt_label_map.keys()))
