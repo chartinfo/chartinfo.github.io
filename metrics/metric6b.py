@@ -93,26 +93,40 @@ def box_to_discrete(ds):
     return out
 
 
-def compare_box(pred_ds, gt_ds, alpha, gamma):
+def compare_box(pred_ds, gt_ds, alpha, beta2, gamma, debug=False):
+    if debug:
+        print("compare_box()")
     pred_ds = box_to_discrete(pred_ds)
     gt_ds = box_to_discrete(gt_ds)
-    return compare_discrete(pred_ds, gt_ds, alpha, gamma)
+    return compare_discrete(pred_ds, gt_ds, alpha, beta2, gamma, debug)
 
 
-def compare_discrete(pred_ds, gt_ds, alpha, gamma):
-    #print("compare_discrete")
+def compare_discrete(pred_ds, gt_ds, alpha, beta2, gamma, debug=False):  # higher is better
+    if debug:
+        print("compare_discrete()")
+        print("Pred:")
+        pprint(pred_ds)
+        print("GT:")
+        pprint(gt_ds)
     pred_names = list(map(lambda ds: str(ds['x']), pred_ds))
     gt_names = list(map(lambda ds: ds['x'], gt_ds))
-    name_compare = lambda s1, s2: 1 - norm_edit_dist(s1, s2) ** alpha
-    name_match_scores = create_dist_mat(pred_names, gt_names, name_compare)
+    name_compare = lambda s1, s2: 1 - norm_edit_dist(s1, s2) ** alpha # higher is better
+    name_match_scores = create_compare_mat(pred_names, gt_names, name_compare)
+    name_match_costs = 1 - name_match_scores
 
     pred_vals = arr_to_np_1d(pred_ds)
     gt_vals = arr_to_np_1d(gt_ds)
-    gt_mean = gt_vals.mean(axis=0)
-    VI = min(400 / gt_mean ** 2, 1 / np.cov(gt_vals.T))
-    value_match_scores = 1 - np.fmin(1, scipy.spatial.distance.cdist(pred_vals, gt_vals, metric='mahalanobis', VI=VI) / gamma)
+    gt_mean_mag = np.abs(gt_vals).mean(axis=0)
+    std_dev = max(gt_mean_mag / 20, np.std(gt_vals))
+    #VI = min(400 / gt_mean ** 2, 1 / np.cov(gt_vals.T))
+    #value_match_scores = 1 - np.fmin(1, scipy.spatial.distance.cdist(pred_vals, gt_vals, metric='mahalanobis', VI=VI) / gamma)
+    value_match_costs = np.fmin(1, scipy.spatial.distance.cdist(pred_vals, gt_vals, metric='minkowski', p=1) / (std_dev * gamma))
+    value_match_scores = 1 - value_match_costs # higher is better
+    if debug:
+        print(name_match_costs)
+        print(value_match_costs)
     
-    cost_mat = 1 - (name_match_scores * value_match_scores)
+    cost_mat = (1 - beta2) * name_match_costs + beta2 * value_match_costs  # lower is better
     #if np.isnan(cost_mat).any():
     #    print(pred_ds)
     #    print(gt_ds)
@@ -134,8 +148,9 @@ def arr_to_np_1d(ds):
     return n
 
 
-def compare_scatter(pred_ds, gt_ds, gamma):
-    #print("compare_scatter")
+def compare_scatter(pred_ds, gt_ds, gamma, debug=False):  # higher is better
+    if debug:
+        print("compare_scatter")
     pred_ds = arr_to_np(pred_ds)
     gt_ds = arr_to_np(gt_ds)
     gt_means = gt_ds.mean(axis=0)
@@ -157,14 +172,32 @@ def compare_scatter(pred_ds, gt_ds, gamma):
     return get_score(cost_mat)
 
 
-def get_score(cost_mat):
+def get_score(cost_mat, cost_mat1=None, cost_mat2=None):
+    # low cost is good, high score is good
     cost_mat = pad_mat(cost_mat)
     k = cost_mat.shape[0]
 
     row_ind, col_ind = scipy.optimize.linear_sum_assignment(cost_mat)
     cost = cost_mat[row_ind, col_ind].sum()
     score = 1 - (cost / k)
-    return score
+
+    if cost_mat1 is not None:
+        cost_mat1 = pad_mat(cost_mat1)
+        cost1 = cost_mat1[row_ind, col_ind].sum()
+        score1 = 1 - (cost1 / k)
+    else:
+        score1 = None
+    if cost_mat2 is not None:
+        cost_mat2 = pad_mat(cost_mat2)
+        cost2 = cost_mat2[row_ind, col_ind].sum()
+        score2 = 1 - (cost2 / k)
+    else:
+        score2 = None
+
+    if score1 is not None and score2 is not None:
+        return score, score1, score2
+    else:
+        return score
 
 
 def get_cont_recall(p_xs, p_ys, g_xs, g_ys, epsilon):
@@ -191,12 +224,13 @@ def get_cont_recall(p_xs, p_ys, g_xs, g_ys, epsilon):
     return total_score / total_interval if total_interval else 0
 
 
-def compare_continuous(pred_ds, gt_ds):
-    #print("compare_cont")
+def compare_continuous(pred_ds, gt_ds, debug=False):  # higher is better
+    if debug:
+        print("compare_cont")
     # filter out any string `x`s.  string y's were already filtered
     # TODO: is this the right thing to do?
     pred_ds = [p for p in pred_ds if is_number(p['x'])]
-    gt_ds = [p for p in gt_ds if is_number(p['x'])]
+    gt_ds = [p for p in gt_ds if is_number(p['x'])]  # I think this never does anything 
 
     pred_ds = list(sorted(pred_ds, key=lambda p: float(p['x'])))
     gt_ds = list(sorted(gt_ds, key=lambda p: float(p['x'])))
@@ -216,7 +250,7 @@ def compare_continuous(pred_ds, gt_ds):
     g_ys = np.array([float(ds['y']) for ds in gt_ds])
 
 
-    epsilon = (g_ys.max() - g_ys.min()) / 100.
+    epsilon = max((g_ys.max() - g_ys.min()) / 100., np.abs(g_ys).mean() / 100)
     recall = get_cont_recall(p_xs, p_ys, g_xs, g_ys, epsilon)
     precision = get_cont_recall(g_xs, g_ys, p_xs, p_ys, epsilon)
 
@@ -235,7 +269,7 @@ def norm_edit_dist(s1, s2):
         raise
 
 
-def create_dist_mat(seq1, seq2, compare):
+def create_compare_mat(seq1, seq2, compare):
     l1 = len(seq1)
     l2 = len(seq2)
     mat = np.full( (l1, l2), -1.)
@@ -259,52 +293,52 @@ def pad_mat(mat):
         return new_mat
 
 
-def metric_6b(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=1, debug=False):
+def metric_6b(pred_data_series, gt_data_series, gt_type, alpha=1, beta1=0.5, beta2=0.5, gamma=1, debug=False):
     if 'box' in gt_type.lower():
-        compare = lambda ds1, ds2: compare_box(ds1, ds2, alpha, gamma)
+        compare = lambda ds1, ds2: compare_box(ds1, ds2, alpha, gamma, beta2, debug)
     else:
         is_discrete = any(map(lambda ds: check_discrete(ds['data']), gt_data_series))
         if is_discrete:
-            compare = lambda ds1, ds2: compare_discrete(ds1, ds2, alpha, gamma)
+            compare = lambda ds1, ds2: compare_discrete(ds1, ds2, alpha, beta2, gamma, debug)
         elif gt_type.lower() == 'scatter':
-            compare = lambda ds1, ds2: compare_scatter(ds1, ds2, gamma)
+            compare = lambda ds1, ds2: compare_scatter(ds1, ds2, gamma, debug)
         elif gt_type.lower() == 'line':
-            compare = compare_continuous
+            compare = lambda ds1, ds2: compare_continuous(ds1, ds2, debug)
         elif 'bar' in gt_type.lower():
-            compare = lambda ds1, ds2: compare_discrete(ds1, ds2, alpha, gamma)
+            compare = lambda ds1, ds2: compare_discrete(ds1, ds2, alpha, beta2, gamma, debug)
         else:
             raise Exception("Odd Case: " + gt_type)
 
     pred_no_names = list(map(lambda ds: ds['data'], pred_data_series))
     gt_no_names = list(map(lambda ds: ds['data'], gt_data_series))
-    ds_match_scores = create_dist_mat(pred_no_names, gt_no_names, compare)
+    ds_match_scores = create_compare_mat(pred_no_names, gt_no_names, compare)
+    ds_match_costs = 1 - ds_match_scores
     if debug:
-        print("Data Series Match Scores:")
-        print(ds_match_scores)
+        print("Data Series Match Costs:")
+        print(ds_match_costs)
 
     pred_names = list(map(lambda ds: str(ds['name']), pred_data_series))
     gt_names = list(map(lambda ds: str(ds['name']), gt_data_series))
-    name_compare = lambda s1, s2: 1 - norm_edit_dist(s1, s2) ** alpha
+    name_compare = lambda s1, s2: 1 - norm_edit_dist(s1, s2) ** alpha  # higher is better
     #print("HERE")
     #print(pred_names)
     #print(gt_names)
-    name_match_costs = create_dist_mat(pred_names, gt_names, name_compare)
+    name_match_scores = create_compare_mat(pred_names, gt_names, name_compare)
+    name_match_costs = 1 - name_match_scores
     if debug:
         print("\nName Match Scores:")
         print(name_match_costs)
 
-    mat1 = 1 - (ds_match_scores / beta)
-    mat2 = 1 - (name_match_costs * ds_match_scores)
-    cost_mat = np.fmin(mat1, mat2)
+    cost_mat = ((1-beta1) * name_match_costs + beta1 * ds_match_costs)
     if debug:
         print("\nCost Matrix:")
         print(cost_mat)
-    return get_score(cost_mat)
+    return get_score(cost_mat, name_match_costs, ds_match_costs)
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print("USAGE: python metric6b.py pred_file|pred_dir gt_file|gt_dir [alpha] [beta] [gamma] [debug]")
+        print("USAGE: python metric6b.py pred_file|pred_dir gt_file|gt_dir [alpha] [beta1] [beta2] [gamma] [debug]")
         exit()
     pred_infile = sys.argv[1]
     gt_infile = sys.argv[2]
@@ -314,15 +348,19 @@ if __name__ == "__main__":
     except:
         alpha = 1
     try:
-        beta = float(sys.argv[4])
+        beta1 = float(sys.argv[4])
     except:
-        beta = 2
+        beta1 = 0.75
     try:
-        gamma = float(sys.argv[5])
+        beta2 = float(sys.argv[5])
+    except:
+        beta2 = 0.75
+    try:
+        gamma = float(sys.argv[6])
     except:
         gamma = 1
     try:
-        debug = sys.argv[6]
+        debug = sys.argv[7]
     except:
         debug = False
 
@@ -340,11 +378,11 @@ if __name__ == "__main__":
         pred_outputs = preprocess(pred_outputs, gt_type)
         gt_outputs = preprocess(gt_outputs, gt_type)
 
-        score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta, gamma, debug)
-        print(score)
+        score, name_score, ds_score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta1, beta2, gamma, debug)
+        print(score, name_score, ds_score)
     elif os.path.isdir(pred_infile) and os.path.isdir(gt_infile):
-        all_scores = []
-        scores_by_type = collections.defaultdict(list)
+        all_scores, all_name_scores, all_ds_scores = [], [], []
+        scores_by_type, name_scores_by_type, ds_scores_by_type = collections.defaultdict(list), collections.defaultdict(list), collections.defaultdict(list)
         idx = 0
         for x in os.listdir(pred_infile):
             pred_file = os.path.join(pred_infile, x)
@@ -369,17 +407,27 @@ if __name__ == "__main__":
             gt_outputs = preprocess(gt_outputs, gt_type)
             #pprint(gt_outputs)
 
-            score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta, gamma, debug)
+            score, name_score, ds_score = metric_6b(pred_outputs, gt_outputs, gt_type, alpha, beta1, beta2, gamma, debug)
             all_scores.append(score)
-            scores_by_type[gt_type].append(score)
+            all_name_scores.append(name_score)
+            all_ds_scores.append(ds_score)
 
-            print("%s: %f" % (x, score))
+            scores_by_type[gt_type].append(score)
+            name_scores_by_type[gt_type].append(name_score)
+            ds_scores_by_type[gt_type].append(ds_score)
+
+            print("%s %s: %4f %4f %4f" % (x, gt_type, score, name_score, ds_score))
             idx += 1
+        print("Category Combined_Score Name_Score Data_Score")
         for chart_type, scores in scores_by_type.items():
             avg_score = sum(scores) / len(scores)
-            print("Average Score for %s: %f" % (chart_type, avg_score))
+            avg_name_score = sum(name_scores_by_type[chart_type]) / len(scores)
+            avg_ds_score = sum(ds_scores_by_type[chart_type]) / len(scores)
+            print("Average Score for %s: %5f %5f %5f" % (chart_type, avg_score, avg_name_score, avg_ds_score))
         avg_score = sum(all_scores) / len(all_scores)
-        print("Average Total Score: %f" % avg_score)
+        avg_name_score = sum(all_name_scores) / len(all_name_scores)
+        avg_ds_score = sum(all_ds_scores) / len(all_ds_scores)
+        print("Average Total Scores: %5f %5f %5f" % (avg_score, avg_name_score, avg_ds_score))
     else:
         print("Error: pred_file and gt_file must both be files or both be directories")
         exit()

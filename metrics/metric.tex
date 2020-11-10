@@ -73,9 +73,12 @@ D(p_i, g_i) = \min \Big(1, \frac{\sqrt{(g_i - p_i)V^{-1}(g_i - p_i)}}{\gamma} \B
 where $V^{-1}$ is the inverse of the covariance matrix of $G$, and $\gamma$ is a hyperparameter.
 Note that Eq.~\ref{eq:point_dist} corresponds to a scaled Mahalanobis distance.
 Scaling the distance computation by the inverse covariance matrix normalizes data series to have the same variance, and thus have more comparable distances.
+Intuitively, the units of $D$ are $\gamma$ standard deviations of the GT distribution of points (but in 2D).
+With $\gamma = 1$, points with more than a standard deviation away from each other are assigned the maximum distance, i.e. 1.
+Increasing $\gamma$ allows partial credit to point pairs that are further away.
 
 However, some data series have extremely small variance (e.g. exactly 0), so in order to avoid over-penalizing such cases, we ensure that the diagonal elements of $V^{-1}$ have a maximum value of 400 divided by the squared mean of the corresponding dimension of the GT data.
-This corresponds to enforcing that the maximum penalty, i.e. 1, of $D$ can only occur if the predicted value is at least 5\% different that the GT value.
+This corresponds to enforcing that the maximum penalty, i.e. 1, of $D$ can only occur if the predicted value is at least $\frac{5}{\gamma}\%$ different that the GT value.
 
 Then, we create the pairwise cost matrix $\mathbf{C}$, where $\mathbf{C}_{n,m} = D(p_n,g_m)$.
 If $\mathbf{C}$ is not square, then it can be padded with $1$s to make it square, so that each dimension is of size $K = \max(N,M)$.
@@ -103,20 +106,17 @@ One is when the $x$'s in the chart are given, and the other when the $x$'s are d
 For the former case, where we can expect exact match strings, we can use string equality.
 We can define the distance between a predicted point, $(x, y)$ and a ground truth point$(u, v)$ as
 \begin{equation} \label{eq:discrete_exact}
-D(x,y,u,v) = 1 - (\delta(u, x) (1 - \min \Big(1, \Big| \frac{v - y}{v} \Big| \Big)))
+D(x,y,u,v) = 1 - \Big[(1 -\beta_2)\delta(u, x) + \beta_2 \min \Big(0, 1 - \Big| \frac{v - y}{\gamma\sigma^2} \Big| \Big)\Big]
 \end{equation}
 where $\delta$ is the Kronecker delta function (1 if equal, otherwise 0).
-While Eq.~\ref{eq:discrete_exact} is more complex than needed for this scenario, it allows us to apply the job assignment optimization from Eq.~\ref{eq:assign} to obtain the optimal $cost$, and the value of the metric as in Eq.~\ref{eq:assign_cost}.
-
-Equivalently, we could just run pairwise string equality between all $x$'s and all $u$'s, and sum up for all matches $1 - D(x,y,u,v)$.
 
 \subsubsection{Fuzzy Text Matching}
 
 For fuzzy matching, we can just redefine D to be
 \begin{equation} \label{eq:discrete_fuzzy}
-D(x,y,u,v) = 1 - ((1 - L(u, x)^\alpha) (1 - \min \Big(1, \Big| \frac{v - y}{\gamma\sigma^2} \Big| \Big)))
+D(x,y,u,v) =  1 - \Big[(1 -\beta_2)(1 - L(u, x)^\alpha) + \beta_2 \min \Big(0, 1 - \Big| \frac{v - y}{\gamma\sigma^2}\Big| \Big)\Big]
 \end{equation}
-where $L$ is the normalized edit distance between $u$ and $x$, $alpha$ is a hyperparameter that controls how important it is to closely match the text, $\sigma^2$ is the variance of the $v$ values of $G$, and $\gamma$ is a hyperparameter (default 1).
+where $L$ is the normalized edit distance between $u$ and $x$, $\alpha$ is a hyperparameter that controls how important it is to closely match the text, $\sigma^2$ is the variance of the $v$ values of $G$, and $\gamma$ is a hyperparameter (default 1).
 $\alpha < 1$ means more sensitive and $\alpha > 1$ means less sensitive to textual differences.
 In the limit of  $\alpha \rightarrow 0$, Eq.~\ref{eq:discrete_fuzzy} reduces to Eq.~\ref{eq:discrete_exact}.
 
