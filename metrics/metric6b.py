@@ -14,6 +14,14 @@ def pprint(obj):
     print(json.dumps(obj, indent=4, sort_keys=True))
 
 
+def get_dataseries(json_obj):
+    if 'task6_output' in json_obj:
+        return json_obj['task6_output']['data series']
+    elif 'task6' in json_obj:
+        return json_obj['task6']['output']['data series']
+    return None
+
+
 def preprocess(outputs, gt_type):
     # normalize box json format
     if 'box' in gt_type:
@@ -89,7 +97,8 @@ def box_to_discrete(ds):
     out = []
     #print(ds)
     for x in ['first_quartile', 'max', 'min', 'median', 'third_quartile']: 
-        out.append( {'x': x, 'y': ds[x]} )
+        if x in ds:
+            out.append( {'x': x, 'y': ds[x]} )
     return out
 
 
@@ -151,6 +160,7 @@ def arr_to_np_1d(ds):
 def compare_scatter(pred_ds, gt_ds, gamma, debug=False):  # higher is better
     if debug:
         print("compare_scatter")
+    pred_ds = [p for p in pred_ds if is_number(p['x']) and is_number(p['y'])]
     pred_ds = arr_to_np(pred_ds)
     gt_ds = arr_to_np(gt_ds)
     gt_means = gt_ds.mean(axis=0)
@@ -368,8 +378,10 @@ if __name__ == "__main__":
         pred_json = json.load(open(pred_infile))
         gt_json = json.load(open(gt_infile))
 
-        pred_outputs = pred_json['task6']['output']['data series']
-        gt_outputs = gt_json['task6']['output']['data series']
+        #pred_outputs = pred_json['task6']['output']['data series']
+        #gt_outputs = gt_json['task6']['output']['data series']
+        pred_outputs = get_dataseries(pred_json)
+        gt_outputs = get_dataseries(gt_json)
         gt_type = gt_json['task1']['output']['chart_type']
 
         if debug:
@@ -396,8 +408,11 @@ if __name__ == "__main__":
             pred_json = json.load(open(pred_file))
             gt_json = json.load(open(gt_file))
 
-            pred_outputs = pred_json['task6']['output']['data series']
-            gt_outputs = gt_json['task6']['output']['data series']
+            #pred_outputs = pred_json['task6']['output']['data series']
+            #gt_outputs = gt_json['task6']['output']['data series']
+            pred_outputs = get_dataseries(pred_json)
+            gt_outputs = get_dataseries(gt_json)
+
             gt_type = gt_json['task1']['output']['chart_type']
             if debug:
                 print("GT Chart Type:", gt_type)
