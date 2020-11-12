@@ -75,7 +75,7 @@ def compare_bar(pred_ds, gt_ds, min_dim):
     cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='cityblock') /(min_dim*0.05))
     return cost_mat
 
-def compare_scatter(pred_ds, gt_ds, gamma):
+def compare_scatter(pred_ds, gt_ds, gamma, beta):
 
     is_grouped = check_groups(gt_ds)
     
@@ -86,10 +86,9 @@ def compare_scatter(pred_ds, gt_ds, gamma):
         pred_ds = [pred_ds]
         gt_ds = [gt_ds]
 
-    score = 0
+    score = np.zeros((len(gt_ds), len(pred_ds)))
     for iter_seq1 in range(len(gt_ds)):
         gt_seq = scatt_arr_to_np(gt_ds[iter_seq1])
-        tmp_score = 0
 
         for iter_seq2 in range(len(pred_ds)):
             pred_seq = scatt_arr_to_np(pred_ds[iter_seq2])
@@ -100,10 +99,11 @@ def compare_scatter(pred_ds, gt_ds, gamma):
             #cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
             cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_seq, gt_seq, metric='euclidean') / gamma)
         
-            tmp_score = max(tmp_score, get_score(cost_mat))
-        score += tmp_score
+            score[iter_seq1, iter_seq2] = get_score(cost_mat)
 
-    score = score/float(len(gt_ds))
+    row_ind, col_ind = scipy.optimize.linear_sum_assignment(score)
+
+    score = 1 - score[row_ind, col_ind].sum()/(float(len(gt_ds))*beta)
 
     return score
 
@@ -198,13 +198,13 @@ def create_dist_mat(pred_seq, gt_seq, compare, beta):
 def compare_line(pred_ds, gt_ds):
     is_grouped = check_groups(gt_ds)
     if is_grouped:
-        score = 0
+        score = np.zeros((len(gt_ds), len(pred_ds)))
         for iter_seq1 in range(len(gt_ds)):
-            tmp_score = 0
             for iter_seq2 in range(len(pred_ds)):
-                tmp_score = max(tmp_score, compare_continuous(gt_ds[iter_seq1], pred_ds[iter_seq2]))
-        score += tmp_score
-        score = score/len(gt_ds)
+                score[iter_seq1, iter_seq2] = compare_continuous(gt_ds[iter_seq1], pred_ds[iter_seq2])
+        
+        row_ind, col_ind = scipy.optimize.linear_sum_assignment(-score)
+        score = score[row_ind, col_ind].sum()/len(gt_ds)
     else:
         print(gt_ds)
         score = compare_continuous(pred_ds, gt_ds)
@@ -239,7 +239,7 @@ def metric_6a(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=
     elif 'scatter' in gt_type.lower():
         pred_no_names = pred_data_series['scatter points']
         gt_no_names = gt_data_series['scatter points']
-        ds_match_score = compare_scatter(pred_no_names, gt_no_names, gamma)
+        ds_match_score = compare_scatter(pred_no_names, gt_no_names, gamma, beta)
     elif 'line' in gt_type.lower():
         pred_no_names = pred_data_series['lines']
         gt_no_names = gt_data_series['lines']
