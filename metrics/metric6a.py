@@ -11,7 +11,6 @@ import scipy.spatial.distance
 def check_groups(ds):
     try:
         _i = ds[0][0]
-        print("Group exists")
         return 1
     except Exception:
         return 0
@@ -88,17 +87,23 @@ def compare_scatter(pred_ds, gt_ds, gamma):
         gt_ds = [gt_ds]
 
     score = 0
-    for iter_seq in range(len_seq):
-        gt_seq = scatt_arr_to_np(gt_ds[iter_seq])
-        pred_seq = scatt_arr_to_np(pred_ds[iter_seq])
+    for iter_seq1 in range(len(gt_ds)):
+        gt_seq = scatt_arr_to_np(gt_ds[iter_seq1])
+        tmp_score = 0
+
+        for iter_seq2 in range(len(pred_ds)):
+            pred_seq = scatt_arr_to_np(pred_ds[iter_seq2])
         
-        # V = np.cov(gt_ds.T)
-        # VI = np.linalg.inv(V).T
+            # V = np.cov(gt_ds.T)
+            # VI = np.linalg.inv(V).T
+            
+            #cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
+            cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_seq, gt_seq, metric='euclidean') / gamma)
         
-        #cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
-        cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_seq, gt_seq, metric='euclidean') / gamma)
-        score += get_score(cost_mat)
-    score = score/float(len_seq)
+            tmp_score = max(tmp_score, get_score(cost_mat))
+        score += tmp_score
+
+    score = score/float(len(gt_ds))
 
     return score
 
@@ -165,26 +170,28 @@ def compare_continuous(pred_ds, gt_ds):
 def norm_edit_dist(s1, s2):
     return editdistance.eval(s1, s2) / float(max(len(s1), len(s2), 1))
 
-def create_dist_mat(seq1, seq2, compare, beta):
-    is_grouped = check_groups(seq1)
+def create_dist_mat(pred_seq, gt_seq, compare, beta):
+    is_grouped = check_groups(gt_seq)
 
-    if is_grouped:
-        len_seq = len(seq1)
-    else:
+    if not is_grouped:
         len_seq = 1
-        seq1 = [seq1]
-        seq2 = [seq2]
+        gt_seq = [gt_seq]
+        pred_seq = [pred_seq]
 
     score = 0
-    for iter_seq in range(len_seq):
-        l1 = len(seq1[iter_seq])
-        l2 = len(seq2[iter_seq])
-        mat = np.full( (l1, l2), -1.)
-        for i in range(l1):
-            for j in range(l2):
-                mat[i,j] = compare(seq1[iter_seq][i], seq2[iter_seq][j])
-        score += get_score(1 - (mat/beta))
-    score = score/float(len_seq)
+    for iter_seq1 in range(len(gt_seq)):
+        l1 = len(gt_seq[iter_seq1])
+        tmp_score = 0
+        
+        for iter_seq2 in range(len(pred_seq)):
+            l2 = len(pred_seq[iter_seq2])
+            mat = np.full( (l1, l2), -1.)
+            for i in range(l1):
+                for j in range(l2):
+                    mat[i,j] = compare(gt_seq[iter_seq1][i], pred_seq[iter_seq2][j])
+            tmp_score = max(tmp_score, get_score(1 - (mat/beta)))
+        score += tmp_score
+    score = score/float(len(gt_seq))
 
     return score
 
@@ -192,14 +199,18 @@ def compare_line(pred_ds, gt_ds):
     is_grouped = check_groups(gt_ds)
     if is_grouped:
         score = 0
-        for iter_seq in range(len(pred_ds)):
-            score += compare_continuous(pred_ds[iter_seq], gt_ds[iter_seq])
-        score = score/len(pred_ds)
+        for iter_seq1 in range(len(gt_ds)):
+            tmp_score = 0
+            for iter_seq2 in range(len(pred_ds)):
+                tmp_score = max(tmp_score, compare_continuous(gt_ds[iter_seq1], pred_ds[iter_seq2]))
+        score += tmp_score
+        score = score/len(gt_ds)
     else:
         print(gt_ds)
         score = compare_continuous(pred_ds, gt_ds)
 
     return score
+
 def pad_mat(mat):
     h,w = mat.shape
     if h == w:
