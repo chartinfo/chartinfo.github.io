@@ -75,7 +75,7 @@ def compare_bar(pred_ds, gt_ds, min_dim):
     cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='cityblock') /(min_dim*0.05))
     return cost_mat
 
-def compare_scatter(pred_ds, gt_ds, gamma, beta):
+def compare_scatter(pred_ds, gt_ds, min_dim, gamma, beta):
 
     is_grouped = check_groups(gt_ds)
     
@@ -97,13 +97,12 @@ def compare_scatter(pred_ds, gt_ds, gamma, beta):
             # VI = np.linalg.inv(V).T
             
             #cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
-            cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_seq, gt_seq, metric='euclidean') / gamma)
+            cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_seq, gt_seq, metric='euclidean') / (min_dim*gamma))
         
             score[iter_seq1, iter_seq2] = get_score(cost_mat)
 
-    row_ind, col_ind = scipy.optimize.linear_sum_assignment(score)
-
-    score = 1 - score[row_ind, col_ind].sum()/(float(len(gt_ds))*beta)
+    row_ind, col_ind = scipy.optimize.linear_sum_assignment(-score)
+    score = score[row_ind, col_ind].sum()/(float(len(gt_ds))*beta)
 
     return score
 
@@ -239,7 +238,7 @@ def metric_6a(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=
     elif 'scatter' in gt_type.lower():
         pred_no_names = pred_data_series['scatter points']
         gt_no_names = gt_data_series['scatter points']
-        ds_match_score = compare_scatter(pred_no_names, gt_no_names, gamma, beta)
+        ds_match_score = compare_scatter(pred_no_names, gt_no_names, min(img_dim), gamma, beta)
     elif 'line' in gt_type.lower():
         pred_no_names = pred_data_series['lines']
         gt_no_names = gt_data_series['lines']
