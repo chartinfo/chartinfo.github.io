@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	  <meta charset="utf-8">
+	  <title>ICPR 2020 - CHART Competition Leaderboards</title>
+	  <meta name="description" content="ICPR 2020 CHART HARVESTING Competition - Leaderboards">
+	  <!--<meta name="author" content="">-->
+	  <link rel="stylesheet" href="css/styles.css">
+	  <style>
+		  div {
+			text-align: justify;
+			text-justify: inter-word;
+		  }
+		* {
+		  box-sizing: border-box;
+		  }
+			/* Create two equal columns that floats next to each other */
+			.column {
+			  float: left;
+			  width: 50%;
+			  padding: 10px;		
+			}
+			/* Clear floats after the columns */
+			.row:after {
+			  content: "";
+			  display: table;
+			  clear: both;
+			}
+	  </style>
+	</head>
+	<body>
+		<script src="js/main.js"></script>
+		<div class="main">
+			<div class="title">		
+				<table style="margin:auto;">
+					<tr>
+						<td style="text-align: center; vertical-align: bottom; height: 210px;">
+							<a href="https://www.micc.unifi.it/icpr2020/" target="_blank">
+								<img src="img/icpr_logo.png" alt="ICPR 2020" style="width: 164px; height: 164px;">
+							</a>
+						</td>
+						<td rowspan="2" style="vertical-align: top;">
+							<img src="img/big_line_chart.png" style="width: 480px; height: 360px;">
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: center; height: 165px; vertical-align: top;">
+							<h1 style="margin-top: 5px;"><b style="color: rgb(176,13,14);">CHART</b>-Infographics<br />2020</h1>
+						</td>				
+					</tr>			
+				</table>
+			</div>
+			<div class="menu">
+				<table>
+					<tr style="cursor: pointer;font-size: 14pt">
+						<td><a href="index.html">Return</a></td>
+					</tr>
+				</table>
+			</div>
+			<div class="content">
+				<h1 align="center" style="color: rgb(50,44,44);"><b style="color: rgb(176,13,14);">C</b>ompetition on <b style="color: rgb(176,13,14);">Ha</b>rvesting <b style="color: 		rgb(176,13,14);">R</b>aw <b style="color: rgb(176,13,14);">T</b>ables from Infographics </h1>
+				<br />
+				<h1 align="center">Leaderboards</h1>
+				<br />
+				<div class="toggle_menu">
+					<table id="toggle_menu_ranking" cellspacing="10px;">
+						<tr>
+							<td id="toggle_menu_overall_ranking" class="selected_1" style="width: 210px;" onclick="change_ranking('overall');">Overall Ranking</td>
+							<td id="toggle_menu_per_task_ranking" class="not_selected" style="width: 210px;" onclick="change_ranking('per_task');">Per-Task Ranking</td>
+						</tr>
+					</table>
+					<table id="toggle_menu_dataset" cellspacing="10px;">
+						<tr>
+							<td id="toggle_menu_ub_pmc" class="selected_2" style="width: 210px;" onclick="change_dataset('ub_pmc');">UB PMC</td>
+							<td id="toggle_menu_adobe_synth" class="not_selected" style="width: 210px;" onclick="change_dataset('adobe_synth');">Adobe Synth</td>
+						</tr>
+					</table>
+					<table id="toggle_menu_task" cellspacing="10px;">
+						<tr>
+							<td id="toggle_menu_task_1" class="selected_3" style="width: 110px;" onclick="change_task('1');">Task 1</td>
+							<td id="toggle_menu_task_2" class="not_selected" style="width: 110px;" onclick="change_task('2');">Task 2</td>
+							<td id="toggle_menu_task_3" class="not_selected" style="width: 110px;" onclick="change_task('3');">Task 3</td>
+							<td id="toggle_menu_task_4" class="not_selected" style="width: 110px;" onclick="change_task('4');">Task 4</td>
+							<td id="toggle_menu_task_5" class="not_selected" style="width: 110px;" onclick="change_task('5');">Task 5</td>
+							<td id="toggle_menu_task_6" class="not_selected" style="width: 110px;" onclick="change_task('6');">Task 6</td>
+							<td id="toggle_menu_task_7" class="not_selected" style="width: 110px;" onclick="change_task('7');">Task 7</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_overall" style="display: hidden;">
+					<h2 align="center">Overall Ranking of Teams</h2>
+					<table cellspacing="0">
+						<tr>
+							<th></th>
+							<th colspan="7">Points per Task on UB PMC</th>
+							<th colspan="7">Points per Task on Adobe Synth</th>
+							<th></th>
+						</tr>
+						<tr>
+							<th>Team</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+							<th>1</th>
+							<th>2</th>
+							<th>3</th>
+							<th>4</th>
+							<th>5</th>
+							<th>6</th>
+							<th>7</th>
+							<th>Score</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td>3</td>
+							<td>2</td>
+							<td>2</td>
+							<td style="font-weight: bold;">4</td>
+							<td>2</td>
+							<td>3</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td>2</td>
+							<td style="font-weight: bold;">4</td>
+							<td style="font-weight: bold;">4</td>
+							<td>3</td>
+							<td>3</td>
+							<td>0</td>
+							<td class="lboard_score">36</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">Magic</td>
+							<td>3</td>
+							<td>3</td>
+							<td>3</td>
+							<td>0</td>
+							<td>3</td>
+							<td>0</td>
+							<td>0</td>
+							<td>3</td>
+							<td>3</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td>0</td>
+							<td class="lboard_score">26</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">Lenovo-SCUT-Intsig</td>
+							<td style="font-weight: bold;">4</td>
+							<td style="font-weight: bold;">4</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td style="font-weight: bold;">4</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td class="lboard_score">24</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">IntSig-SCUT-Lenovo</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td class="lboard_score">16</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">SCUT-IntSig-Lenovo</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>3</td>
+							<td>0</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td>0</td>
+							<td>0</td>
+							<td style="font-weight: bold;">4</td>
+							<td class="lboard_score">15</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">IPSA</td>
+							<td>2</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>3</td>
+							<td>1</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td class="lboard_score">7</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">PY</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+							<td>2</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td class="lboard_score">4</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_ub_pmc_task_1" style="display: hidden;">
+					<h2 align="center">Ranking for Task 1 on the UB PMC Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Per-Class<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Lenovo-SCUT-Intsig</td>
+							<td class="lboard_score">92.85%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">90.48%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">90.43%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">3</td>
+							<td class="lboard_first">IPSA</td>
+							<td class="lboard_score">86.33%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_ub_pmc_task_2" style="display: hidden;">
+					<h2 align="center">Ranking for Task 2 on the UB PMC Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Detection<br />IOU</th>
+							<th>Average<br />Recognition<br />OCR</th>
+							<th>Average<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Lenovo-SCUT-Intsig</td>
+							<td class="lboard_score">74.05%</td>
+							<td class="lboard_score">76.45%</td>
+							<td class="lboard_score">75.23%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">72.21%</td>
+							<td class="lboard_score">73.51%</td>
+							<td class="lboard_score">72.85%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">3</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">73.71%</td>
+							<td class="lboard_score">58.42%</td>
+							<td class="lboard_score">65.18%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">4</td>
+							<td class="lboard_first">PY</td>
+							<td class="lboard_score">67.56%</td>
+							<td class="lboard_score">60.60%</td>
+							<td class="lboard_score">63.89%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">5</td>
+							<td class="lboard_first">IPSA</td>
+							<td class="lboard_score">27.47%</td>
+							<td class="lboard_score">32.02%</td>
+							<td class="lboard_score">29.57%</td>
+						</tr>
+						
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_ub_pmc_task_3" style="display: hidden;">
+					<h2 align="center">Ranking for Task 3 on the UB PMC Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Per-Class<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Lenovo-SCUT-Intsig</td>
+							<td class="lboard_score">85.85%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">81.71%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">3</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">77.19%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">4</td>
+							<td class="lboard_first">PY</td>
+							<td class="lboard_score">65.38%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_ub_pmc_task_4" style="display: hidden;">
+					<h2 align="center">Ranking for Task 4 on the UB PMC Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Recall</th>
+							<th>Average<br />Precision</th>
+							<th>Average<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">81.56%</td>
+							<td class="lboard_score">81.00%</td>
+							<td class="lboard_score">81.28%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">SCUT-IntSig-Lenovo</td>
+							<td class="lboard_score">79.47%</td>
+							<td class="lboard_score">80.66%</td>
+							<td class="lboard_score">80.06%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">3</td>
+							<td class="lboard_first">PY</td>
+							<td class="lboard_score">60.47%</td>
+							<td class="lboard_score">57.22%</td>
+							<td class="lboard_score">58.80%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_ub_pmc_task_5" style="display: hidden;">
+					<h2 align="center">Ranking for Task 5 on the UB PMC Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />BBox IOU</th>
+							<th>Average<br />BBox Recall</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">IntSig-SCUT-Lenovo</td>
+							<td class="lboard_score">84.92%</td>
+							<td class="lboard_score">93.19%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">86.00%</td>
+							<td class="lboard_score">92.00%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">3</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">81.78%</td>
+							<td class="lboard_score">86.43%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_ub_pmc_task_6" style="display: hidden;">
+					<h2 align="center">Ranking for Task 6 on the UB PMC Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Name Score</th>
+							<th>Average<br />Data Score</th>
+							<th>Average<br />Metric Score</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">IntSig-SCUT-Lenovo</td>
+							<td class="lboard_score">90.42%</td>
+							<td class="lboard_score">76.73%</td>
+							<td class="lboard_score">80.15%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">78.54%</td>
+							<td class="lboard_score">55.40%</td>
+							<td class="lboard_score">61.18%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_ub_pmc_task_7" style="display: hidden;">
+					<h2 align="center">Ranking for Task 7 on the UB PMC Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Name Score</th>
+							<th>Average<br />Data Score</th>
+							<th>Average<br />Metric Score</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">SCUT-IntSig-Lenovo</td>
+							<td class="lboard_score">82.08%</td>
+							<td class="lboard_score">69.06%</td>
+							<td class="lboard_score">72.32%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_adobe_synth_task_1" style="display: hidden;">
+					<h2 align="center">Ranking for Task 1 on the Adobe Synthetic Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Per-Class<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Lenovo-SCUT-Intsig</td>
+							<td class="lboard_score">100.00%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">100.00%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">99.44%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">IPSA</td>
+							<td class="lboard_score">99.16%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_adobe_synth_task_2" style="display: hidden;">
+					<h2 align="center">Ranking for Task 2 on the Adobe Synthetic Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Detection<br />IOU</th>
+							<th>Average<br />Recognition<br />OCR</th>
+							<th>Average<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Lenovo-SCUT-Intsig</td>
+							<td class="lboard_score">94.29%</td>
+							<td class="lboard_score">97.34%</td>
+							<td class="lboard_score">95.80%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">92.88%</td>
+							<td class="lboard_score">92.25%</td>
+							<td class="lboard_score">92.56%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">3</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">44.10%</td>
+							<td class="lboard_score">70.19%</td>
+							<td class="lboard_score">54.16%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">4</td>
+							<td class="lboard_first">IPSA</td>
+							<td class="lboard_score">13.48%</td>
+							<td class="lboard_score">20.93%</td>
+							<td class="lboard_score">16.40%</td>
+						</tr>
+						
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_adobe_synth_task_3" style="display: hidden;">
+					<h2 align="center">Ranking for Task 3 on the Adobe Synthetic Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Per-Class<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Lenovo-SCUT-Intsig</td>
+							<td class="lboard_score">100.00%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">99.93%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">99.92%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_adobe_synth_task_4" style="display: hidden;">
+					<h2 align="center">Ranking for Task 4 on the Adobe Synthetic Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />F-Measure</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">99.90%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">SCUT-IntSig-Lenovo</td>
+							<td class="lboard_score">99.80%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_adobe_synth_task_5" style="display: hidden;">
+					<h2 align="center">Ranking for Task 5 on the Adobe Synthetic Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />BBox IOU</th>
+							<th>Average<br />BBox Recall</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">IntSig-SCUT-Lenovo</td>
+							<td class="lboard_score">94.98%</td>
+							<td class="lboard_score">99.67%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">Magic</td>
+							<td class="lboard_score">98.99%</td>
+							<td class="lboard_score">99.30%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">91.88%</td>
+							<td class="lboard_score">92.82%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_adobe_synth_task_6" style="display: hidden;">
+					<h2 align="center">Ranking for Task 6 on the Adobe Synthetic Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Name Score</th>
+							<th>Average<br />Data Score</th>
+							<th>Average<br />Metric Score</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">IntSig-SCUT-Lenovo</td>
+							<td class="lboard_score">99.86%</td>
+							<td class="lboard_score">96.20%</td>
+							<td class="lboard_score">97.12%</td>
+						</tr>
+						<tr>
+							<td class="lboard_first">2</td>
+							<td class="lboard_first">DeepBlueAI</td>
+							<td class="lboard_score">94.84%</td>
+							<td class="lboard_score">70.30%</td>
+							<td class="lboard_score">76.43%</td>
+						</tr>
+					</table>
+				</div>
+				<div class="leaderboard" id="ranking_per_task_adobe_synth_task_7" style="display: hidden;">
+					<h2 align="center">Ranking for Task 7 on the Adobe Synthetic Testing Dataset</h2>
+					<table cellspacing="0">
+						<tr>
+							<th>Rank</th>
+							<th>Team Name</th>
+							<th>Average<br />Name Score</th>
+							<th>Average<br />Data Score</th>
+							<th>Average<br />Metric Score</th>
+						</tr>
+						<tr>
+							<td class="lboard_first">1</td>
+							<td class="lboard_first">SCUT-IntSig-Lenovo</td>
+							<td class="lboard_score">97.00%</td>
+							<td class="lboard_score">93.19%</td>
+							<td class="lboard_score">94.14%</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script>
+			var current_ranking = "overall";
+			var current_dataset = "ub_pmc";
+			var current_task = "1";
+			
+			function change_ranking(new_ranking){
+				current_ranking = new_ranking;
+				if (current_ranking == "overall"){
+					document.getElementById("toggle_menu_overall_ranking").className = "selected_1";
+					document.getElementById("toggle_menu_per_task_ranking").className = "not_selected";
+				} else {
+					document.getElementById("toggle_menu_overall_ranking").className = "not_selected";
+					document.getElementById("toggle_menu_per_task_ranking").className = "selected_1";
+				}				
+				
+				show_current_leaderboard();
+			}
+			
+			function change_dataset(new_dataset){
+				current_dataset = new_dataset;
+				if (current_dataset == "ub_pmc"){
+					document.getElementById("toggle_menu_ub_pmc").className = "selected_2";
+					document.getElementById("toggle_menu_adobe_synth").className = "not_selected";
+				} else {
+					document.getElementById("toggle_menu_ub_pmc").className = "not_selected";
+					document.getElementById("toggle_menu_adobe_synth").className = "selected_2";
+				}				
+				
+				show_current_leaderboard();
+			}
+			
+			function change_task(new_task){
+				current_task = new_task;
+				
+				var idx;
+				for (idx = 1; idx <= 7; idx++){
+					document.getElementById("toggle_menu_task_" + idx).className = "not_selected";
+				}
+				document.getElementById("toggle_menu_task_" + current_task).className = "selected_3";
+				
+				
+				show_current_leaderboard();
+			}
+			
+			
+			function show_current_leaderboard(){
+				var idx;
+				document.getElementById("ranking_overall").style.display = "None";
+					
+				for (idx = 1; idx <= 7; idx++){
+					document.getElementById("ranking_per_task_ub_pmc_task_" + idx).style.display = "None";
+					document.getElementById("ranking_per_task_adobe_synth_task_" + idx).style.display = "None";
+				}
+				
+				if (current_ranking == "overall"){
+					document.getElementById("ranking_overall").style.display = "";
+					
+					document.getElementById("toggle_menu_dataset").style.visibility = "hidden";
+					document.getElementById("toggle_menu_task").style.visibility = "hidden";
+				} else {
+					document.getElementById("ranking_per_task_" + current_dataset + "_task_" + current_task).style.display = "";
+					
+					document.getElementById("toggle_menu_dataset").style.visibility = "visible";
+					document.getElementById("toggle_menu_task").style.visibility = "visible";
+				}
+			}
+			
+			show_current_leaderboard();
+		</script>
+	</body>
+</html>
