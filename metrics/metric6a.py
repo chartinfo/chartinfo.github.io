@@ -8,6 +8,14 @@ import numpy as np
 import scipy.optimize
 import scipy.spatial.distance
 
+def check_groups(ds):
+    try:
+        _i = ds[0][0]
+        print("Group exists")
+        return 1
+    except Exception:
+        return 0
+
 def pprint(obj):
     print(json.dumps(obj, indent=4, sort_keys=True))
 
@@ -69,15 +77,30 @@ def compare_bar(pred_ds, gt_ds, min_dim):
     return cost_mat
 
 def compare_scatter(pred_ds, gt_ds, gamma):
-    pred_ds = scatt_arr_to_np(pred_ds)
-    gt_ds = scatt_arr_to_np(gt_ds)
 
-    # V = np.cov(gt_ds.T)
-    # VI = np.linalg.inv(V).T
+    is_grouped = check_groups(gt_ds)
     
-    #cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
-    cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='euclidean') / gamma)
-    return get_score(cost_mat)
+    if is_grouped:
+        len_seq = len(gt_ds)
+    else:
+        len_seq = 1
+        pred_ds = [pred_ds]
+        gt_ds = [gt_ds]
+
+    score = 0
+    for iter_seq in range(len_seq):
+        gt_seq = scatt_arr_to_np(gt_ds[iter_seq])
+        pred_seq = scatt_arr_to_np(pred_ds[iter_seq])
+        
+        # V = np.cov(gt_ds.T)
+        # VI = np.linalg.inv(V).T
+        
+        #cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_ds, gt_ds, metric='mahalanobis', VI=VI) / gamma)
+        cost_mat = np.minimum(1, scipy.spatial.distance.cdist(pred_seq, gt_seq, metric='euclidean') / gamma)
+        score += get_score(cost_mat)
+    score = score/float(len_seq)
+
+    return score
 
 def get_score(cost_mat):
     cost_mat = pad_mat(cost_mat)
@@ -143,14 +166,40 @@ def norm_edit_dist(s1, s2):
     return editdistance.eval(s1, s2) / float(max(len(s1), len(s2), 1))
 
 def create_dist_mat(seq1, seq2, compare, beta):
-    l1 = len(seq1)
-    l2 = len(seq2)
-    mat = np.full( (l1, l2), -1.)
-    for i in range(l1):
-        for j in range(l2):
-            mat[i,j] = compare(seq1[i], seq2[j])
-    return get_score(1 - (mat/beta))
+    is_grouped = check_groups(seq1)
 
+    if is_grouped:
+        len_seq = len(seq1)
+    else:
+        len_seq = 1
+        seq1 = [seq1]
+        seq2 = [seq2]
+
+    score = 0
+    for iter_seq in range(len_seq):
+        l1 = len(seq1[iter_seq])
+        l2 = len(seq2[iter_seq])
+        mat = np.full( (l1, l2), -1.)
+        for i in range(l1):
+            for j in range(l2):
+                mat[i,j] = compare(seq1[iter_seq][i], seq2[iter_seq][j])
+        score += get_score(1 - (mat/beta))
+    score = score/float(len_seq)
+
+    return score
+
+def compare_line(pred_ds, gt_ds):
+    is_grouped = check_groups(gt_ds)
+    if is_grouped:
+        score = 0
+        for iter_seq in range(len(pred_ds)):
+            score += compare_continuous(pred_ds[iter_seq], gt_ds[iter_seq])
+        score = score/len(pred_ds)
+    else:
+        print(gt_ds)
+        score = compare_continuous(pred_ds, gt_ds)
+
+    return score
 def pad_mat(mat):
     h,w = mat.shape
     if h == w:
@@ -183,8 +232,7 @@ def metric_6a(pred_data_series, gt_data_series, gt_type, alpha=1, beta=2, gamma=
     elif 'line' in gt_type.lower():
         pred_no_names = pred_data_series['lines']
         gt_no_names = gt_data_series['lines']
-        compare = compare_continuous
-        ds_match_score = create_dist_mat(pred_no_names, gt_no_names, compare, beta)
+        ds_match_score = compare_line(pred_no_names, gt_no_names)
     else:
         raise Exception("Odd Case")
   
@@ -237,8 +285,11 @@ if __name__ == "__main__":
             pred_file = os.path.join(pred_infile, x)
             gt_file = os.path.join(gt_infile, x)
 
-            pred_json = json.load(open(pred_file))
-            gt_json = json.load(open(gt_file))
+            try:
+                pred_json = json.load(open(pred_file))
+                gt_json = json.load(open(gt_file))
+            except Exception:
+                continue
 
             pred_outputs = get_dataseries(pred_json)
             gt_outputs = get_dataseries(gt_json)
