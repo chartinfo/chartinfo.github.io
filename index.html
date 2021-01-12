@@ -82,6 +82,9 @@
 							<!--
 							<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
 							-->
+							<tr>
+								<td style="text-align:top;"> Jan 11</td> <td onclick="update_view('data_tools');">UB PMC datasets have been  <a href="http://tc11.cvc.uab.es/datasets/ICPR2020-CHART-Info_1;">released!</a></td>
+							</tr>
 							<tr> 
 								<td style="text-align:top;"> Nov 12 </td> <td><a href="leaderboards_2020.html"><b>Leaderboards</b></a> now available! </td>
 							</tr>
@@ -252,270 +255,272 @@
 					<td> <a href="#task7"> End-to-End Data Extraction</a> </td> 
 				</tr>
 			</table>
+			
 			<a name='task1'><h2>1) Chart Image Classification</h2></a>
-				<p> 
-					Knowing the type of chart greatly affects what processing needs to be done.
-					Thus, the first sub-task is to classify chart images by type. 
-					Given the chart image, methods are expected to output the chart class. 
-					We are providing two datasets, each one has a different set 
-					of classes as follows. We expect participants to develop <b>two versions</b> of their
-					classification system, one for each set of datasets, which will be <b>evaluated independently</b>.
-				</p>
+			<p> 
+				Knowing the type of chart greatly affects what processing needs to be done.
+				Thus, the first sub-task is to classify chart images by type. 
+				Given the chart image, methods are expected to output the chart class. 
+				We are providing two datasets, each one has a different set 
+				of classes as follows. We expect participants to develop <b>two versions</b> of their
+				classification system, one for each set of datasets, which will be <b>evaluated independently</b>.
+			</p>
+			<p> Note that many classes included in this first task such as <b>pie and donut plots are not used</b> for the remaining sub-tasks. </p>
 				
-				<p> Note that many classes included in this first task such as <b>pie and donut plots are not used</b> for the remaining sub-tasks. </p>
+			<h3>Classes of Chart Images on Adobe Synthetic Datasets</h3>
+			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
+				<tr>
+					<td>Area</td>
+					<td>Donut</td>
+					<td>Horizontal Box</td>
+					<td>Horizontal Grouped Bar</td>
+				</tr>
+				<tr>
+					<td>Horizontal Stacked Bar</td>
+					<td>Line</td>
+					<td>Pie</td>
+					<td>Polar</td>
+				</tr>
+				<tr>
+					<td>Scatter</td>
+					<td>Vertical Box</td>
+					<td>Vertical Grouped Bar</td>
+					<td>Vertical Stacked Bar</td>
+				</tr>
+			</table>
 				
-				<h3>Classes of Chart Images on Adobe Synthetic Datasets</h3>
-				<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
-					<tr>
-						<td>Area</td>
-						<td>Donut</td>
-						<td>Horizontal Box</td>
-						<td>Horizontal Grouped Bar</td>
-					</tr>
-					<tr>
-						<td>Horizontal Stacked Bar</td>
-						<td>Line</td>
-						<td>Pie</td>
-						<td>Polar</td>
-					</tr>
-					<tr>
-						<td>Scatter</td>
-						<td>Vertical Box</td>
-						<td>Vertical Grouped Bar</td>
-						<td>Vertical Stacked Bar</td>
-					</tr>
-				</table>
+			<p> 
+				For bar charts that have a single set of bars (single data series), 
+					it is visually ambigious whether it a Grouped or Stacked bar chart, though their
+					ground truth class indicates one of these classes.
+				In this case we accept either prediction, as long as the orientation (vertical or horizontal)
+				is correct.
+				For example, a vertical bar chart with a single data series can be classified as either
+				<i>Grouped vertical bar</i> or <i>Stacked vertical bar</i>.
+			</p>
 				
-				<p> 
-					For bar charts that have a single set of bars (single data series), 
-						it is visually ambigious whether it a Grouped or Stacked bar chart, though their
-						ground truth class indicates one of these classes.
-					In this case we accept either prediction, as long as the orientation (vertical or horizontal)
-					is correct.
-					For example, a vertical bar chart with a single data series can be classified as either
-					<i>Grouped vertical bar</i> or <i>Stacked vertical bar</i>.
-				</p>
-				
-				<h3>Classes of Chart Images on UB PMC Datasets</h3>
-				<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
-					<tr>
-						<td>Area</td>
-						<td>Heatmap</td>
-						<td>Horizontal Bar</td>
-						<td>Horizontal Interval</td>
-					</tr>
-					<tr>
-						<td>Line</td>
-						<td>Manhattan</td>
-						<td>Map</td>
-						<td>Pie</td>
-					</tr>
-					<tr>
-						<td>Scatter</td>
-						<td>Scatter-Line</td>
-						<td>Surface</td>
-						<td>Venn</td>
-					</tr>
-					<tr>
-						<td>Vertical Bar</td>
-						<td>Vertical Box</td>
-						<td>Vertical Interval</td>
-						<td>&nbsp;</td>
-					</tr>
-				</table>
+			<h3>Classes of Chart Images on UB PMC Datasets</h3>
+			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
+				<tr>
+					<td>Area</td>
+					<td>Heatmap</td>
+					<td>Horizontal Bar</td>
+					<td>Horizontal Interval</td>
+				</tr>
+				<tr>
+					<td>Line</td>
+					<td>Manhattan</td>
+					<td>Map</td>
+					<td>Pie</td>
+				</tr>
+				<tr>
+					<td>Scatter</td>
+					<td>Scatter-Line</td>
+					<td>Surface</td>
+					<td>Venn</td>
+				</tr>
+				<tr>
+					<td>Vertical Bar</td>
+					<td>Vertical Box</td>
+					<td>Vertical Interval</td>
+					<td>&nbsp;</td>
+				</tr>
+			</table>
 				
 
-				<h3> Metric </h3>
-					<p>
-						The evaluation metric will be the <b>average per-class F-measure.</b>
-						Based on the class confusion matrix, we can compute the precision, recall, and F-measure for each class.
-						The overall score is the average of each classes' F-measure.
-					</p>
-					<p>
-						To account for charts with multiple possible labels (i.e. single data series bar charts), the per-class
-							precision and recall is modified to not penalize ambiguous cases.
-					</p>
-				<h3> Input/Output </h3>
-					<p> Input: Chart Image <p>
-					<p> Output: Chart Class <p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
+			<h3> Metric </h3>
+			<p>
+				The evaluation metric will be the <b>average per-class F-measure.</b>
+				Based on the class confusion matrix, we can compute the precision, recall, and F-measure for each class.
+				The overall score is the average of each classes' F-measure.
+			</p>
+			<p>
+				To account for charts with multiple possible labels (i.e. single data series bar charts), the per-class
+					precision and recall is modified to not penalize ambiguous cases.
+			</p>
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image </p>
+			<p> Output: Chart Class </p>
+			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 
 			<a name='task2'><h2>2) Text Detection and Recognition</h2></a>
-				<p>
-					Understanding the text in charts is necessary to interpret the graphical elements correctly.
-					This sub-task concentrates on detecting and recognizing the text within the chart image. 
-					Competing systems are expected to produce tight bounding boxes and transcriptions for each text block.
-					Examples of individual text blocks individual titles, tick labels, legend labels.
-					Text blocks may be a single line, multiple lines (due to text wrapping), and may be horizontal, vertical, or rotated.
-					A predicted bounding box matches a GT bounding box if their Intersection Over Union (IOU) is at least 0.5, 
-						and tighter IOU criteria will be used to resolve ties when multiple predictions can match a single GT bounding box.
-					<!-- Evaluation metrics for detection of bounding boxes is precision-recall at Intersection Over Union (IOU) of 0.5. Tighter IOU criteria will be used to resolve ties. Same procedure as the ICDAR Robust Reading Competitions will be used to handle split/merged boxes. Transcription errors will be compared on the basis of edit distance from ground truth. -->
-				</p>
-				<h3> Metric </h3>
-					<p> There are two evalaution metrics for detection and recognition respectively.
-						For detection, we will sum the per-block <b>IOU</b> and divide by max(#predicted, #GT) for each image.
-						For recognition, we will average <b>normalized Character Error Rate (CER)</b> for each text block in an image.
-						By normalized CER, we mean that the number of character edits to transform a predicted word to GT word is divided by the length of the GT block.  
-						False positive and false negative text block detections will be assigned a normalized CER of 1 and an IOU of 0.
-						We will use the same procedure as the ICDAR Robust Reading Competitions to handle split/merged boxes.
-					</p>
-					<p>
-						For each chart, we will compute both detection and recognition scores.
-						Then we will average the per-chart scores over the whole dataset to ensure that each image contributes equally to the final score.
-						The winner for the sub-task will be determined by the system with the highest harmonic mean of detection and recognition scores.
-					</p>
-				<h3> Input/Output </h3>
-					<p> Input: Chart Image, Chart Class <p>
-					<p> Output: List of (Text Block BBs, Text Transcription) </p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
+			<p>
+				Understanding the text in charts is necessary to interpret the graphical elements correctly.
+				This sub-task concentrates on detecting and recognizing the text within the chart image. 
+				Competing systems are expected to produce tight bounding boxes and transcriptions for each text block.
+				Examples of individual text blocks individual titles, tick labels, legend labels.
+				Text blocks may be a single line, multiple lines (due to text wrapping), and may be horizontal, vertical, or rotated.
+			</p>
+			<p>
+				A predicted bounding box matches a GT bounding box if their Intersection Over Union (IOU) is at least 0.5, 
+					and tighter IOU criteria will be used to resolve ties when multiple predictions can match a single GT bounding box.
+			</p>
+			<h3> Metric </h3>
+			<p> There are two evalaution metrics for detection and recognition respectively.
+				For detection, we will sum the per-block <b>IOU</b> and divide by max(#predicted, #GT) for each image.
+				For recognition, we will average <b>normalized Character Error Rate (CER)</b> for each text block in an image.
+				By normalized CER, we mean that the number of character edits to transform a predicted word to GT word is divided by the length of the GT block.  
+				False positive and false negative text block detections will be assigned a normalized CER of 1 and an IOU of 0.
+				We will use the same procedure as the ICDAR Robust Reading Competitions to handle split/merged boxes.
+			</p>
+			<p>
+				For each chart, we will compute both detection and recognition scores.
+				Then we will average the per-chart scores over the whole dataset to ensure that each image contributes equally to the final score.
+				The winner for the sub-task will be determined by the system with the highest harmonic mean of detection and recognition scores.
+			</p>
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image, Chart Class </p>
+			<p> Output: List of (Text Block BBs, Text Transcription) </p>
+			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task3'><h2>3) Text Role Classification</h2></a>
-				<p>
-					For text to be useful in chart interpretation, its semantic <i>role</i> should be identified.
-					This sub-task focuses on identifying the role of each text block in a chart image, and text bounding boxes and transcripts are provided as input.
-					Competing systems are expected to classify each bounding box into one of the following roles.
-				</p>
-				
-				<table style="width:100%; font-size:11pt; text-align:center; align:center">
-					<tr>
-						<td> Chart Title </td>
-						<td> Axis Title </td>
-						<td> Tick Label (x and y axes values) </td>
-					</tr><tr>
-						<td> Tick Grouping (x and y axes) </td>
-						<td> Legend Title </td>
-						<td> Legend Label </td>
-					</tr><tr>
-						<td> Value Label </td>
-						<td> Data Marker Label </td>
-						<td> Other </td>
-					</tr>
-				</table>
-				<p>
-					*For <b>Adobe Synth Datasets</b>, only a <b>subset</b> of these classes are used. 
-				</p>
-				<h3> Metric </h3>
-					<p>Similar to the evaluation in sub-task 1 (chart classification), the evaluation metric will be the <b>average per-class F-measure.</b></p>
+			<p>
+				For text to be useful in chart interpretation, its semantic <i>role</i> should be identified.
+				This sub-task focuses on identifying the role of each text block in a chart image, and text bounding boxes and transcripts are provided as input.
+				Competing systems are expected to classify each bounding box into one of the following roles.
+			</p>
+			
+			<table style="width:100%; font-size:11pt; text-align:center; align:center">
+				<tr>
+					<td> Chart Title </td>
+					<td> Axis Title </td>
+					<td> Tick Label (x and y axes values) </td>
+				</tr><tr>
+					<td> Tick Grouping (x and y axes) </td>
+					<td> Legend Title </td>
+					<td> Legend Label </td>
+				</tr><tr>
+					<td> Value Label </td>
+					<td> Data Marker Label </td>
+					<td> Other </td>
+				</tr>
+			</table>
+			<p>
+				*For <b>Adobe Synth Datasets</b>, only a <b>subset</b> of these classes are used. 
+			</p>
+			<h3> Metric </h3>
+			<p>Similar to the evaluation in sub-task 1 (chart classification), the evaluation metric will be the <b>average per-class F-measure.</b></p>
 
-				<h3> Input/Output </h3>
-					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
-					<p> Output: List of (Text Block Id, Text role) </p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
+			<p> Output: List of (Text Block Id, Text role) </p>
+			
+			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task4'><h2>4) Axis Analysis</h2></a>
-				<p>
-					Locating and interpreting the axes of the chart is critical to transforming data point coordinates from units of pixels to the semantic units.
-					Competing systems are expected to output the location and value of each tick mark on both the X-axis and Y-axis.
-					Tick locations are represented as points and must be associated with the corresponding value (a string).
-					Note that some sets of ticks are ordered or unordered discrete sets with textual non-numeric labels.
-				</p>
-				<p>
-					For this competition, X-axis will always refer to the axis that represents the independent variable shown, 
-						rather than the axis that is visually horizontal.
-					For example, vertical bar and vertical box plots have an X-axis that is vertical.
-					Similarly, the Y-axis is not always the axis that is vertical.
-				</p>
-					
-				<h3> Metric </h3>
-					<p> 
-						We use a <b>modified F-measure</b> to score each axis and then take the average F-measure over all axes.  
-						Each detected tick is scored for correctness, receiving a score between 0 and 1.
-						Precision is then computed as the sum of the scores divided by the number of predictions.
-						Recall is computed as the sum of the scores divided by the number of ground truth ticks.
-					</p>
-					<p>
-						A detected tick receives a score of 1 if the predicted point is close to the corresponding
-							GT tick point, where correspondance between predictioned and GT ticks is based on the
-							text BB and transcription.
-						The threshold for close (scoring 1) and the threshold for far (scoring 0) is based on the distance
-							between tick marks in the chart image.
-						Predictions that are between the close and far thresholds are penalized linearly with distance.
-					</p>
-				<h3> Input/Output </h3>
-					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
-					<p> Output: For each of X-axis and Y-axis, List of tuples (tick x position, tick y position, Text Block Id)</p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
+			<p>
+				Locating and interpreting the axes of the chart is critical to transforming data point coordinates from units of pixels to the semantic units.
+				Competing systems are expected to output the location and value of each tick mark on both the X-axis and Y-axis.
+				Tick locations are represented as points and must be associated with the corresponding value (a string).
+				Note that some sets of ticks are ordered or unordered discrete sets with textual non-numeric labels.
+			</p>
+			<p>
+				For this competition, X-axis will always refer to the axis that represents the independent variable shown, 
+					rather than the axis that is visually horizontal.
+				For example, vertical bar and vertical box plots have an X-axis that is vertical.
+				Similarly, the Y-axis is not always the axis that is vertical.
+			</p>
+				
+			<h3> Metric </h3>
+			<p> 
+				We use a <b>modified F-measure</b> to score each axis and then take the average F-measure over all axes.  
+				Each detected tick is scored for correctness, receiving a score between 0 and 1.
+				Precision is then computed as the sum of the scores divided by the number of predictions.
+				Recall is computed as the sum of the scores divided by the number of ground truth ticks.
+			</p>
+			<p>
+				A detected tick receives a score of 1 if the predicted point is close to the corresponding
+					GT tick point, where correspondance between predictioned and GT ticks is based on the
+					text BB and transcription.
+				The threshold for close (scoring 1) and the threshold for far (scoring 0) is based on the distance
+					between tick marks in the chart image.
+				Predictions that are between the close and far thresholds are penalized linearly with distance.
+			</p>
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
+			<p> Output: For each of X-axis and Y-axis, List of tuples (tick x position, tick y position, Text Block Id)</p>
+			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<a name='task5'><h2>5) Legend Analysis</h2></a>
-				<p>
-					The purpose of chart legends is to associate a data series name with the graphical style used to represent it
-					This is critical to chart understanding when there are multiple data series represented.
-				</p>
-				<p>
-					Competing systems are expected to associate each legend label text with the corresponding graphical style element within the legend area.
-					Bounding boxes and transcriptions (but not text roles) are given as input.
-					Note that in this task, legend labels are not paired with the corresponding data series found in the plot area.
-					Also, some charts do not have legends, and an empty list should be returned.
-				</p>
-				<h3> Metric </h3>
-					<p>
-						For each GT legend label, if there is an associated predicted graphical style element, 
-							we compute the <b>IOU</b> of the predicted BB to the GT graphical style element BB.
-						We then divide the sum of the IOU by max(#predicted, #GT) for each image, and then average this value over all images.
-					</p>
-					<p>
-						For charts that have no legend, it is expected that participant systems return an empty list to receive the max score
-							for that chart.
-						When there is no legened, specifying any output results in a score of 0 for that chart.
-					</p>
-				<h3> Input/Output </h3>
-					<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
-					<p> Output: A list of (Text Block Id, Graphical Style Element BB) </p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
+			<p>
+				The purpose of chart legends is to associate a data series name with the graphical style used to represent it
+				This is critical to chart understanding when there are multiple data series represented.
+			</p>
+			<p>
+				Competing systems are expected to associate each legend label text with the corresponding graphical style element within the legend area.
+				Bounding boxes and transcriptions (but not text roles) are given as input.
+				Note that in this task, legend labels are not paired with the corresponding data series found in the plot area.
+				Also, some charts do not have legends, and an empty list should be returned.
+			</p>
+			<h3> Metric </h3>
+			<p>
+				For each GT legend label, if there is an associated predicted graphical style element, 
+					we compute the <b>IOU</b> of the predicted BB to the GT graphical style element BB.
+				We then divide the sum of the IOU by max(#predicted, #GT) for each image, and then average this value over all images.
+			</p>
+			<p>
+				For charts that have no legend, it is expected that participant systems return an empty list to receive the max score
+					for that chart.
+				When there is no legened, specifying any output results in a score of 0 for that chart.
+			</p>
+			<h3> Input/Output </h3>
+			<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
+			<p> Output: A list of (Text Block Id, Graphical Style Element BB) </p>
+			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
 
 			<h2>6) Data Extraction</h2>
-				<p>
-					The goal of this task is to convert all of the previously extracted information into a CSV file.
-					We break this task into 2 subtasks: (a) plot element detection and classification (b) data conversion.
-					Competitor systems are expected to produce output for both sub-tasks.
-					It is also permitted for competitors to only perform this sub-task only for certain classes of charts.
-				</p>
+			<p>
+				The goal of this task is to convert all of the previously extracted information into a CSV file.
+				We break this task into 2 subtasks: (a) plot element detection and classification (b) data conversion.
+				Competitor systems are expected to produce output for both sub-tasks.
+				It is also permitted for competitors to only perform this sub-task only for certain classes of charts.
+			</p>
 			<a name='task6a'><h2>6a) Plot Element Detection/Classification</h2></a>
-				<p>
-					For 6a, the subtask of visual analysis, the goal is to detect and classify each individual element in the plot area.
-					The representation of the element varies by class and is listed in the table below.
-					Note that the output representations (BB or point) are in units of pixels.
-				</p>
-				<table style="width:100%; font-size:11pt; text-align:center; align:center">
-					<tr> <th> Element Class</th> <th> Description </th> <th> Representation </th> </tr>
-					<tr> <td> Bar </td> <td> Individual bars in bar charts </td> <td> Bounding Box </td> </tr>
-					<tr> <td> Line Point </td> <td> Location of Data Points in line charts </td>  <td> Point </td> </tr>
-					<tr> <td> Scatter Marker </td> <td> Location of Data Points in scatter charts </td>  <td> Point </td> </tr>
-					<tr> <td> Boxplot Median </td> <td> Median Line of Boxplot </td>  <td> Point </td> </tr>
-					<tr> <td> Boxplot Box Top </td> <td> Line that is typically the upper quartile</td>  <td> Point </td> </tr>
-					<tr> <td> Boxplot Box Bottom </td> <td> Line that is typically the lower quartile</td>  <td> Point </td> </tr>
-					<tr> <td> Boxplot Top Wisker </td> <td> Line that is typically the max value</td>  <td> Point </td> </tr>
-					<tr> <td> Boxplot Bottom Wisker </td> <td> Line that is typically the min value</td>  <td> Point </td> </tr>
-				</table>
-				<p> 
-					Even though boxplot elements are visually line segments, we allow for any point on that line segment.  
-					Other plot elements, such as boxplot outlier points and error bars, 
-						are not evaluated and should not be contained in the output for this sub-task.
-					Note that the chart class is given as input to this task and that each plot element can be found in only one class of chart.
-				</p>
-				<h3> Metric </h3>
-					<p>
-						For an element to be correctly detected, it must be <b>assigned to the correct class.</b>
-						We will use a variation on MSE to evaluate the representation of each element with the correct class.
-						For each element, we compute a score between 0 and 1, where 1 represents an exact prediction, 
-							and predictions farther away than a distance threshold, T, receive a score of 0.
-						<b>The score is max(0, 1 - (D/T)^2)</b>, where D is the Euclidean distance between the predicted and GT points.
-						The distance threshold, T, is determined to be <b>1%</b> of the smallest image dimension.
-						Because there are many ways to pair predicted and GT points, we will find the minimum cost pairing
-							(i.e. solve this bi-partite graph matching problem).
-					</p>
-					<p> 
-						For Boxplot elements, we will use <b>distance between the predicted point and the line segment.</b>
-						For Bar chart bars, we will use the <b>distances between corresponding BB corners.</b>
-					</p>
-					<p> For each chart, the scores will be summed and divided by max(#GT, #Predictions).  
-						Then these scores will be averaged across all images. 
-					</p>
-					<p>
-						For line plots, individual lines must be segmented from each other, and will be scored similarly as lines in 6b,
-							except the units of predicted values should be in pixels for this task.
-					</p>
+			<p>
+				For 6a, the subtask of visual analysis, the goal is to detect and classify each individual element in the plot area.
+				The representation of the element varies by class and is listed in the table below.
+				Note that the output representations (BB or point) are in units of pixels.
+			</p>
+			<table style="width:100%; font-size:11pt; text-align:center; align:center">
+				<tr> <th> Element Class</th> <th> Description </th> <th> Representation </th> </tr>
+				<tr> <td> Bar </td> <td> Individual bars in bar charts </td> <td> Bounding Box </td> </tr>
+				<tr> <td> Line Point </td> <td> Location of Data Points in line charts </td>  <td> Point </td> </tr>
+				<tr> <td> Scatter Marker </td> <td> Location of Data Points in scatter charts </td>  <td> Point </td> </tr>
+				<tr> <td> Boxplot Median </td> <td> Median Line of Boxplot </td>  <td> Point </td> </tr>
+				<tr> <td> Boxplot Box Top </td> <td> Line that is typically the upper quartile</td>  <td> Point </td> </tr>
+				<tr> <td> Boxplot Box Bottom </td> <td> Line that is typically the lower quartile</td>  <td> Point </td> </tr>
+				<tr> <td> Boxplot Top Wisker </td> <td> Line that is typically the max value</td>  <td> Point </td> </tr>
+				<tr> <td> Boxplot Bottom Wisker </td> <td> Line that is typically the min value</td>  <td> Point </td> </tr>
+			</table>
+			<p> 
+				Even though boxplot elements are visually line segments, we allow for any point on that line segment.  
+				Other plot elements, such as boxplot outlier points and error bars, 
+					are not evaluated and should not be contained in the output for this sub-task.
+				Note that the chart class is given as input to this task and that each plot element can be found in only one class of chart.
+			</p>
+			<h3> Metric </h3>
+			<p>
+				For an element to be correctly detected, it must be <b>assigned to the correct class.</b>
+				We will use a variation on MSE to evaluate the representation of each element with the correct class.
+				For each element, we compute a score between 0 and 1, where 1 represents an exact prediction, 
+					and predictions farther away than a distance threshold, T, receive a score of 0.
+				<b>The score is max(0, 1 - (D/T)^2)</b>, where D is the Euclidean distance between the predicted and GT points.
+				The distance threshold, T, is determined to be <b>1%</b> of the smallest image dimension.
+				Because there are many ways to pair predicted and GT points, we will find the minimum cost pairing
+					(i.e. solve this bi-partite graph matching problem).
+			</p>
+			<p> 
+				For Boxplot elements, we will use <b>distance between the predicted point and the line segment.</b>
+				For Bar chart bars, we will use the <b>distances between corresponding BB corners.</b>
+			</p>
+			<p> For each chart, the scores will be summed and divided by max(#GT, #Predictions).  
+				Then these scores will be averaged across all images. 
+			</p>
+			<p>
+				For line plots, individual lines must be segmented from each other, and will be scored similarly as lines in 6b,
+					except the units of predicted values should be in pixels for this task.
+			</p>
 
 				<h3> Input/Output </h3>
 					<p> Input: Outputs of tasks 1-5 </p>
@@ -595,11 +600,17 @@
 				<b>UB PMC Datasets. </b> We have sample data for the main each chart types for <a href="UB_PMC_sample_1.21.zip">download.</a> Each chart has a JPEG image as given by the PubMedCentral. 
 			</p>
 			
-			
+			<h2>Datasets from ICPR CHART-Infographics 2020</h2>
+			<p>
+				Datasets from the latest edition of our competition are publicly available and can be used for benchmarking. 
+			</p>
+			<p>
+				ICPR CHART-Infographics 2020 - UB PMC dataset <a href="http://tc11.cvc.uab.es/datasets/ICPR2020-CHART-Info_1;">(ICPR-2020-CHART-UB_PMC)</a>
+			</p>
 			<h2>Datasets from ICDAR CHART-Infographics 2019</h2>
 			<p>
 				Datasets from the previous edition of our competition are publicly available and can be used
-				as reference only. Note that most annotations from the ICDAR 2019 PubMedCentral dataset <b>have been improved and are already included</b> in the novel UB PMC Training Dataset that we are providing this year. 
+				as reference only. Note that most annotations from the ICDAR 2019 PubMedCentral dataset <b>have been improved and are already included</b> in the latests UB PMC Training Dataset that we provided in 2020. 
 			</p>
 			<p>
 				ICDAR CHART-Infographics 2019 - Synthethic dataset <a href="http://tc11.cvc.uab.es/datasets/CHART2019-S_1">(CHART2019-S)</a>
