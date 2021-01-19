@@ -50,7 +50,7 @@ def eval_task4(gt_folder, result_folder, img_folder):
     total_precision = 0.
     gt_files = os.listdir(gt_folder)
     for gt_file in gt_files:
-        gt_id = ''.join(gt_file.split('.')[:-1])
+        gt_id = '.'.join(gt_file.split('.')[:-1])
         if not os.path.isfile(os.path.join(result_folder, gt_id + '.json')):
             continue
         with open(os.path.join(gt_folder, gt_file), 'r') as f:
