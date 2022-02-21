@@ -1,0 +1,148 @@
+
+body {
+	background: #333333;	
+	font-family: Verdana;
+}
+
+.title {
+	padding: 20px;
+	background: rgb(204, 204, 204);	
+	color: rgb(50, 44, 44);
+}
+
+.menu {
+	background: rgb(176,13,14);
+	color: rgb(255,255,255);
+}
+
+.menu table {
+	margin: auto;
+}
+
+.menu td {	
+	font-weight: bold;
+	padding: 10px 30px 10px 30px;
+}
+
+.title h2 { 
+	margin: 5px 10px 20px 5px;
+}
+
+h2 { 
+	margin-top: 40px;
+}
+
+h1 { 
+	margin-top: 40px;
+}
+
+h3 { 
+	margin-top: 30px;
+}
+
+
+.main {
+	margin: auto;
+	background: #FFFFFF;
+	width: 900px;
+}
+
+.content {
+	padding: 30px;
+}
+
+.content h1 {
+	margin: auto;
+	color: rgb(176,13,14);
+	font-size: 16pt;
+}
+
+.content h2 {
+	color: rgb(176,13,14);
+	font-size: 14pt;
+}
+
+.content h3 {
+	color: rgb(88,13,14);
+	font-size: 12pt;
+}
+
+
+.toggle_menu {
+	
+}
+
+.toggle_menu table {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0px;
+}
+
+.toggle_menu td {	
+	font-size: 10pt;
+	font-weight: bold;
+	padding: 10px 10px 10px 10px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.toggle_menu .not_selected {
+	border: 1px solid rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+	background: rgb(100, 100, 100);
+}
+
+.toggle_menu .selected_1 {	
+	border: 1px solid rgb(0, 0, 0);
+	color: rgb(0, 0, 0);
+	background: rgb(255, 255, 255);
+}
+
+.toggle_menu .selected_2 {	
+	border: 1px solid rgb(176, 13, 13);
+	color: rgb(176, 13, 13);
+	background: rgb(204, 204, 204);
+}
+
+.toggle_menu .selected_3 {	
+	border: 1px solid rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+	background: rgb(176, 13, 13);
+}
+
+
+.leaderboard {
+	margin-top: 0px;
+}
+
+.leaderboard table {
+	margin: auto;
+	font-size: 10pt;
+}
+
+.leaderboard th {
+	text-align: center;
+	padding-left: 12px;
+	padding-right: 12px;
+	border: 1px solid rgb(12,12,12);
+	background: rgb(192,192,192);
+	color: rgb(50, 44, 44);
+}
+
+.leaderboard td {
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 1px solid rgb(12,12,12);
+	background: rgb(245,245,245);
+	color: rgb(50, 44, 44);
+}
+
+.leaderboard .lboard_first {
+	font-weight: bold;
+}
+
+.leaderboard .lboard_score {
+	font-weight: bold;
+	text-align: right;
+}
+

@@ -1,729 +1,364 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>ICPR 2020 - CHART Competition</title>
-  <meta name="description" content="ICPR 2020 CHART HARVESTING Competition">
-  <!--<meta name="author" content="">-->
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-	  div {
-  		text-align: justify;
-  		text-justify: inter-word;
-	  }
-	* {
-	  box-sizing: border-box;
-	  }
-		/* Create two equal columns that floats next to each other */
-		.column {
-		  float: left;
-		  width: 50%;
-		  padding: 10px;		
-		}
-		/* Clear floats after the columns */
-		.row:after {
-		  content: "";
-		  display: table;
-		  clear: both;
-		}
-  </style>
-</head>
-<body>
-  <script src="js/main.js"></script>
-  <div class="main">
-	<div class="title">		
-		<table style="margin:auto;">
-			<tr>
-				<td style="text-align: center; vertical-align: bottom; height: 210px;">
-					<a href="https://www.micc.unifi.it/icpr2020/" target="_blank">
-						<img src="img/icpr_logo.png" alt="ICPR 2020" style="width: 164px; height: 164px;">
-					</a>
-				</td>
-				<td rowspan="2" style="vertical-align: top;">
-					<img src="img/big_line_chart.png" style="width: 480px; height: 360px;">
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align: center; height: 165px; vertical-align: top;">
-					<h1 style="margin-top: 5px;"><b style="color: rgb(176,13,14);">CHART</b>-Infographics<br />2020</h1>
-				</td>				
-			</tr>			
-		</table>
-	</div>	
-	<div class="menu">
-		<table>
-			<tr style="cursor: pointer;font-size: 14pt">
-				<td onclick="update_view('home');">Home</td>
-				<td onclick="update_view('tasks');">Tasks</td>
-				<td onclick="update_view('schedule');">Schedule</td>
-				<td onclick="update_view('data_tools');">Tools and Data</td>
-				<td onclick="update_view('contact');">Contact Us</td>
-			</tr>
-		</table>
-	</div>
-	<div class="content">
-		<div id="home" style="display: None;">
-			<h1 align="center" style="color: rgb(50,44,44);"><b style="color: rgb(176,13,14);">C</b>ompetition on <b style="color: rgb(176,13,14);">Ha</b>rvesting <b style="color: 		rgb(176,13,14);">R</b>aw <b style="color: rgb(176,13,14);">T</b>ables from Infographics </h1>
-			<br />
-			<div class="row">
-  				<div class="column">					
-    				<h1>Summary</h1>
-    					<p>
-    						This competition is composed of a series of 6 sub-tasks for chart data extraction, which when put together as a pipeline go from an input chart image to a CSV file representing the data used to create the chart.
-							Entrants in the competition may choose to participate in any number of sub-tasks, which are evaluated in isolation, such that solving previous sub-tasks is not necessary.
-							We hope that such decomposition of the problem of chart data extraction will draw broad participation from the Document Analysis and Recognition (DAR) community.
-							Additionally, we also evaluate methods that perform the whole chart data extraction pipeline from the chart image without receiving intermediate inputs.
-						</p>
-  				</div>
-  				<div class="column">
-    				<h1>Competition Updates</h1>
-					<div style="height: 300px; overflow: scroll;">
-						<table style="margin-top:10px" cellspacing="10px">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/1.40.1/tsparticles.min.js"
+      integrity="sha512-8dBmE/Q84D0/2nwNVmTEkiUkXs8WBD6CzSrpjJzNdei7K7FbqVUeAShbx+5xt/APpPlZ6IJSs2c4FnULxkESow=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/js/common.js"></script>
+    <script>
+      tsParticles
+        .loadJSON("tsparticles", "presets/default.json")
+        .then((container) => {
+          console.log("callback - tsparticles config loaded");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+    <title>ICPR 2022 - CHART Competition</title>
+  </head>
+  <body>
+    <div class="h-screen" style="overflow-x: hidden">
+      <!-- Header -->
+      <div id="header">
+        <div class="relative h-screen-1/3">
+          <div id="tsparticles"></div>
+          <nav
+            id="navbar"
+            class="bg-transparent border-gray-200 px-2 sm:px-4 py-2.5 rounded"
+          >
+            <div
+              class="container flex flex-wrap justify-center items-center mx-auto"
+            >
+              <button
+                data-collapse-toggle="mobile-menu"
+                type="button"
+                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="mobile-menu-2"
+                aria-expanded="false"
+                onclick="toggleHidden('mobile-menu');"
+              >
+                <span class="sr-only">Open main menu</span>
+                <svg
+                  class="w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <svg
+                  class="hidden w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+                <ul
+                  class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
+                >
+                  <li>
+                    <a
+                      href="/index.html"
+                      class="block hover:bg-orange-500 hover:text-white text-white bg-orange-500 px-3 py-2 w-full rounded-md text-md font-semibold"
+                      >Home</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="/tasks.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Tasks</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="/schedule.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Schedule</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="/toolsanddata.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Tools and Data</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="/contactus.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Contact Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <div
+            style="z-index: 2; object-fit: cover; left: -1%; width: 102vw"
+            class="absolute bottom-0 w-full"
+          >
+            <img
+              src="./img/waves.svg"
+              alt="ondas perronas"
+              class="w-full"
+              style="transform: translateY(2px)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Home's Content -->
+      <div class="container mx-auto px-4 text-justify">
+        <div class="text-center">
+          <h1 class="font-medium leading-tight text-5xl my-4 text-orange-900">
+            <b>C</b>ompetition on <b>Ha</b>rvesting <b>R</b>aw <b>T</b>ables
+            from Infographics
+          </h1>
+        </div>
+        <div class="flex flex-col md:flex-row mb-4">
+          <div class="flex flex-col w-full md:w-1/2 mx-2">
+            <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+              Summary
+            </h2>
+            <p>
+              This competition is composed of a series of 6 sub-tasks for chart
+              data extraction, which when put together as a pipeline go from an
+              input chart image to a CSV file representing the data used to
+              create the chart. Entrants in the competition may choose to
+              participate in any number of sub-tasks, which are evaluated in
+              isolation, such that solving previous sub-tasks is not necessary.
+              We hope that such decomposition of the problem of chart data
+              extraction will draw broad participation from the Document
+              Analysis and Recognition (DAR) community. Additionally, we also
+              evaluate methods that perform the whole chart data extraction
+              pipeline from the chart image without receiving intermediate
+              inputs.
+            </p>
+          </div>
+          <div class="flex flex-col w-full md:w-1/2 mx-2">
+            <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+              Competition Updates
+            </h2>
+                    <div style="height: 180px; overflow-y: scroll;">
+						<table style="margin-top:1px" cellspacing="10px">
 							<!--
 							<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
 							-->
-							<tr> 
-								<td style="text-align:top;"> Jan 19 </td> <td><a href="leaderboards_2020.html"><b>Leaderboard</b></a> for UB PMC Task 4 Updated </td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Jan 18 </td> <td><b>Certificates</b> for <b>Winning</b> <br />participants delivered</td>
-							</tr>
 							<tr>
-								<td style="text-align:top;"> Jan 11</td> <td onclick="update_view('data_tools');">UB PMC datasets have been  <a href="http://tc11.cvc.uab.es/datasets/ICPR2020-CHART-Info_1;">released!</a></td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Nov 12 </td> <td><a href="leaderboards_2020.html"><b>Leaderboards</b></a> now available! </td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Oct 21 </td> <td><b>Testing sets now available</b> <br />for <b>registered</b> participants </td>
-							</tr>
-							<tr>
-								<td style="text-align:top;"> Oct 19 </td> <td> <a href="#RegistrationDetails">Registration</a> is closed!</td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Oct 10 </td> <td><b>Adobe Synth Train Dataset</b> <br />has been updated! (v1.2)</td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Sept 30 </td> <td><b>Adobe Synth Train Dataset</b> <br />has been updated! (v1.1)</td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Sept 23 </td> <td><b>UB PMC Train Dataset</b> <br />has been updated! (v1.2.1)</td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Sept 23 </td> <td><b>UB PMC Train Dataset</b> <br />has been updated! (v1.2)</td>
-							</tr>
-							<tr>
-								<td style="text-align:top;"> Sept 23 </td> <td> <a href="#RegistrationDetails">Registration</a> is still open!</td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Sept 07 </td> <td><b>UB PMC Train Dataset</b> <br />has been updated! (v1.1)</td>
-							</tr>
-							<tr> 
-								<td style="text-align:top;"> Jul 27 </td> <td> Training sets now available <br />for registered participants </td>
-							</tr>
-							<tr>
-								<td style="text-align:top;"> Mar 20 </td> 
-								<td> <a href="#RegistrationDetails">Registration</a> is now open!</td> </tr>						
-							<tr> <td style="text-align:top;"> Mar 13 </td> <td> Previous CHART-Info <a href="index_2019.html">here</a></td> </tr>
+								<td style="text-align:top; background-color:brown; color:white">   
+								<b>&nbsp Feb 21 &nbsp</b>   
+								</td> 
+								<td> <a href="#RegistrationDetails">Registration</a> is now open!</td> </tr>								
+							<tr> <td style="text-align:top; background-color:lightsalmon; color:white">   
+							<b>&nbsp Feb 20 &nbsp</b>   
+							</td><td>Previous <b>CHART-Info</b> links: <a href="index_2019.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">ICDAR2019</a>, <a href="index_2020.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" >ICPR2020</a></td> </tr>
 						</table>
 					</div>
-  				</div>
-			</div>
-			<table style="margin: auto;">
-				<tr>
-					<td><a name="subtaskchart"><img src="img/tasks.png" width="600px"></a></td>
-				</tr>
-			</table>
-			<h2>Background</h2>
-			<p>
-				Charts are a compact method of displaying and comparing data. In scientific publications, charts and graphs are often used to to summarize results, comparison of methodologies, emphasize the reasoning behind key aspects of the scientific process, and  justification of design choices, to name a few. Automatically extracting data from charts is a key step in understanding the intent behind a chart which could lead to a better understanding of the document itself. 
-			</p>
-			<table align="center" style="margin: auto;">
-				<tr>
-					<td><img src="img/charts.png" width="600px"></td>
-				</tr>
-				<tr>
-					<td style="font-size: 10pt; text-align: center; width: 600px;">Example chart types to use in the proposed competition. Note that all these were generated from the same tabular data.</td>
-				</tr>
-			</table>
-			
-			<p>
-				The DAR community has displayed a continued interest in classifying types of charts as well as processing charts to extract data. In the past decade, multiple applications have been built around automatic processing of charts such as retrieval, textual summarization of charts, making charts more accessible on the web, automatically redesigning charts, automatically assessing chart quality, preservation of charts from historical documents, chart data plagiarism detection, bibliometrics, visual question answering and accelerating discovery of new materials.
-			</p>
-			<p>
-				Prior competitions related to this area include DeTEXT which concentrated on detecting text in figures and ImageCLEF competition on medical compound figure separation and multi-label classification. However, these competitions do not concentrate on end-to-end data extraction from scientific charts, but include these as a sub-type of scientific figures in general. 
-			</p>
-			
-			<h2>Competition Outline</h2>
-			<p>
-			For ICPR 2020, we are providing <b>two sets</b> of datasets. Each set has its own training and testing datasets. The first set is <b>Adobe Synth</b> and the second set is <b>UB PMC</b>. Each of these sets of datasets represent a different type of challenges of the CHART recognition process. These datasets sets are <b>independent</b> of each other, and we will provide separated ranking for each task for each testing dataset.  
-			</p>
-			
-			<h3>Adobe Synthethic Datasets</h3>
-			<p>
-				The first set of datasets is based on a large number of synthetic chart images (created with matplotlib) 
-				with corresponding automatically derived annotations. The data (i.e. CSV files) used to generate the synthetic chart images are taken from real public data sources.
-			</p>
-			
-			<h3>UB PMC Datasets</h3>
-			<p>
-				The second set of datasets is based on a smaller number of chart images extracted from Open-Access publications found in the <a href='https://www.ncbi.nlm.nih.gov/pmc/'>PubMedCentral.</a> (PMC). This year we only picked images released under a Creative Commons By Attribution license (CC-BY), which allows us to redistribute them to the competition participants. Each image has a file name which can be used to easily find the original publication where the image appears. A team of human annotators was hired to annotate the chart images in a semi-automatic fashion.  
-			</p>
-			<h3>Evaluation</h3>
-			<p>
-			On October 19, 2020, we will release the test datasets, and by <b>October 26</b> competition participants are expected submit the following:
-			<ol>
-				<li> Predictions on each test dataset </li>
-				<li> A short system description </li> 
-				<li> Runnable code that reproduces the results (e.g. Docker container, executable, jar file, etc.) or any other proof that results have been generated using a real software system</li>
-			</ol>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center">
+          <img
+            src="./img/tasks.png"
+            alt="tasks"
+            class="md:max-w-4xl self-center"
+          />
+        </div>
+        <div class="flex flex-col mb-4">
+          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            Background
+          </h2>
+          <p>
+            Charts are a compact method of displaying and comparing data. In
+            scientific publications, charts and graphs are often used to to
+            summarize results, comparison of methodologies, emphasize the
+            reasoning behind key aspects of the scientific process, and
+            justification of design choices, to name a few. Automatically
+            extracting data from charts is a key step in understanding the
+            intent behind a chart which could lead to a better understanding of
+            the document itself.
+          </p>
+          <div class="flex flex-col justify-center text-center my-4">
+            <img
+              src="./img/charts.png"
+              alt="charts"
+              class="md:max-w-4xl self-center"
+            />
+            <p>
+              Example chart types to use in the proposed competition. Note that
+              all these were generated from the same tabular data.
+            </p>
+          </div>
+          <p>
+            The DAR community has displayed a continued interest in classifying
+            types of charts as well as processing charts to extract data. In the
+            past decade, multiple applications have been built around automatic
+            processing of charts such as retrieval, textual summarization of
+            charts, making charts more accessible on the web, automatically
+            redesigning charts, automatically assessing chart quality,
+            preservation of charts from historical documents, chart data
+            plagiarism detection, bibliometrics, visual question answering and
+            accelerating discovery of new materials.
+          </p>
+          <p class="my-4">
+            Prior competitions related to this area include DeTEXT which
+            concentrated on detecting text in figures and ImageCLEF competition
+            on medical compound figure separation and multi-label
+            classification. However, these competitions do not concentrate on
+            end-to-end data extraction from scientific charts, but include these
+            as a sub-type of scientific figures in general.
+          </p>
+        </div>
 
-			The organizers will tabulate the results for each subtask for each dataset and present it at <a href="https://www.micc.unifi.it/icpr2020/">ICPR 2020 in Milan, Italy.</a>.
-			Note that you <b>do not need to attend ICPR 2020</b> to participate in this competition.
-			</p>
-
-			<p> The sub-tasks considered in this competition are </p>
-				<ol>
-					<li> Chart Image Classification (e.g. bar, box, line) </li>
-					<li> Text Detection and Recognition </li>
-					<li> Text Role Classification (e.g. title, x-axis label) </li>
-					<li> Axis Analysis </li>
-					<li> Legend Analysis </li>
-					<li> Data Extraction 
-						<ol> 
-							<li type="a"> Plot Element Detection/Classification </li> 
-							<li type="a"> Raw Data Extraction </li> 
-						</ol> 
-					</li>
-				</ol>
-			<p> 
-			Each subtask is evaluated in isolation, meaning that systems have access to the ideal output 
-				(i.e. Ground Truth) of <a href="#subtaskchart">previous subtasks.</a>
-			Subtasks 3-5 are considered parallel tasks and only receive the outputs of subtasks 1 and 2.
-			For example, the input for the Axis Analysis sub-task is the chart image, chart type, text bounding boxes, and text transcriptions.
-			Each sub-task has its own evaluaton metric, detailed on the Tasks page. 
-			
-			</p>
-			<p>
-				Participants are not obligated to perform all subtasks or all datasets and may submit test results for any set of subtasks or datasets they wish.
-				Additionally, methods may be submitted for the complete data extraction task where systems are only given the chart image (no intermediate inputs)
-					and are expected to produce the raw data used to produce the chart (same output as subtask 6b).
-			</p>						
-			
-			<h2>Registration</h2>	
-			<p> <a id="RegistrationDetails"></a> To register, please send an email to <a href="mailto:chart.infographics@gmail.com">chart.infographics@gmail.com</a>. Please include the following: </p>
-				<ul>
-					<li> Names of participants </li>
-					<li> Primary contact person </li>
-					<li> Affiliation of participants </li>
-					<li> Team Name </li>
-					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
-				</ul>
-			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
-			<h2>Acknowledgements</h2>
-			<p>
-				The creation of our manually curated real CHART dataset was partially supported by the National Science Foundation under Grant No.1640867 (OAC/DMR).
-			</p>
-			
-		</div>
-		<div id="tasks" style="display: None;">
-			<h1>Competition Tasks</h1>
-			<p>
-				The main task of the competition is to, given a chart image, extract the raw data that was used to create the chart image.
-				We acknowledge that building an entire chart processing pipeline is time consuming, 
-					so to encourage participation from the wider community, we divide the overall task into several smaller sub-tasks that can be solved in isolation.
-				For each sub-task, the ground truth (GT) outputs of some previous sub-tasks are provided as input.
-				<b>Researchers are encouraged to participate in as many or few sub-tasks as they like.</b>
-				However, we also evaluate systems that perform the entire pipeline of sub-tasks without intermediate inputs.
-			</p>
-			<table style="margin: auto;">
-				<tr>
-					<td><img src="img/tasks.png" width="600px"></td>
-				</tr>
-			</table>
-			<p>
-				Note that since some partial ground truth will be provided for task with dependencies, 
-					disjoint subsets of the test set will be used to evaluate these tasks independently for fairness. 
-				For all tasks, the chart image is provided.
-				
-				<a id="TaskList">Here is a list of the subtasks and the main task.</a>
-			</p>
-			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
-				<tr> 
-					<td> <a href="#task1">1) Chart Classification</a> </td> 
-					<td> <a href="#task2">2) Text Detection/Recognition</a> </td> 
-					<td> <a href="#task3">3) Text Role Classification</a> </td> 
-					<td> <a href="#task4">4) Axis Analysis</a> </td> 
-				</tr> <tr> 
-					<td> <a href="#task5">5) Legend Analysis</a> </td> 
-					<td> <a href="#task6a">6a) Plot Element Detection/Classification</a> </td> 
-					<td> <a href="#task6b">6b) CSV Extraction</a> </td> 
-					<td> <a href="#task7"> End-to-End Data Extraction</a> </td> 
-				</tr>
-			</table>
-			
-			<a name='task1'><h2>1) Chart Image Classification</h2></a>
-			<p> 
-				Knowing the type of chart greatly affects what processing needs to be done.
-				Thus, the first sub-task is to classify chart images by type. 
-				Given the chart image, methods are expected to output the chart class. 
-				We are providing two datasets, each one has a different set 
-				of classes as follows. We expect participants to develop <b>two versions</b> of their
-				classification system, one for each set of datasets, which will be <b>evaluated independently</b>.
-			</p>
-			<p> Note that many classes included in this first task such as <b>pie and donut plots are not used</b> for the remaining sub-tasks. </p>
-				
-			<h3>Classes of Chart Images on Adobe Synthetic Datasets</h3>
-			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
-				<tr>
-					<td>Area</td>
-					<td>Donut</td>
-					<td>Horizontal Box</td>
-					<td>Horizontal Grouped Bar</td>
-				</tr>
-				<tr>
-					<td>Horizontal Stacked Bar</td>
-					<td>Line</td>
-					<td>Pie</td>
-					<td>Polar</td>
-				</tr>
-				<tr>
-					<td>Scatter</td>
-					<td>Vertical Box</td>
-					<td>Vertical Grouped Bar</td>
-					<td>Vertical Stacked Bar</td>
-				</tr>
-			</table>
-				
-			<p> 
-				For bar charts that have a single set of bars (single data series), 
-					it is visually ambigious whether it a Grouped or Stacked bar chart, though their
-					ground truth class indicates one of these classes.
-				In this case we accept either prediction, as long as the orientation (vertical or horizontal)
-				is correct.
-				For example, a vertical bar chart with a single data series can be classified as either
-				<i>Grouped vertical bar</i> or <i>Stacked vertical bar</i>.
-			</p>
-				
-			<h3>Classes of Chart Images on UB PMC Datasets</h3>
-			<table style="margin:auto; width:100%; font-size:11pt; text-align:center">
-				<tr>
-					<td>Area</td>
-					<td>Heatmap</td>
-					<td>Horizontal Bar</td>
-					<td>Horizontal Interval</td>
-				</tr>
-				<tr>
-					<td>Line</td>
-					<td>Manhattan</td>
-					<td>Map</td>
-					<td>Pie</td>
-				</tr>
-				<tr>
-					<td>Scatter</td>
-					<td>Scatter-Line</td>
-					<td>Surface</td>
-					<td>Venn</td>
-				</tr>
-				<tr>
-					<td>Vertical Bar</td>
-					<td>Vertical Box</td>
-					<td>Vertical Interval</td>
-					<td>&nbsp;</td>
-				</tr>
-			</table>
-				
-
-			<h3> Metric </h3>
-			<p>
-				The evaluation metric will be the <b>average per-class F-measure.</b>
-				Based on the class confusion matrix, we can compute the precision, recall, and F-measure for each class.
-				The overall score is the average of each classes' F-measure.
-			</p>
-			<p>
-				To account for charts with multiple possible labels (i.e. single data series bar charts), the per-class
-					precision and recall is modified to not penalize ambiguous cases.
-			</p>
-			<h3> Input/Output </h3>
-			<p> Input: Chart Image </p>
-			<p> Output: Chart Class </p>
-			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-
-
-			<a name='task2'><h2>2) Text Detection and Recognition</h2></a>
-			<p>
-				Understanding the text in charts is necessary to interpret the graphical elements correctly.
-				This sub-task concentrates on detecting and recognizing the text within the chart image. 
-				Competing systems are expected to produce tight bounding boxes and transcriptions for each text block.
-				Examples of individual text blocks individual titles, tick labels, legend labels.
-				Text blocks may be a single line, multiple lines (due to text wrapping), and may be horizontal, vertical, or rotated.
-			</p>
-			<p>
-				A predicted bounding box matches a GT bounding box if their Intersection Over Union (IOU) is at least 0.5, 
-					and tighter IOU criteria will be used to resolve ties when multiple predictions can match a single GT bounding box.
-			</p>
-			<h3> Metric </h3>
-			<p> There are two evalaution metrics for detection and recognition respectively.
-				For detection, we will sum the per-block <b>IOU</b> and divide by max(#predicted, #GT) for each image.
-				For recognition, we will average <b>normalized Character Error Rate (CER)</b> for each text block in an image.
-				By normalized CER, we mean that the number of character edits to transform a predicted word to GT word is divided by the length of the GT block.  
-				False positive and false negative text block detections will be assigned a normalized CER of 1 and an IOU of 0.
-				We will use the same procedure as the ICDAR Robust Reading Competitions to handle split/merged boxes.
-			</p>
-			<p>
-				For each chart, we will compute both detection and recognition scores.
-				Then we will average the per-chart scores over the whole dataset to ensure that each image contributes equally to the final score.
-				The winner for the sub-task will be determined by the system with the highest harmonic mean of detection and recognition scores.
-			</p>
-			<h3> Input/Output </h3>
-			<p> Input: Chart Image, Chart Class </p>
-			<p> Output: List of (Text Block BBs, Text Transcription) </p>
-			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-
-			<a name='task3'><h2>3) Text Role Classification</h2></a>
-			<p>
-				For text to be useful in chart interpretation, its semantic <i>role</i> should be identified.
-				This sub-task focuses on identifying the role of each text block in a chart image, and text bounding boxes and transcripts are provided as input.
-				Competing systems are expected to classify each bounding box into one of the following roles.
-			</p>
-			
-			<table style="width:100%; font-size:11pt; text-align:center; align:center">
-				<tr>
-					<td> Chart Title </td>
-					<td> Axis Title </td>
-					<td> Tick Label (x and y axes values) </td>
-				</tr><tr>
-					<td> Tick Grouping (x and y axes) </td>
-					<td> Legend Title </td>
-					<td> Legend Label </td>
-				</tr><tr>
-					<td> Value Label </td>
-					<td> Data Marker Label </td>
-					<td> Other </td>
-				</tr>
-			</table>
-			<p>
-				*For <b>Adobe Synth Datasets</b>, only a <b>subset</b> of these classes are used. 
-			</p>
-			<h3> Metric </h3>
-			<p>Similar to the evaluation in sub-task 1 (chart classification), the evaluation metric will be the <b>average per-class F-measure.</b></p>
-
-			<h3> Input/Output </h3>
-			<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
-			<p> Output: List of (Text Block Id, Text role) </p>
-			
-			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-
-			<a name='task4'><h2>4) Axis Analysis</h2></a>
-			<p>
-				Locating and interpreting the axes of the chart is critical to transforming data point coordinates from units of pixels to the semantic units.
-				Competing systems are expected to output the location and value of each tick mark on both the X-axis and Y-axis.
-				Tick locations are represented as points and must be associated with the corresponding value (a string).
-				Note that some sets of ticks are ordered or unordered discrete sets with textual non-numeric labels.
-			</p>
-			<p>
-				For this competition, X-axis will always refer to the axis that represents the independent variable shown, 
-					rather than the axis that is visually horizontal.
-				For example, vertical bar and vertical box plots have an X-axis that is vertical.
-				Similarly, the Y-axis is not always the axis that is vertical.
-			</p>
-				
-			<h3> Metric </h3>
-			<p> 
-				We use a <b>modified F-measure</b> to score each axis and then take the average F-measure over all axes.  
-				Each detected tick is scored for correctness, receiving a score between 0 and 1.
-				Precision is then computed as the sum of the scores divided by the number of predictions.
-				Recall is computed as the sum of the scores divided by the number of ground truth ticks.
-			</p>
-			<p>
-				A detected tick receives a score of 1 if the predicted point is close to the corresponding
-					GT tick point, where correspondance between predictioned and GT ticks is based on the
-					text BB and transcription.
-				The threshold for close (scoring 1) and the threshold for far (scoring 0) is based on the distance
-					between tick marks in the chart image.
-				Predictions that are between the close and far thresholds are penalized linearly with distance.
-			</p>
-			<h3> Input/Output </h3>
-			<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
-			<p> Output: For each of X-axis and Y-axis, List of tuples (tick x position, tick y position, Text Block Id)</p>
-			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-
-			<a name='task5'><h2>5) Legend Analysis</h2></a>
-			<p>
-				The purpose of chart legends is to associate a data series name with the graphical style used to represent it
-				This is critical to chart understanding when there are multiple data series represented.
-			</p>
-			<p>
-				Competing systems are expected to associate each legend label text with the corresponding graphical style element within the legend area.
-				Bounding boxes and transcriptions (but not text roles) are given as input.
-				Note that in this task, legend labels are not paired with the corresponding data series found in the plot area.
-				Also, some charts do not have legends, and an empty list should be returned.
-			</p>
-			<h3> Metric </h3>
-			<p>
-				For each GT legend label, if there is an associated predicted graphical style element, 
-					we compute the <b>IOU</b> of the predicted BB to the GT graphical style element BB.
-				We then divide the sum of the IOU by max(#predicted, #GT) for each image, and then average this value over all images.
-			</p>
-			<p>
-				For charts that have no legend, it is expected that participant systems return an empty list to receive the max score
-					for that chart.
-				When there is no legened, specifying any output results in a score of 0 for that chart.
-			</p>
-			<h3> Input/Output </h3>
-			<p> Input: Chart Image, Chart Class, List of (Text Block BB, Text Transcription, Text Block Id) </p>
-			<p> Output: A list of (Text Block Id, Graphical Style Element BB) </p>
-			<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-
-			<h2>6) Data Extraction</h2>
-			<p>
-				The goal of this task is to convert all of the previously extracted information into a CSV file.
-				We break this task into 2 subtasks: (a) plot element detection and classification (b) data conversion.
-				Competitor systems are expected to produce output for both sub-tasks.
-				It is also permitted for competitors to only perform this sub-task only for certain classes of charts.
-			</p>
-			<a name='task6a'><h2>6a) Plot Element Detection/Classification</h2></a>
-			<p>
-				For 6a, the subtask of visual analysis, the goal is to detect and classify each individual element in the plot area.
-				The representation of the element varies by class and is listed in the table below.
-				Note that the output representations (BB or point) are in units of pixels.
-			</p>
-			<table style="width:100%; font-size:11pt; text-align:center; align:center">
-				<tr> <th> Element Class</th> <th> Description </th> <th> Representation </th> </tr>
-				<tr> <td> Bar </td> <td> Individual bars in bar charts </td> <td> Bounding Box </td> </tr>
-				<tr> <td> Line Point </td> <td> Location of Data Points in line charts </td>  <td> Point </td> </tr>
-				<tr> <td> Scatter Marker </td> <td> Location of Data Points in scatter charts </td>  <td> Point </td> </tr>
-				<tr> <td> Boxplot Median </td> <td> Median Line of Boxplot </td>  <td> Point </td> </tr>
-				<tr> <td> Boxplot Box Top </td> <td> Line that is typically the upper quartile</td>  <td> Point </td> </tr>
-				<tr> <td> Boxplot Box Bottom </td> <td> Line that is typically the lower quartile</td>  <td> Point </td> </tr>
-				<tr> <td> Boxplot Top Wisker </td> <td> Line that is typically the max value</td>  <td> Point </td> </tr>
-				<tr> <td> Boxplot Bottom Wisker </td> <td> Line that is typically the min value</td>  <td> Point </td> </tr>
-			</table>
-			<p> 
-				Even though boxplot elements are visually line segments, we allow for any point on that line segment.  
-				Other plot elements, such as boxplot outlier points and error bars, 
-					are not evaluated and should not be contained in the output for this sub-task.
-				Note that the chart class is given as input to this task and that each plot element can be found in only one class of chart.
-			</p>
-			<h3> Metric </h3>
-			<p>
-				For an element to be correctly detected, it must be <b>assigned to the correct class.</b>
-				We will use a variation on MSE to evaluate the representation of each element with the correct class.
-				For each element, we compute a score between 0 and 1, where 1 represents an exact prediction, 
-					and predictions farther away than a distance threshold, T, receive a score of 0.
-				<b>The score is max(0, 1 - (D/T)^2)</b>, where D is the Euclidean distance between the predicted and GT points.
-				The distance threshold, T, is determined to be <b>1%</b> of the smallest image dimension.
-				Because there are many ways to pair predicted and GT points, we will find the minimum cost pairing
-					(i.e. solve this bi-partite graph matching problem).
-			</p>
-			<p> 
-				For Boxplot elements, we will use <b>distance between the predicted point and the line segment.</b>
-				For Bar chart bars, we will use the <b>distances between corresponding BB corners.</b>
-			</p>
-			<p> For each chart, the scores will be summed and divided by max(#GT, #Predictions).  
-				Then these scores will be averaged across all images. 
-			</p>
-			<p>
-				For line plots, individual lines must be segmented from each other, and will be scored similarly as lines in 6b,
-					except the units of predicted values should be in pixels for this task.
-			</p>
-
-				<h3> Input/Output </h3>
-					<p> Input: Outputs of tasks 1-5 </p>
-					<p> Output: List of (Element Class, Element Representation) </p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-
-			<a name='task6b'><h2>6b) Raw Data Extraction</h2></a>
-				<p>
-					Output the raw data that was used to generate the chart image.
-					For the purpose of this competition, we define a simple schema, where each chart is a set of data series, 
-						and a data series is a name (string) and a list of (x,y) points.
-					The x values can be either numerical or string values, depending on the X-axis domain.
-					The y values are always numerical.
-				</p>
-				<p>
-					For box plots, it is not necessary to reproduce the raw data as the plot only shows a statistical summary.  
-					Instead, participants are expected to recover the dataset median, upper and lower quartiles, and wisker values.
-					The interpretation of the wiskers (e.g. dataset min/max or 2/98 percentiles) is not always contained in the chart image itself,
-						so we do not require this information at any stage of the competition.
-				</p>
-				<h3> Metric </h3>
-					<p>
-						Data Series names should come from the chart legend (if there is one).  
-						If the data series names are not specified in the chart image, then the predicted names are <b>ignored for evaluation purposes</b>.
-					</p>
-
-					<p> See this <a href="metrics/metric.pdf">PDF</a> for details </p>
-
-				<h3> Input/Output </h3>
-					<p> Input: Outputs of tasks 1-5. </p>
-					<p> Output: Set of Data Series.  Data Series = (name, [(x_1, y_1), ..., (x_n, y_n)]) </p>
-					<p> The output of 6a is <b>not</b> given as an input to 6b. </p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-
-			<a name='task7'><h1>End-to-End Data Extraction</h1></a>
-			<p>
-				This is the main task of the competition and involves producing the CSV file directly from the chart image without any intermediate inputs.
-				The competing systems will be evaluated on the metric for subtask 6b, and are free to use third party software (e.g. for OCR).
-			</p>
-				<h3> Metric </h3>
-					<p>See Metric for sub-task 6b.</p>
-
-				<h3> Input/Output </h3>
-					<p> Input: Chart Image. </p>
-					<p> Output: See output of sub-task 6b. </p>
-				<h4> List of <a href="#TaskList">sub-tasks</a></h4>	
-		</div>
-		<div id="schedule" style="display: None;">
-			<h1>Competition Schedule</h1>
-			<table style="margin-top:30px">
-				<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
-				<tr> <td>July 27, 2020 </td> <td> Training Data Release </td> </tr>
-				<tr> <td>October 21, 2020</td> <td> Test Data Release</td> </tr>
-				<tr> <td>October 26, 2020</td> <td> Half Page Description of System due</td> </tr>
-				<tr><td>October 30, 2020</td><td><b>Results due</b> by email  </td> </tr>
-				<tr><td>November 6, 2020</td><td><b>Full report due</b> </td> </tr>
-				<tr> <td> <b>November 2020</b> </td> <td> <b>Winners</b> Announcement  </td> </tr>
-			</table>
-		</div>
-		<div id="data_tools" style="display: None;">
-			<h1>Tools and Data</h1>
-
-			<h2>Sample Data</h2>
-			<p> 
-				Below you can find samples from each training set. 
-				We provide a few chart images with their corresponding annotations in a JSON file. 
-				The inputs and expected outputs for each sub-task are specified in the JSON file. 
-				Key values that begin with an underscore (_) are not required output, but are given as part of
-					the ground truth annotations, in case this information is useful.
-			</p>
-			<p>
-				<b>Adobe Synth Datasets. </b> We have sample data for each chart type for <a href="synth_sample.zip">download.</a>
-				Each chart has a PNG image produced by matplotlib. In the samples, we have also included a visualization of the JSON annotations on the image.
-				These visualizations were generated with this <a href="visualize_json.py">python script.</a>
-			</p>
-			<p>
-				<b>UB PMC Datasets. </b> We have sample data for the main each chart types for <a href="UB_PMC_sample_1.21.zip">download.</a> Each chart has a JPEG image as given by the PubMedCentral. 
-			</p>
-			
-			<h2>Datasets from ICPR CHART-Infographics 2020</h2>
-			<p>
-				Datasets from the latest edition of our competition are publicly available and can be used for benchmarking. 
-			</p>
-			<p>
-				ICPR CHART-Infographics 2020 - UB PMC dataset <a href="http://tc11.cvc.uab.es/datasets/ICPR2020-CHART-Info_1;">(ICPR-2020-CHART-UB_PMC)</a>
-			</p>
-			<h2>Datasets from ICDAR CHART-Infographics 2019</h2>
-			<p>
-				Datasets from the previous edition of our competition are publicly available and can be used
-				as reference only. Note that most annotations from the ICDAR 2019 PubMedCentral dataset <b>have been improved and are already included</b> in the latests UB PMC Training Dataset that we provided in 2020. 
-			</p>
-			<p>
-				ICDAR CHART-Infographics 2019 - Synthethic dataset <a href="http://tc11.cvc.uab.es/datasets/CHART2019-S_1">(CHART2019-S)</a>
-			</p>
-			<p>
-				ICDAR CHART-Infographics 2019 - PubMedCentral dataset <a href="http://tc11.cvc.uab.es/datasets/ICDAR-CHART-2019-PMC_1">(CHART2019-PMC)</a>
-			</p>
-
-			<h2>Chart Annotation Tools</h2>
-			<p>
-				The tools used for the annotation of chart images can be found <a href="https://github.com/kdavila/ChartInfo_annotation_tools">here</a>
-			</p>
-			<h2>Registration</h2>
-			<p> To register, please send an email to <a href="mailto:chart.infographics@gmail.com">chart.infographics@gmail.com</a>.  Please include the following. </p>
-				<ul>
-					<li> Names of participants </li>
-					<li> Primary contact person </li>
-					<li> Affiliation of participants </li>
-					<li> Team Name </li>
-					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
-				</ul>
-			<p> Upon registration, you will be sent additional information to obtain the training and test data when it becomes available. </p>
-		</div>
-		<div id="contact" style="display: None;">
-			<h1>Registration and Contact Information</h1>
-			<p>
-				For any inquiries, please email us at <a href="mailto:chart.infographics@gmail.com">chart.infographics@gmail.com</a>.
-			<p> To register, please send an email to <a href="mailto:chart.infographics@gmail.com">chart.infographics@gmail.com</a>.  Please include the following. </p>
-				<ul>
-					<li> Names of participants </li>
-					<li> Primary contact person </li>
-					<li> Affiliation of participants </li>
-					<li> Team Name </li>
-					<li> List of tasks you are interested in participating in (you are not restricted to this list) </li>
-				</ul>
-			</p>
-			<p> Upon registration, you will be sent additional information to obtain the training and test data that we have made available only to registered participants. </p>
-
-			<h2> Organizer Information </h2>
-				<table width='100%'>
-					<col width="150px">
-					<col width="450px">
-					<tr>
-						<td> <img src="img/kenny.jpg" width="130px" align="center"><p> Kenny Davila </p> </td>
-						<td> 
-							Kenny is a Post-doctoral Associate at the Center for Unified Biometrics and Sensors, University at Buffalo, SUNY. 
-							He has created and released open source tools for labeling and evaluation of Lecture Video Summarization approaches, 
-								included with the release of the AccessMath Lecture Video Dataset, 
-								as well as a baseline method for summarization of lecture videos (ICDAR 2017).
-							His open source visual search engine (Tangent-V) received the Best Paper Award at ICFHR 2018.
-						</td>
-					</tr>
-					<tr>
-						<td> <img src="img/chris.jpg" width="130px" align="center"> <p>Chris Tensmeyer</p> </td>
-						<td> 
-							Chris joined Adobe Research in the Document Intelligence Lab in 2018, 
-								and received his PhD in Computer Science from Brigham Young University in 2019.
-							His research interests lie at the intersection of document analysis and deep learning with
-								tasks such as chart and table understanding, layout analysis, and handwriting recognition.
-							He is also interested in deep learning models and training with applications to computer vision and
-								natural language processing.
-						</td>
-					</tr>
-					<tr>
-						<td> <img src="img/hrituraj.png" width="130px" align="center"> <p>Hrituraj Singh</p> </td>
-						<td>
-						Hrituraj works as a Research Engineer in Adobe Research, India where he works at the intersection of Natural Language Processing and Computer Vision Problems. Previously, he interned with Adobe in 2018 where he worked on tailored summary generation.
-						He recently graduated in Electrical Engineering from IIT Roorkee.
-						</td>
-					</tr>
-					<tr>			
-						<td> <img src="img/sumit.jpg" width="130px" align="center"> <p>Sumit Shekhar</p> </td>
-						<td> 
-							Sumit joined Adobe Research Labs India as a Research Scientist in August 2014. 
-							He completed his doctoral studies at University of Maryland under Prof. Rama Chellappa. 
-							Previously, he received B. Tech. in Electrical Engineering from IIT Bombay. 
-							His research interests are in computer vision and machine learning. 
-							At Adobe, he is a part of Document Intelligence group, working on topics like document structural analysis and question/answering. 
-							He has also explored video content analysis and AR/VR interfaces during his work at Adobe.
-						</td>
-					</tr>
-					<tr>
-						<td> <img src="img/ranga.jpg" width="130px" align="center"><p> Srirangaraj Setlur </p> </td>
-						<td> 
-							Ranga is a Principal Research Scientist at the Center of Excellence for Document Analysis and Recognition, 
-								Department of Computer Science and Engineering and Co-Director of the 
-								NSF Center for Identification Technology Research at the University at Buffalo, SUNY. 
-							He has contributed significantly to the development of real-time automated systems for handwriting recognition 
-								and multilingual OCR well as to the development of methodologies for evaluating the performance of large scale recognition systems.
-							He is on the editorial board of IJDAR and is a co-author of the Springer Guide to OCR of Indic scripts. 
-							He is a Senior Member of IEEE.
-					</tr>
-					<tr>
-						<td> <img src="img/venu.jpg" width="130px" align="center"><p> Venu Govindraju </p> </td>
-						<td> Venu Govindaraju is responsible for managing UB's research enterprise, university/industry relations and economic development, 
-								contributing to the economic and cultural vitality of New York State and around the world.
-							Govindaraju's research focuses on machine learning and pattern recognition and his seminal work in handwriting recognition 
-								was at the core of the first handwritten address interpretation system used by the U.S. Postal Service.
-							Dr. Govindaraju has authored more than 400 scientific papers including over 80 journal papers.
-						</td>
-					</tr>
-				</table>
-		</div>
-	</div>
-  </div>
-  <script>
-	update_view("home");
-  </script>
-</body>
+        <div class="flex flex-col mb-4">
+          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            Competition Outline
+          </h2>
+          <h3 class="font-medium leading-tight text-3xl my-4 text-orange-800">
+            Dataset
+          </h3>
+          <p>
+            Our previous competitions used both real and synthetic charts datasets for all tasks. For ICPR 2022, we are providing a <b>extended UB PMC dataset</b>, which contains real charts extracted from Open-Access publications found in the <a
+              class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              href="https://www.ncbi.nlm.nih.gov/pmc/"
+            >
+              PubMedCentral.
+            </a>(<b>PMC</b>). Following the same protocol, we only picked images released under a Creative Commons By Attribution license (CC-BY), which allows us to redistribute them to the competition participants. 
+          </p>
+          <br/>
+		  <p>
+		  For this competition, <b>UB PMC</b> has a new, larger training set (by merging training and testing sets from previous competition), and a novel testing set that is also collected and annotated on real charts. Participants can use additional datasets (e.g. <b>Adobe Synth</b> from previous competition) to improve the performance of their framework, as long as it is notified in their final result.
+		  </p>
+		  
+          <h3 class="font-medium leading-tight text-3xl my-4 text-orange-800">
+            Evaluation
+          </h3>
+          <p>
+            On May 1st, 2022, we will release the test datasets, and by
+            <b>May 8th</b> competition participants are expected submit the
+            following:
+          </p>
+          <ol class="list-decimal list-inside">
+            <li>Predictions on each test dataset</li>
+            <li>A short system description</li>
+            <li>
+              Runnable code that reproduces the results (e.g. Docker container,
+              executable, jar file, etc.) or any other proof that results have
+              been generated using a real software system
+            </li>
+          </ol>
+          <br />
+          <p>
+            The organizers will tabulate the results for each subtask for each
+            dataset and present it at
+            <a
+              class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              href="https://www.icpr2022.com"
+            >
+              ICPR 2022 in Montréal Québec, Canada
+            </a>.
+            Note that you do not need to attend ICPR 2022 to participate in this
+            competition.
+          </p>
+          <br />
+          <p>The sub-tasks considered in this competition are</p>
+          <ol class="list-decimal list-inside">
+            <li>Chart Image Classification (e.g. bar, box, line)</li>
+            <li>Text Detection and Recognition</li>
+            <li>Text Role Classification (e.g. title, x-axis label)</li>
+            <li>Axis Analysis</li>
+            <li>Legend Analysis</li>
+            <li>
+              Data Extraction
+              <ol class="list-alpha list-inside ml-8">
+                <li>Plot Element Detection/Classification</li>
+                <li>Raw Data Extraction</li>
+              </ol>
+            </li>
+          </ol>
+          <br />
+          <p>
+            Each subtask is evaluated in isolation, meaning that systems have
+            access to the ideal output (i.e. Ground Truth) of previous subtasks.
+            Subtasks 3-5 are considered parallel tasks and only receive the
+            outputs of subtasks 1 and 2. For example, the input for the Axis
+            Analysis sub-task is the chart image, chart type, text bounding
+            boxes, and text transcriptions. Each sub-task has its own evaluaton
+            metric, detailed on the Tasks page.
+          </p>
+          <br />
+          <p>
+            Participants are not obligated to perform all subtasks or all
+            datasets and may submit test results for any set of subtasks or
+            datasets they wish. Additionally, methods may be submitted for the
+            complete data extraction task where systems are only given the chart
+            image (no intermediate inputs) and are expected to produce the raw
+            data used to produce the chart (same output as subtask 6b).
+          </p>
+        </div>
+        <div class="flex flex-col mb-4">
+          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            Registration
+          </h2>
+          <p>
+		    <a id="RegistrationDetails"></a>
+            To register, please send an email to
+            <a
+              class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              href="mailto:chart.infographics@gmail.com"
+            >
+              chart.infographics@gmail.com</a
+            >.<br />Please include the following:
+          </p>
+          <br />
+          <ul class="list-disc list-inside ml-4">
+            <li>Names of participants</li>
+            <li>Primary contact person</li>
+            <li>Affiliation of participants</li>
+            <li>Team Name</li>
+            <li>
+              List of tasks you are interested in participating in (you are not
+              restricted to this list)
+            </li>
+          </ul>
+          <br />
+          <p>
+            Upon registration, you will be sent additional information to obtain
+            the training and test data when it becomes available.
+          </p>
+        </div>
+        <div class="flex flex-col mb-4">
+          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            Acknowledgements
+          </h2>
+          <p>
+            The creation of our manually curated real CHART dataset was
+            partially supported by the National Science Foundation under Grant
+            No.1640867 (OAC/DMR).
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
