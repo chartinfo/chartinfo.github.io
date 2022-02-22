@@ -240,16 +240,7 @@
             >
               <a href="#sixth">Data Extraction</a>
             </li>
-            <li
-              class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
-            >
-              <a href="#sixthA">Plot Element Detection/Classification</a>
-            </li>
-            <li
-              class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
-            >
-              <a href="#sixthB">Raw Data Extraction</a>
-            </li>
+            
             <li
               class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
             >
@@ -581,26 +572,36 @@
               <p>
                 The goal of this task is to convert all of the previously
                 extracted information into a CSV file. We break this task into 2
-                subtasks: (a) plot element detection and classification (b) data
-                conversion. Competitor systems are expected to produce output
+                subtasks.
+			  </p>	
+				<br />
+				<ul class="list-disc list-inside ml-4">
+					<li>Plot Element Detection/Classification</li>
+					<li>Primary contact person</li>
+				
+				</ul>
+				<br />
+			  <p>	
+				Competitor systems are expected to produce output
                 for both sub-tasks. It is also permitted for competitors to only
                 perform this sub-task only for certain classes of charts.
               </p>
-            </div>
-            <div id="sixthA" class="hidden container mx-auto px-4 text-justify">
-              <h1
-                class="font-medium leading-tight text-5xl my-4 text-orange-900"
-              >
-                Plot Element Detection/Classification
-              </h1>
-              <p>
+			  
+			  <div>
+                <h3
+                  class="font-medium leading-tight text-4xl my-4 text-orange-900"
+                >
+                  a) Plot Element Detection/Classification
+                </h3>
+                <p>
                 For 6a, the subtask of visual analysis, the goal is to detect
                 and classify each individual element in the plot area. The
                 representation of the element varies by class and is listed in
                 the table below. Note that the output representations (BB or
                 point) are in units of pixels.
-              </p>
-              <table class="table-auto w-full mt-4">
+                </p>
+                <br />
+                <table class="table-auto w-full mt-4">
                 <thead
                   class="text-xs font-semibold uppercase text-gray-600 bg-gray-200"
                 >
@@ -672,7 +673,7 @@
               </p>
               <div>
                 <h3
-                  class="font-medium leading-tight text-3xl my-4 text-orange-900"
+                  class="font-medium leading-tight text-2xl my-4 text-orange-900"
                 >
                   Metric
                 </h3>
@@ -700,13 +701,13 @@
                   For Bar chart bars, we will use the
                   <b>distances between corresponding BB corners.</b>
                 </p>
-                <br />
+                
                 <p>
                   For each chart, the scores will be summed and divided by
                   max(#GT, #Predictions). Then these scores will be averaged
                   across all images.
                 </p>
-                <br />
+                
                 <p>
                   For line plots, individual lines must be segmented from each
                   other, and will be scored similarly as lines in 6b, except the
@@ -715,19 +716,20 @@
               </div>
               <div>
                 <h3
-                  class="font-medium leading-tight text-3xl my-4 text-orange-900"
+                  class="font-medium leading-tight text-2xl my-4 text-orange-900"
                 >
                   Input/Output
                 </h3>
                 <p>Input: Outputs of tasks 1-5</p>
                 <p>Output: List of (Element Class, Element Representation)</p>
+              </div>				
               </div>
-            </div>
-            <div id="sixthB" class="hidden container mx-auto px-4 text-justify">
-              <h1
-                class="font-medium leading-tight text-5xl my-4 text-orange-900"
+			  
+			  <div>
+			    <h1
+                class="font-medium leading-tight text-4xl my-4 text-orange-900"
               >
-                Raw Data Extraction
+                b) Raw Data Extraction
               </h1>
               <p>
                 Output the raw data that was used to generate the chart image.
@@ -759,10 +761,10 @@
                   chart image, then the predicted names are
                   <b>ignored for evaluation purposes.</b>
                 </p>
-                <br />
+                
                 <p>
                   See this
-                  <a href="https://chartinfo.github.io/metrics/metric.pdf"
+                  <a href="https://chartinfo.github.io/metrics/metric.pdf" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
                     >PDF</a
                   >
                   for details
@@ -780,7 +782,9 @@
                   ..., (x_n, y_n)])
                 </p>
               </div>
+			  </div>	  
             </div>
+			
             <div
               id="seventh"
               class="hidden container mx-auto px-4 text-justify"
