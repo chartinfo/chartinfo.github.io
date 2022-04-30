@@ -57,14 +57,14 @@ def eval_task1(gt_folder, result_folder, output_img_path, class_auto_mapping):
     result_files = os.listdir(result_folder)
     gt_files = os.listdir(gt_folder)
     for gt_file in gt_files:
-        gt_id = ''.join(gt_file.split('.')[:-1])
+        gt_id = '.'.join(gt_file.split('.')[:-1])
         with open(os.path.join(gt_folder, gt_file), 'r') as f:
             gt = json.load(f)
             truth = gt['task1']['output']['chart_type'].lower().strip()
         gt_label_map[truth] = gt_label_map[truth] + [gt_id] if truth in gt_label_map else [gt_id]
         confusion[gt_id] = [truth, None]
     for result_file in result_files:
-        result_id = ''.join(result_file.split('.')[:-1])
+        result_id = '.'.join(result_file.split('.')[:-1])
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:

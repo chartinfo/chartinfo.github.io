@@ -121,7 +121,7 @@ def eval_task2(gt_folder, result_folder):
     total_text_score = 0.0
 
     for gt_file in os.listdir(gt_folder):
-        gt_id = ''.join(gt_file.split('.')[:-1])
+        gt_id = '.'.join(gt_file.split('.')[:-1])
 
         # print(" " * 120, end="\r")
         print("Processing: " + gt_id)

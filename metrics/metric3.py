@@ -69,7 +69,7 @@ def eval_task3(gt_folder, result_folder, output_img_path, classes_ignore):
     # for all GT files ... 
     for gt_file in gt_files:
         # read and get the roles ... 
-        gt_id = ''.join(gt_file.split('.')[:-1])
+        gt_id = '.'.join(gt_file.split('.')[:-1])
         with open(os.path.join(gt_folder, gt_file), 'r') as f:
             gt = json.load(f)    
         text_roles = gt['task3']['output']['text_roles']
@@ -99,7 +99,7 @@ def eval_task3(gt_folder, result_folder, output_img_path, classes_ignore):
 
     unique_roles = set()
     for result_file in result_files:
-        result_id = ''.join(result_file.split('.')[:-1])
+        result_id = '.'.join(result_file.split('.')[:-1])
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
