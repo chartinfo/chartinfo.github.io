@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/1.40.1/tsparticles.min.js"
+      integrity="sha512-8dBmE/Q84D0/2nwNVmTEkiUkXs8WBD6CzSrpjJzNdei7K7FbqVUeAShbx+5xt/APpPlZ6IJSs2c4FnULxkESow=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/js/common.js"></script>
+    <script>
+      tsParticles
+        .loadJSON("tsparticles", "presets/default.json")
+        .then((container) => {
+          console.log("callback - tsparticles config loaded");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+    <title>ICPR 2022 - CHART Competition</title>
+  </head>
+  <body>
+    <div class="h-screen" style="overflow-x: hidden">
+      <!-- Header -->
+      <div id="header">
+        <div class="relative h-screen-1/3">
+          <div id="tsparticles"></div>
+          <nav
+            id="navbar"
+            class="bg-transparent border-gray-200 px-2 sm:px-4 py-2.5 rounded"
+          >
+            <div
+              class="container flex flex-wrap justify-center items-center mx-auto"
+            >
+              <button
+                data-collapse-toggle="mobile-menu"
+                type="button"
+                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="mobile-menu-2"
+                aria-expanded="false"
+                onclick="toggleHidden('mobile-menu');"
+              >
+                <span class="sr-only">Open main menu</span>
+                <svg
+                  class="w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <svg
+                  class="hidden w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+                <ul
+                  class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
+                >
+                  <li>
+                    <a
+                      href="./index_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Home</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./tasks_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Tasks</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./schedule_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Schedule</a
+                    >
+                  </li>
+				  <li>
+                    <a
+                      href="./registration_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Registration</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./toolsanddata_2022.html"
+                      class="block text-white hover:bg-orange-500 hover:text-whitetext-white bg-orange-500 px-3 py-2 rounded-md text-md font-semibold"
+                      >Tools and Data</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./contactus_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Contact Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <div
+            style="z-index: 2; object-fit: cover; left: -1%; width: 102vw"
+            class="absolute bottom-0 w-full"
+          >
+            <img
+              src="./img/waves.svg"
+              alt="ondas perronas"
+              class="w-full"
+              style="transform: translateY(2px)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks's Content -->
+      <div class="container mx-auto px-4 text-justify">
+        <div class="text-center">
+          <h1 class="font-medium leading-tight text-5xl my-4 text-orange-900">
+            Tools and Data
+          </h1>
+        </div>
+		
+		
+		<div class="flex flex-col">
+            <h1 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+              Training & Testing Dataset
+            </h1>
+            <p>
+              The ICPR 2022 CHART-Infographics UB PMC <b>Training Dataset</b> can be downloaded <a href="https://www.dropbox.com/s/85yfkigo5916xk1/ICPR2022_CHARTINFO_UB_PMC_TRAIN_v1.0.zip?dl=0" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">here</a>.
+            </p> 
+			<p>
+              The ICPR 2022 CHART-Infographics UB Unitec PMC <b>Testing Dataset</b> can be downloaded <a href="https://www.dropbox.com/s/w0j0rxund06y04f/ICPR2022_CHARTINFO_UB_UNITEC_PMC_TEST_v2.1.zip?dl=0" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">here</a>.
+            </p>
+        </div>
+			
+        	  
+          <div class="flex flex-col">
+            <h1 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+              Sample Data
+            </h1>
+            <p>
+              Below you can find samples from each training set. We provide a
+              few chart images with their corresponding annotations in a JSON
+              file. The inputs and expected outputs for each sub-task are
+              specified in the JSON file. Key values that begin with an
+              underscore (_) are not required output, but are given as part of
+              the ground truth annotations, in case this information is useful.
+            </p>
+            <p class="my-4">
+              <b>UB PMC Datasets.</b> We have sample data for the main each
+              chart types for
+              <a
+                href="https://chartinfo.github.io/UB_PMC_sample_1.21.zip"
+                class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                >download.</a
+              >
+              Each chart has a JPEG image as given by the PubMedCentral.
+            </p>
+          </div>
+        
+		
+        <div class="flex flex-col">
+          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            Datasets from ICPR CHART-Infographics 2020
+          </h2>
+          <p>
+            Datasets from the previous edition of our competition are publicly
+            available and can be used for benchmarking.
+          </p>
+          <p>
+            ICPR CHART-Infographics 2020 - UB PMC dataset
+            <a
+              href="http://tc11.cvc.uab.es/datasets/ICPR2020-CHART-Info_1;"
+              class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              >(ICPR-2020-CHART-UB_PMC)</a
+            >
+			<p>
+			<b>Note</b>: The ICPR-2020-CHART-UB_PMC dataset is a subset of the new training dataset for ICPR 2022 CHART-Infographics.
+			</p>
+		  </p>
+        </div>
+
+        <div class="flex flex-col">
+          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            Chart Annotation Tools
+          </h2>
+          <p>
+            The tools used for the annotation of chart images can be found
+            <a
+              href="https://github.com/kdavila/ChartInfo_annotation_tools"
+              class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              >here</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

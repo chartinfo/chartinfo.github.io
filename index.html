@@ -3,169 +3,115 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/styles.css" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/1.40.1/tsparticles.min.js"
-      integrity="sha512-8dBmE/Q84D0/2nwNVmTEkiUkXs8WBD6CzSrpjJzNdei7K7FbqVUeAShbx+5xt/APpPlZ6IJSs2c4FnULxkESow=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script src="/js/common.js"></script>
-    <script>
-      tsParticles
-        .loadJSON("tsparticles", "presets/default.json")
-        .then((container) => {
-          console.log("callback - tsparticles config loaded");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="./js/common.js"></script>
+    <script>      
     </script>
-    <title>ICPR 2022 - CHART Competition</title>
+    <title>ICDAR 2023 - CHART-Infographics Competition</title>
   </head>
   <body>
     <div class="h-screen" style="overflow-x: hidden">
       <!-- Header -->
       <div id="header">
-        <div class="relative h-screen-1/3">
-          <div id="tsparticles"></div>
-          <nav
-            id="navbar"
-            class="bg-transparent border-gray-200 px-2 sm:px-4 py-2.5 rounded"
-          >
-            <div
-              class="container flex flex-wrap justify-center items-center mx-auto"
-            >
-              <button
-                data-collapse-toggle="mobile-menu"
-                type="button"
-                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="mobile-menu-2"
-                aria-expanded="false"
-                onclick="toggleHidden('mobile-menu');"
-              >
-                <span class="sr-only">Open main menu</span>
-                <svg
-                  class="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <svg
-                  class="hidden w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
+		<!-- relative h-screen-1/3 -->
+        <div style="height: 80px;">
+		  <!-- bg-transparent -->
+          <nav id="navbar" class="border-gray-200 px-2 sm:px-4 py-2.5 rounded bg-white">
+            <div class="container flex flex-wrap justify-center items-center mx-auto" >              
+			  <div style="padding-left: 50px;padding-right: 50px;">
+				<!--<img src="./img/icdar2023_logo_light_horizontal.png" style="height: 50px;"> -->
+				<img src="./img/draft_logo_light_horizontal_chart_only.png" style="height: 50px;">				
+			  </div>
               <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
                 <ul
                   class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
                 >
                   <li>
                     <a
-                      href="/index.html"
-                      class="block hover:bg-orange-500 hover:text-white text-white bg-orange-500 px-3 py-2 w-full rounded-md text-md font-semibold"
+                      href="./index.html"
+                      class="block hover:bg-stone-700 hover:text-white text-white bg-stone-700 px-3 py-2 w-full rounded-md text-md font-semibold"
                       >Home</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/tasks.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./tasks.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Tasks</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/schedule.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./schedule.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Schedule</a
                     >
                   </li>
 				  <li>
                     <a
-                      href="/registration.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./registration.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Registration</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/toolsanddata.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./toolsanddata.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Tools and Data</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/contactus.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./contactus.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Contact Us</a
                     >
                   </li>
                 </ul>
               </div>
             </div>
-          </nav>
-          <div
-            style="z-index: 2; object-fit: cover; left: -1%; width: 102vw"
-            class="absolute bottom-0 w-full"
-          >
-            <img
-              src="./img/waves.svg"
-              alt="ondas perronas"
-              class="w-full"
-              style="transform: translateY(2px)"
-            />
-          </div>
+          </nav>          
         </div>
       </div>
 
       <!-- Home's Content -->
       <div class="container mx-auto px-4 text-justify">
         <div class="text-center">
-          <h1 class="font-medium leading-tight text-5xl my-4 text-orange-900">
-            <b>C</b>ompetition on <b>Ha</b>rvesting <b>R</b>aw <b>T</b>ables
-            from Infographics
+          <h1 class="font-medium leading-tight text-3xl my-4 text-gray-600">
+            <b>ICDAR 2023</b> <b>C</b>ompetition on <b>H</b>arvesting <b>A</b>nswers and <b>R</b>aw <b>T</b>ables<br/>
+            from Infographics (CHART-Infographics)
           </h1>
         </div>
         <div class="flex flex-col md:flex-row mb-4">
           <div class="flex flex-col w-full md:w-1/2 mx-2">
-            <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            <h2 class="font-medium leading-tight text-2xl my-4 text-gray-600">
               Summary
             </h2>
             <p>
-              This competition is composed of a series of 6 sub-tasks for chart
-              data extraction, which when put together as a pipeline go from an
-              input chart image to a CSV file representing the data used to
-              create the chart. Entrants in the competition may choose to
+              This competition is composed of a series of task and sub-tasks 
+			  related to chart analysis. The first task, <b>Stepwise Data Extraction</b>,  
+			  is composed of a series of 6 sub-tasks for chart data extraction, which 
+			  when put together as a pipeline go from an input chart image to a CSV file 
+			  representing the data used to create the chart.
+			  The second task, <b>End-to-end Data Extraction</b>, evaluates methods that 
+			  perform the whole chart data extraction pipeline from the chart image 
+			  without receiving intermediate inputs.
+			  The third task, <b>Visual Question Answering</b>, evaluates methods that 
+			  can take chart images and question related to the chart in the image and 
+			  can produce the right answers to the given question. 			  
+			  Entrants in the competition may choose to
               participate in any number of sub-tasks, which are evaluated in
               isolation, such that solving previous sub-tasks is not necessary.
-              We hope that such decomposition of the problem of chart data
-              extraction will draw broad participation from the Document
-              Analysis and Recognition (DAR) community. Additionally, we also
-              evaluate methods that perform the whole chart data extraction
-              pipeline from the chart image without receiving intermediate
-              inputs.
+              We hope that such decomposition of the problem of chart image
+              analysis will draw broad participation from the Document
+              Analysis and Recognition (DAR) community.               
             </p>
           </div>
           <div class="flex flex-col w-full md:w-1/2 mx-2">
-            <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+            <h2 class="font-medium leading-tight text-2xl my-4 text-gray-600">
               Competition Updates
             </h2>
                     <div style="height: 180px; overflow-y: scroll;">
@@ -173,55 +119,65 @@
 							<!--
 							<tr> <th align="left"> Deadline </th> <th align="left"> Event </th> </tr>
 							-->
-			  <tr>
-                <td style="text-align:top; background-color:brown; color:white">   
-                <b>&nbsp Nov 3 &nbsp</b>   
-                </td> 
-                <td> <a href="/toolsanddata.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Training & Testing</a> sets are publicly available. </td>
-              </tr>
+						  <!--
+						  <tr>
+							<td style="text-align:top; background-color:brown; color:white">   
+							<b>&nbsp Nov 3 &nbsp</b>   
+							</td> 
+							<td> <a href="/toolsanddata.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Training & Testing</a> sets are publicly available. </td>
+						  </tr>
 			  
-              <tr>
-                <td style="text-align:top; background-color:lightsalmon; color:white">   
-                <b>&nbsp May 23 &nbsp</b>   
-                </td> 
-                <td> <a href="/leaderboards.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Leaderboards</a> is out. </td>
-              </tr>
+						  <tr>
+							<td style="text-align:top; background-color:lightsalmon; color:white">   
+							<b>&nbsp May 23 &nbsp</b>   
+							</td> 
+							<td> <a href="/leaderboards.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Leaderboards</a> is out. </td>
+						  </tr>
 
-              <tr>
-                <td style="text-align:top; background-color:lightsalmon; color:white">   
-                <b>&nbsp May 9 &nbsp</b>   
-                </td> 
-                <td> Testing dataset is released. </td>
-              </tr>
-                
-              <tr>
+						  <tr>
+							<td style="text-align:top; background-color:lightsalmon; color:white">   
+							<b>&nbsp May 9 &nbsp</b>   
+							</td> 
+							<td> Testing dataset is released. </td>
+						  </tr>
+						-->
+						  <!--
 							<tr>
 								<td style="text-align:top; background-color:lightsalmon; color:white">   
 								<b>&nbsp Feb 23 &nbsp</b>   
 								</td> 
-								<td> Training dataset is released. <a href="https://www.dropbox.com/s/85yfkigo5916xk1/ICPR2022_CHARTINFO_UB_PMC_TRAIN_v1.0.zip?dl=0" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Download</a></td> </tr>
-								
+								<td> Training dataset is released. <a href="https://www.dropbox.com/s/85yfkigo5916xk1/ICPR2022_CHARTINFO_UB_PMC_TRAIN_v1.0.zip?dl=0" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Download</a></td> 
+							</tr>
+						-->
 							<tr>
-								<td style="text-align:top; background-color:lightsalmon; color:white">   
-								<b>&nbsp Feb 21 &nbsp</b>   
+								<td style="text-align:top; background-color:rgb(48,60,72); color:white">   
+								<b>&nbsp Dec 30, 2022 &nbsp</b>   
 								</td> 
-								<td> <a href="/registration.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Registration</a> is now open!</td> </tr>								
-							<tr> <td style="text-align:top; background-color:lightsalmon; color:white">   
-							<b>&nbsp Feb 20 &nbsp</b>   
-							</td><td>Previous <b>CHART-Info</b> links: <a href="index_2019.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">ICDAR2019</a>, <a href="index_2020.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" >ICPR2020</a></td> </tr>
+								<td> <a href="./registration.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Registration</a> is now open!</td> 
+							</tr>								
+							<tr> 
+								<td style="text-align:top; background-color:rgb(48,60,72); color:white">   
+									<b>&nbsp Dec 29, 2022 &nbsp </b>   
+								</td>
+								<td>Previous <b>CHART-Info</b> links: 
+									<a href="index_2022.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" >ICPR 2022</a>
+									<a href="index_2020.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" >ICPR 2020</a>
+									<a href="index_2019.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" >ICDAR 2019</a>
+								</td> 
+							</tr>
 						</table>
 					</div>
           </div>
         </div>
         <div class="flex flex-col justify-center">
           <img
-            src="./img/tasks.png"
+            src="./img/icdar2023_tasks.png"
             alt="tasks"
-            class="md:max-w-4xl self-center"
+            class="md:max-w-3xl self-center"
           />
         </div>
         <div class="flex flex-col mb-4">
-          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+          <h2 class="font-medium leading-tight text-2xl my-4 text-gray-600">
             Background
           </h2>
           <p>
@@ -256,25 +212,25 @@
             plagiarism detection, bibliometrics, visual question answering and
             accelerating discovery of new materials.
           </p>
-          <p class="my-4">
+          <!-- <p class="my-4">
             Prior competitions related to this area include DeTEXT which
             concentrated on detecting text in figures and ImageCLEF competition
             on medical compound figure separation and multi-label
             classification. However, these competitions do not concentrate on
             end-to-end data extraction from scientific charts, but include these
             as a sub-type of scientific figures in general.
-          </p>
+          </p> -->
         </div>
 
         <div class="flex flex-col mb-4">
-          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+          <h2 class="font-medium leading-tight text-3xl my-4 text-gray-600">
             Competition Outline
           </h2>
-          <h3 class="font-medium leading-tight text-3xl my-4 text-orange-800">
+          <h3 class="font-medium leading-tight text-2xl my-4 text-gray-600">
             Dataset
           </h3>
           <p>
-            Our previous competitions used both real and synthetic charts datasets for all tasks. For ICPR 2022, we are providing a <b>extended UB PMC dataset</b>, which contains real charts extracted from Open-Access publications found in the <a
+            Our previous competitions used both real and synthetic charts datasets for all tasks. For ICDAR 2023, we are providing a <b>extended UB-UNITEC PMC dataset</b>, which contains real charts extracted from Open-Access publications found in the <a
               class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
               href="https://www.ncbi.nlm.nih.gov/pmc/"
             >
@@ -283,80 +239,91 @@
           </p>
           <br/>
 		  <p>
-		  For this competition, <b>UB PMC</b> has a new, larger training set (by merging training and testing sets from previous competition), and a novel testing set that is also collected and annotated on real charts. Participants can use additional datasets (e.g. <b>Adobe Synth</b> from previous competition) to improve the performance of their framework, as long as it is notified in their final result.
+		  For this competition, <b>UB-UNITEC PMC</b> has a new, larger training set (by merging training and testing sets from previous competition), and a novel testing set that is also collected and annotated on real charts. Participants can use additional datasets (e.g. <b>Adobe Synth</b> from previous competition) to improve the performance of their framework, as long as it is notified in their final result.
 		  </p>
 		  
-          <h3 class="font-medium leading-tight text-3xl my-4 text-orange-800">
+          <h3 class="font-medium leading-tight text-2xl my-4 text-gray-600">
             Evaluation
           </h3>
           <p>
-            On May 1st, 2022, we will release the test datasets, and by
-            <b>May 8th</b> competition participants are expected submit the
+            On March, 2023, we will release the test datasets, and by
+            <b>March 15th, 2023</b> competition participants are expected submit the
             following:
           </p>
           <ol class="list-decimal list-inside">
             <li>Predictions on each test dataset</li>
-            <li>A short system description</li>
+            <li>A short but complete system description</li>
           </ol>
           <br />
           <p>
-            The organizers will tabulate the results for each subtask for each
-            dataset and present it at
+            The organizers will tabulate the results for each task and present it at
             <a
               class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-              href="https://www.icpr2022.com"
+              href="https://www.icdar2023.org/"
             >
-              ICPR 2022 in Montréal Québec, Canada
+              ICDAR 2023 in San Jose, California, USA
             </a>.
-            Note that you do not need to attend ICPR 2022 to participate in this
+            Note that you do not need to attend ICDAR 2023 to participate in this
             competition.
           </p>
           <br />
-          <p>The sub-tasks considered in this competition are</p>
-          <ol class="list-decimal list-inside">
-            <li>Chart Image Classification (e.g. bar, box, line)</li>
-            <li>Text Detection and Recognition</li>
-            <li>Text Role Classification (e.g. title, x-axis label)</li>
-            <li>Axis Analysis</li>
-            <li>Legend Analysis</li>
-            <li>
-              Data Extraction
-              <ol class="list-alpha list-inside ml-8">
-                <li>Plot Element Detection/Classification</li>
-                <li>Raw Data Extraction</li>
-              </ol>
-            </li>
-          </ol>
+		  <p>The tasks and sub-tasks considered in this competition are</p>
+		  <ol class="list-decimal list-inside">
+			<li>
+				<b>Task 1:</b> Stepwise Data Extraction
+				<ol class="pl-5 list-decimal list-inside">
+					<li><b>Sub-task 1.1:</b> Chart Image Classification (e.g. bar, box, line)</li>
+					<li><b>Sub-task 1.2:</b> Text Detection and Recognition</li>
+					<li><b>Sub-task 1.3:</b> Text Role Classification (e.g. title, x-axis label)</li>
+					<li><b>Sub-task 1.4:</b> Axis Analysis</li>
+					<li><b>Sub-task 1.5:</b> Legend Analysis</li>
+					<li>
+					  <b>Sub-task 1.6:</b> Data Extraction
+					  <ol class="list-alpha list-inside ml-8">
+						<li><b>Sub-task 1.6.a:</b> Plot Element Detection/Classification</li>
+						<li><b>Sub-task 1.6.b:</b> Raw Data Extraction</li>
+					  </ol>
+					</li>
+				</ol>
+			</li>
+			<li><b>Task 2:</b> End-to-end Data Extraction</li>
+			<li><b>Task 3:</b> Visual Question Answering</li>
+		  </ol>
+          
           <br />
           <p>
             Each subtask is evaluated in isolation, meaning that systems have
             access to the ideal output (i.e. Ground Truth) of previous subtasks.
-            Subtasks 3-5 are considered parallel tasks and only receive the
-            outputs of subtasks 1 and 2. For example, the input for the Axis
+            Subtasks 1.3-1.5 are considered parallel tasks and only receive the
+            outputs of subtasks 1.1 and 1.2. For example, the input for the Axis
             Analysis sub-task is the chart image, chart type, text bounding
             boxes, and text transcriptions. Each sub-task has its own evaluaton
-            metric, detailed on the <a href="/tasks.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Tasks</a> page.
+            metric, detailed on the <a href="./tasks.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">Tasks</a> page.
           </p>
           <br />
           <p>
-            Participants are not obligated to perform all subtasks or all
-            datasets and may submit test results for any set of subtasks or
-            datasets they wish. Additionally, methods may be submitted for the
-            complete data extraction task where systems are only given the chart
+            Participants are not obligated to perform all subtasks 
+			and may submit test results for any set of subtasks 
+			they wish. Methods may be submitted for the
+            end-to-end data extraction task where systems are only given the chart
             image (no intermediate inputs) and are expected to produce the raw
-            data used to produce the chart (same output as subtask 6b).
+            data used to create the chart (same output as subtask 1.6.b).
+			Additionally, methods may be submitted for the visual question answering
+			task where system also only given the chart image and a question about 
+			the chart, and they are expected to produce the right answer based
+			on the chart.
           </p>
         </div>
         <div class="flex flex-col mb-4">
-          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+          <h2 class="font-medium leading-tight text-2xl my-4 text-gray-600">
             Registration
           </h2>
           <p>
-		    Register <a href="/registration.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">here</a>.
+		    Register <a href="./registration.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">here</a>.
           </p>
         </div>
         <div class="flex flex-col mb-4">
-          <h2 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+          <h2 class="font-medium leading-tight text-2xl my-4 text-gray-600">
             Acknowledgements
           </h2>
           <p>

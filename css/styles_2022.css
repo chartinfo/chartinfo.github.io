@@ -1,0 +1,34 @@
+#tsparticles {
+  position: absolute !important;
+  height: 100%;
+  width: 100vw;
+  z-index: 1;
+}
+
+#navbar {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.h-screen-1\/3 {
+  height: calc(100vh / 4) !important;
+}
+
+.w-overlap {
+  width: 110%;
+}
+
+.bg-dark {
+  background-color: #292f36 !important;
+}
+
+.text-dark {
+  color: #292f36;
+}
+
+.list-alpha {
+  list-style-type: lower-alpha;
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/1.40.1/tsparticles.min.js"
+      integrity="sha512-8dBmE/Q84D0/2nwNVmTEkiUkXs8WBD6CzSrpjJzNdei7K7FbqVUeAShbx+5xt/APpPlZ6IJSs2c4FnULxkESow=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./js/common.js"></script>
+    <script>
+      tsParticles
+        .loadJSON("tsparticles", "presets/default.json")
+        .then((container) => {
+          console.log("callback - tsparticles config loaded");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+    <title>ICPR 2022 - CHART Competition</title>
+  </head>
+  <body>
+    <div class="h-screen" style="overflow-x: hidden">
+      <!-- Header -->
+      <div id="header">
+        <div class="relative h-screen-1/3">
+          <div id="tsparticles"></div>
+          <nav
+            id="navbar"
+            class="bg-transparent border-gray-200 px-2 sm:px-4 py-2.5 rounded"
+          >
+            <div
+              class="container flex flex-wrap justify-center items-center mx-auto"
+            >
+              <button
+                data-collapse-toggle="mobile-menu"
+                type="button"
+                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="mobile-menu-2"
+                aria-expanded="false"
+                onclick="toggleHidden('mobile-menu');"
+              >
+                <span class="sr-only">Open main menu</span>
+                <svg
+                  class="w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <svg
+                  class="hidden w-6 h-6"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+                <ul
+                  class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
+                >
+                  <li>
+                    <a
+                      href="./index_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Home</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./tasks_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Tasks</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./schedule_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Schedule</a
+                    >
+                  </li>
+				  <li>
+                    <a
+                      href="./registration_2022.html"
+                      class="block text-white hover:bg-orange-500 hover:text-whitetext-white bg-orange-500 px-3 py-2 rounded-md text-md font-semibold"
+                      >Registration</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./toolsanddata_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Tools and Data</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./contactus_2022.html"
+                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Contact Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <div
+            style="z-index: 2; object-fit: cover; left: -1%; width: 102vw"
+            class="absolute bottom-0 w-full"
+          >
+            <img
+              src="./img/waves.svg"
+              alt="ondas perronas"
+              class="w-full"
+              style="transform: translateY(2px)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks's Content -->
+      <div class="container mx-auto px-4 text-justify">
+        <div class="text-center">
+          <h1 class="font-medium leading-tight text-5xl my-4 text-orange-900">
+            Registration
+          </h1>
+        </div>   
+        <div class="flex flex-col mb-4">
+		  <h1 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+              Contact Information
+          </h1>
+          <p>
+            To register, please send an email to
+            <a
+              class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              href="mailto:chart.infographics@gmail.com"
+            >
+              chart.infographics@gmail.com</a
+            >.<br />Please include the following:
+          </p>
+          <br />
+          <ul class="list-disc list-inside ml-4">
+            <li>Names of participants</li>
+            <li>Primary contact person</li>
+            <li>Affiliation of participants</li>
+            <li>Team Name</li>
+            <li>
+              List of tasks you are interested in participating in (you are not
+              restricted to this list)
+            </li>
+          </ul>
+          <br />
+          <p>
+            Upon registration, you will be sent additional information to obtain
+            the training and test data when it becomes available. For sample data and chart 
+			annotation tools of the UB PMC dataset, please find detail in 
+			<a href="./toolsanddata_2022.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">"Tools and Data"<a>. For more information about previous competitions, please check 
+			<a href="index_2019.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600">ICDAR2019</a> and 
+			<a href="index_2020.html" class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" >ICPR2020</a>. 
+          </p>
+        </div>
+		
+		<div>
+		  <h1 class="font-medium leading-tight text-4xl my-4 text-orange-800">
+              Competition Rules
+          </h1>
+		  <p>The CHART-Infographics competition is open for participants from both industry and academia. The competition is open for both students and professionals who want to make a contribution to the field of chart recognition. Below we describe the tentative rules for our competition. </p>
+		  <br />
+          <ul class="list-disc list-inside ml-4">
+            <li>Each participant team can include up to a maximum of <b>10</b> people from one or more affiliations. For the sake of fairness to smaller research groups, we will not allow bigger teams to participate as a single team.</li>
+            <li>One person can only participate on one team. Mentors included. No exceptions. </li>
+            <li>Winners teams will have certificates listing the names of their members in the exact format and order as they were registered.</li>
+            <li> We will only allow registrations to be updated until the date of the release of the testing dataset. Changes allowed before this date include adding or removing members, correcting typos on names, as well as updating the order of the team members which will be used for the certificate in the case of winners. </li>
+            <li>
+              Participants can register to participate on individual tasks only. However, <i>winners will be selected based on their task coverage</i>. We will be using a scoring system as follows:
+			  <ul class="list-decimal list-inside ml-4">
+			    <li>
+				For each task, we will rank all participant teams using the average and standard deviation of the corresponding task metric. Two or more teams will be considered to be technically tied on the same rank if the difference of their means is not statistically significant.
+			    </li>
+				<li>
+				Each team will get points based on their rank on each task: rank 1 gets 5 points, rank 2 gets 4 points, rank 3 gets 3 points, and rank 4 and below get 1 point for participation. Not submitting results for the task gets a score of 0.
+				</li>
+				<li>
+				The total scores for all tasks will be added up for each participant team to obtain a single final score.
+				</li>
+			  </ul>
+            </li>
+			
+			<li>
+			Participants will be allowed to use their own datasets for training. However, they must notify the organizers about this. 
+			</li>
+			<li>
+			Submissions will be done via e-mail. Participants will be required to submit the results of their systems in the expected JSON format. Participants will be able to beta test their system using testing sets and evaluation tools from the previous competition. This will be helpful in making sure that their system can produce outputs in the right formats. We might not consider submissions which do not conform to the correct file format. 
+			</li>
+			<li>
+			No CODE submission will be required.
+			</li>
+			<li>
+			Participants must provide a description of the methods used to produce the results submitted. In the final competition paper, we will summarize these descriptions when we describe the submitted systems. If external datasets were used, participants will also have to provide a full description of these. We reserve the right to disqualify submissions which do not provide a sufficiently detailed description of their system.
+			</li>
+			<li>
+			To be fair to all participants, any deadline extensions given will apply to all participants, not just to  individual research groups who might request them.
+			</li>
+          </ul>
+          <br />
+		</div>
+      </div>
+    </div>
+  </body>
+</html>

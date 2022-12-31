@@ -5,65 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/styles.css" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/1.40.1/tsparticles.min.js"
-      integrity="sha512-8dBmE/Q84D0/2nwNVmTEkiUkXs8WBD6CzSrpjJzNdei7K7FbqVUeAShbx+5xt/APpPlZ6IJSs2c4FnULxkESow=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <link rel="stylesheet" href="./css/styles.css" />
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
       integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="/js/common.js"></script>
+    <script src="./js/common.js"></script>
     <script>
-      tsParticles
-        .loadJSON("tsparticles", "presets/default.json")
-        .then((container) => {
-          console.log("callback - tsparticles config loaded");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-
+      
       window.onload = () => {
         const events = [
 		  {
             name: "Registration Opens",
-            deadline: "February 21, 2022",
+            deadline: "Dec 29, 2022",
             calculateWhen: true,
           },
           {
             name: "Training Data Release",
-            deadline: "February 23, 2022",
+            deadline: "January 15, 2023",
             calculateWhen: true,
           },
           {
             name: "Test Data Release",
-            deadline: "May 9, 2022",
+            deadline: "March 10, 2023",
             calculateWhen: true,
           },
           {
             name: "Brief Description of System due",
-            deadline: "May 13, 2022",
+            deadline: "March 15, 2023",
             calculateWhen: true,
           },
           {
             name: "Results due by email",
-            deadline: "May 15, 2022",
-            calculateWhen: true,
-          },
-          {
-            name: "Full report due",
-            deadline: "May 15, 2022",
+            deadline: "March 25, 2023",
             calculateWhen: true,
           },
           {
             name: "Winners Announcement",
-            deadline: "May 2022",
+            deadline: "April 2023",
             calculateWhen: false,
           },
         ];
@@ -112,123 +93,78 @@
         });
       };
     </script>
-    <title>ICPR 2022 - CHART Competition</title>
+    <title>ICDAR 2023 - CHART Competition</title>
   </head>
   <body>
     <div class="h-screen" style="overflow-x: hidden">
       <!-- Header -->
       <div id="header">
-        <div class="relative h-screen-1/3">
-          <div id="tsparticles"></div>
-          <nav
-            id="navbar"
-            class="bg-transparent border-gray-200 px-2 sm:px-4 py-2.5 rounded"
-          >
-            <div
-              class="container flex flex-wrap justify-center items-center mx-auto"
-            >
-              <button
-                data-collapse-toggle="mobile-menu"
-                type="button"
-                class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="mobile-menu-2"
-                aria-expanded="false"
-                onclick="toggleHidden('mobile-menu');"
-              >
-                <span class="sr-only">Open main menu</span>
-                <svg
-                  class="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <svg
-                  class="hidden w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
+		<!-- relative h-screen-1/3 -->
+        <div style="height: 80px;">
+		  <!-- bg-transparent -->
+          <nav id="navbar" class="border-gray-200 px-2 sm:px-4 py-2.5 rounded bg-white">
+            <div class="container flex flex-wrap justify-center items-center mx-auto" >              
+			  <div style="padding-left: 50px;padding-right: 50px;">
+				<!--<img src="./img/icdar2023_logo_light_horizontal.png" style="height: 50px;"> -->
+				<img src="./img/draft_logo_light_horizontal_chart_only.png" style="height: 50px;">				
+			  </div>
               <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
                 <ul
                   class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
                 >
                   <li>
                     <a
-                      href="/"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./index.html"
+                      class="block hover:bg-stone-700 hover:text-white px-3 py-2 w-full rounded-md text-md font-semibold"
                       >Home</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/tasks.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./tasks.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Tasks</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/schedule.html"
-                      class="block text-white hover:bg-orange-500 hover:text-whitetext-white bg-orange-500 px-3 py-2 rounded-md text-md font-semibold"
+                      href="./schedule.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white text-white bg-stone-700 px-3 py-2 rounded-md text-md font-semibold"
                       >Schedule</a
                     >
                   </li>
 				  <li>
                     <a
-                      href="/registration.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./registration.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Registration</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/toolsanddata.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./toolsanddata.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Tools and Data</a
                     >
                   </li>
                   <li>
                     <a
-                      href="/contactus.html"
-                      class="block text-dark hover:bg-orange-500 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      href="./contactus.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
                       >Contact Us</a
                     >
                   </li>
                 </ul>
               </div>
             </div>
-          </nav>
-          <div
-            style="z-index: 2; object-fit: cover; left: -1%; width: 102vw"
-            class="absolute bottom-0 w-full"
-          >
-            <img
-              src="./img/waves.svg"
-              alt="ondas perronas"
-              class="w-full"
-              style="transform: translateY(2px)"
-            />
-          </div>
+          </nav>          
         </div>
       </div>
 
       <!-- Schedule's Content -->
       <div class="container mx-auto px-4 text-justify">
         <div class="text-center">
-          <h1 class="font-medium leading-tight text-5xl my-4 text-orange-900">Competition Schedule</h1>
+          <h1 class="font-medium leading-tight text-4xl my-4 text-gray-600">Competition Schedule</h1>
         </div>
         <div class="flex flex-col justify-center overflow-x-auto">
           <table id="events-table" class="table-auto w-full">
