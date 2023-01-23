@@ -688,9 +688,9 @@
                   correct class. For each element, we compute a score between 0
                   and 1, where 1 represents an exact prediction, and predictions
                   farther away than a distance threshold, T, receive a score of
-                  0. <b>The score is max(0, 1 - (D/T)^2)</b>, where D is the
+                  0. <b>The score is max(0, 1 - (D/T))</b>, where D is the
                   Euclidean distance between the predicted and GT points. The
-                  distance threshold, T, is determined to be <b>1%</b> of the
+                  distance threshold, T, is determined to be <b>5%</b> of the
                   smallest image dimension. Because there are many ways to pair
                   predicted and GT points, we will find the minimum cost pairing
                   (i.e. solve this bi-partite graph matching problem).
