@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
+	<script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="./js/common.js"></script>
+    <script>
+		window.onload = () => {
+        let tabsContainer = document.querySelector("#tabs");
+
+        let tabTogglers = tabsContainer.querySelectorAll("a");
+
+        tabTogglers.forEach(function (toggler) {
+          toggler.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            let tabName = this.getAttribute("href");
+
+            let tabContents = document.querySelector("#tab-contents");
+
+            for (let i = 0; i < tabContents.children.length; i++) {
+              tabTogglers[i].parentElement.classList.remove(
+                "border-orange-400",
+                "border-b",
+                "-mb-px",
+                "opacity-100"
+              );
+              tabContents.children[i].classList.remove("hidden");
+              if ("#" + tabContents.children[i].id === tabName) {
+                continue;
+              }
+              tabContents.children[i].classList.add("hidden");
+            }
+            e.target.parentElement.classList.add(
+              "border-orange-400",
+              "border-b-4",
+              "-mb-px",
+              "opacity-100"
+            );
+          });
+        });
+
+        document.getElementById("default-tab").click();
+      };
+    </script>
+    <title>ICDAR 2023 - CHART-Infographics Competition</title>
+  </head>
+  <head>    
+  <body>
+    <div class="h-screen" style="overflow-x: hidden">
+      <!-- Header -->
+      <div id="header">
+		<!-- relative h-screen-1/3 -->
+        <div style="height: 80px;">
+		  <!-- bg-transparent -->
+          <nav id="navbar" class="border-gray-200 px-2 sm:px-4 py-2.5 rounded bg-white">
+            <div class="container flex flex-wrap justify-center items-center mx-auto" >              
+			  <div style="padding-left: 50px;padding-right: 50px;">
+				<!--<img src="./img/icdar2023_logo_light_horizontal.png" style="height: 50px;"> -->
+				<img src="./img/draft_logo_light_horizontal_chart_only.png" style="height: 50px;">				
+			  </div>
+              <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+                <ul
+                  class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium"
+                >
+                  <li>
+                    <a
+                      href="./index.html"
+                      class="block hover:bg-stone-700 hover:text-white text-white bg-stone-700 px-3 py-2 w-full rounded-md text-md font-semibold"
+                      >Home</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./tasks.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Tasks</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./schedule.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Schedule</a
+                    >
+                  </li>
+				  <li>
+                    <a
+                      href="./registration.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Registration</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./toolsanddata.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Tools and Data</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="./contactus.html"
+                      class="block text-dark hover:bg-stone-700 hover:text-white px-3 py-2 rounded-md text-md font-semibold"
+                      >Contact Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>          
+        </div>
+      </div>
+
+      <!-- Tasks's Content -->
+      <div class="container mx-auto px-4 text-justify">
+        <div class="text-center">
+          <h1 class="font-medium leading-tight text-4xl my-4 text-gray-600">
+            <b>C</b>ompetition on <b>H</b>arvesting <b>A</b>nswers and <b>R</b>aw <b>T</b>ables from Infographics
+          </h1>
+          <h1 class="font-medium leading-tight text-5xl my- text-gray-600">
+            Leaderboards
+          </h1>
+          <h1 class="font-medium leading-tight text-2xl my-2 text-gray-600">
+            (Updated: April 15th, 2023)
+          </h1>
+        </div>
+        <div>
+          <head>
+			<style>
+			table, th, td {
+			  border: 2px solid rgb(128,128,128);
+			  border-collapse: collapse;
+			  margin-left: auto;
+			  margin-right: auto;
+			}
+			</style>
+		  </head>
+		  <table class="text-center ">
+		  	<tr class="text-white" style="background-color: rgb(64,64,64); border: 2px solid rgb(128,128,128);">
+          		<td class="font-semibold" style="width: 250px;"></td>
+          		<td class="font-semibold" style="width: 210px;" colspan="8">Points per Task</td>
+          		<td class="font-semibold" style="width: 40px;"></td>
+          	</tr>
+          	<tr class="text-white" style="background-color: rgb(64,64,64)">
+          		<td class="font-semibold" style="width: 250px;">Team Name</td>
+          		<td class="font-semibold" style="width: 20px;">1.1</td>
+          		<td class="font-semibold" style="width: 20px;">1.2</td>
+          		<td class="font-semibold" style="width: 20px;">1.3</td>
+          		<td class="font-semibold" style="width: 20px;">1.4</td>
+          		<td class="font-semibold" style="width: 20px;">1.5</td>
+          		<td class="font-semibold" style="width: 20px;">1.6</td>
+          		<td class="font-semibold" style="width: 20px;">2</td>
+				<td class="font-semibold" style="width: 20px;">3</td>
+          		<td class="font-semibold" style="width: 40px;">Score</td>
+          	</tr>
+          	<tr style="background-color: rgb(224,224,224)">
+          		<td style="width: 250px;">IPSA LAB</td>
+          		<td style="width: 20px;">3</td>
+          		<td class="font-semibold" style="width: 20px;">5</td>
+          		<td class="font-semibold" style="width: 20px;">5</td>
+          		<td class="font-semibold" style="width: 20px;">5</td>
+          		<td class="font-semibold" style="width: 20px;">5</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+				<td style="width: 20px;">0</td>
+          		<td class="font-semibold" style="width: 40px;">23</td>
+          	</tr>
+          	<tr style="background-color: rgb(224,224,224)">
+          		<td style="width: 250px;">KISTPI</td>
+          		<td style="width: 20px;">4</td>
+          		<td style="width: 20px;">4</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+				<td style="width: 20px;">0</td>
+          		<td style="width: 40px;">8</td>
+          	</tr>
+          	<tr style="background-color: rgb(224,224,224)">
+          		<td style="width: 250px;">IIITA-CVBL</td>
+          		<td class="font-semibold" style="width: 20px;">5</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+				<td style="width: 20px;">0</td>
+          		<td style="width: 40px;">5</td>
+          	</tr>
+          	<tr style="background-color: rgb(224,224,224)">
+          		<td style="width: 250px;">Nara AI</td>
+          		<td style="width: 20px;">1</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+          		<td style="width: 20px;">0</td>
+				<td style="width: 20px;">0</td>
+          		<td style="width: 40px;">1</td>
+          	</tr>          	
+          </table>
+
+        </div>      
+        
+        
+      </div>
+      <div class="container mx-auto text-justify mb-4">
+        <div class="mt-4 rounded">
+          <!-- Tabs -->
+          <ul
+            id="tabs"
+            class="md:inline-flex justify-center text-left w-full overflow-x-auto overflow-y-hidden"
+          >
+            <li
+              class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
+            >
+              <a id="default-tab" href="#first">Chart Classification</a>
+            </li>
+            <li
+              class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
+            >
+              <a href="#second">Text Detection/Recognition</a>
+            </li>
+            <li
+              class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
+            >
+              <a href="#third">Text Role Classification</a>
+            </li>
+            <li
+              class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
+            >
+              <a href="#fourth">Axis Analysis</a>
+            </li>
+            <li
+              class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"
+            >
+              <a href="#fifth">Legend Analysis</a>
+            </li>            
+          </ul>
+
+          <!-- Tab Contents -->
+          <div id="tab-contents">
+            <div id="first" class="container mx-auto px-4 text-justify">
+              <h1 class="font-medium leading-tight text-3xl my-4 text-gray-600 text-center">
+                Task 1.1: Chart Image Classification
+              </h1>
+              <div>
+	              <table class="text-center ">
+	              	<tr class="text-white" style="background-color: rgb(64,64,64)">
+	              		<td class="font-semibold" style="width: 40px;">Rank</td>
+	              		<td class="font-semibold" style="width: 250px;">Team Name</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> Per-Class <br> F-Measure</td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>1</td>
+	              		<td class="text-left">IIITA-CVBL</td>
+	              		<td class="font-medium">0.9463</td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>2</td>
+	              		<td class="text-left" >KISTPI</td>
+	              		<td>0.8862</td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>3</td>
+	              		<td class="text-left">IPSA LAB</td>
+	              		<td>0.8503</td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>4</td>
+	              		<td class="text-left">Nara AI</td>
+	              		<td>0.8127</td>
+	              	</tr>
+	              </table>
+          	  </div>
+
+            </div>
+            <div id="second" class="hidden container mx-auto px-4 text-justify">
+              <h1
+                class="font-medium leading-tight text-3xl my-4 text-gray-600  text-center"
+              >
+                Task 1.2: Text Detection/Recognition
+              </h1>
+              <div>
+	              <table class="text-center">
+	              	<tr class="text-white" style="background-color: rgb(64,64,64)">
+	              		<td class="font-semibold" style="width: 40px;">Rank</td>
+	              		<td class="font-semibold" style="width: 250px;">Team Name</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> Detection <br> IOU</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> Recognition <br> OCR</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> F-Measure </td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>1</td>
+	              		<td class="text-left">IPSA LAB</td>
+	              		<td class="font-medium">0.8518</td>
+	              		<td class="font-medium">0.7562</td>
+	              		<td class="font-medium">0.8012</td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>2</td>
+	              		<td class="text-left" >KISTPI</td>
+	              		<td>0.5410</td>
+	              		<td>0.6696</td>
+	              		<td>0.5985</td>
+	              	</tr>	              	
+	              </table>
+          	  </div>
+            </div>
+            <div id="third" class="hidden container mx-auto px-4 text-justify">
+              <h1 class="font-medium leading-tight text-3xl my-4 text-gray-600 text-center">
+                Task 1.3: Text Role Classification
+              </h1>
+              <div>
+	              <table class="text-center ">
+	              	<tr class="text-white" style="background-color: rgb(64,64,64)">
+	              		<td class="font-semibold" style="width: 40px;">Rank</td>
+	              		<td class="font-semibold" style="width: 250px;">Team Name</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> Per-Class <br> F-Measure</td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>1</td>
+	              		<td class="text-left">IPSA LAB</td>
+	              		<td class="font-medium">0.8249</td>
+	              	</tr>	              	
+	              </table>
+          	  </div>
+            </div>
+            <div id="fourth" class="hidden container mx-auto px-4 text-justify">
+              <h1
+                class="font-medium leading-tight text-3xl my-4 text-gray-600  text-center"
+              >
+                Task 1.4: Axis Analysis
+              </h1>
+              <div>
+	              <table class="text-center">
+	              	<tr class="text-white" style="background-color: rgb(64,64,64)">
+	              		<td class="font-semibold" style="width: 40px;">Rank</td>
+	              		<td class="font-semibold" style="width: 250px;">Team Name</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> Recall</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> Precision</td>
+	              		<td class="font-semibold" style="width: 100px;">Average <br> F-Measure </td>
+	              	</tr>
+	              	<tr style="background-color: rgb(224,224,224)">
+	              		<td>1</td>
+	              		<td class="text-left">IPSA LAB</td>
+	              		<td class="font-medium">0.8764</td>
+	              		<td class="font-medium">0.9409</td>
+	              		<td class="font-medium">0.9075</td>
+	              	</tr>	              	
+	              </table>
+          	  </div>
+            </div>
+            <div id="fifth" class="hidden container mx-auto px-4 text-justify">
+	              <h1
+	                class="font-medium leading-tight text-3xl my-4 text-gray-600 text-center"
+	              >
+	                Task 1.5: Legend Analysis
+	              </h1>
+	              <div>
+		              <table class="text-center">
+		              	<tr class="text-white" style="background-color: rgb(64,64,64)">
+		              		<td class="font-semibold" style="width: 40px;">Rank</td>
+		              		<td class="font-semibold" style="width: 250px;">Team Name</td>
+		              		<td class="font-semibold" style="width: 100px;">Average <br> BBox Recall</td>
+		              		<td class="font-semibold" style="width: 100px;">Average <br> BBox IOU</td>
+		              	</tr>
+		              	<tr style="background-color: rgb(224,224,224)">
+		              		<td>1</td>
+		              		<td class="text-left">IPSA LAB</td>
+		              		<td class="font-medium">0.8293</td>
+		              		<td class="font-medium">0.9191</td>
+		              	</tr>		              	
+		              </table>
+	          	  </div>
+	        </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

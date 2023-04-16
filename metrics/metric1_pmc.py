@@ -68,6 +68,9 @@ def eval_task1(gt_folder, result_folder, output_img_path, class_auto_mapping):
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
+            if 'task1.1' in result:
+                result['task1'] = result['task1.1']                                          
+            
             if not 'task1' in result:
                 print("results file {0:s} does not follow a supported format".format(result_file))
                 continue
@@ -115,8 +118,13 @@ def eval_task1(gt_folder, result_folder, output_img_path, class_auto_mapping):
     total_images = 0
     total_correct = 0
 
+    print("GT labels:")
+    print(gt_label_map.keys())
+    print("Pred Labels:")
+    print(result_label_map.keys())
+
     for label, gt_imgs in gt_label_map.items():
-        res_imgs = set(result_label_map[label])
+        res_imgs = set(result_label_map[label])        
         gt_imgs = set(gt_imgs)
         intersection = gt_imgs.intersection(res_imgs)
         recall = len(intersection) / float(len(gt_imgs))

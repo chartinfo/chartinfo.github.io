@@ -98,6 +98,9 @@ if __name__ == "__main__":
         pred_json = json.load(open(pred_infile))
         gt_json = json.load(open(gt_infile))
 
+        if 'task1.5' in pred_json:
+            pred_json['task5'] = pred_json['task1.5']
+
         pred_outputs = pred_json['task5']['output']['legend_pairs']
         gt_outputs = gt_json['task5']['output']['legend_pairs']
         gt_type = gt_json['task1']['output']['chart_type']
@@ -113,6 +116,9 @@ if __name__ == "__main__":
 
             pred_json = json.load(open(pred_file))
             gt_json = json.load(open(gt_file))
+
+            if 'task1.5' in pred_json:
+                pred_json['task5'] = pred_json['task1.5']
 
             pred_outputs = pred_json['task5']['output']['legend_pairs']
             gt_outputs = gt_json['task5']['output']['legend_pairs']

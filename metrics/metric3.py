@@ -103,6 +103,9 @@ def eval_task3(gt_folder, result_folder, output_img_path, classes_ignore):
         with open(os.path.join(result_folder, result_file), 'r') as f:
             result = json.load(f)
         try:
+            if "task1.3" in result:
+                result['task3'] = result["task1.3"]
+            
             if 'text_roles' in result['task3']['output']:
                 text_roles = result['task3']['output']['text_roles']
                 # this is due to wrong json format in a submission

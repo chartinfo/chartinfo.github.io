@@ -63,6 +63,9 @@ def sanitize_text(text):
 
 
 def extract_bboxes(js):
+    if 'task1.2' in js:
+        js['task2'] = js['task1.2']
+    
     if not 'task2' in js:
         raise Exception("No Task 2 output found")
 

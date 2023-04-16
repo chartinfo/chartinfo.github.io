@@ -12,7 +12,17 @@ def extract_tick_point_pairs(js):
     def get_coords(tpp):
         ID = tpp['id']
         x, y = tpp['tick_pt']['x'], tpp['tick_pt']['y']
+
+        if isinstance(x, str):
+            x = float(x)
+        if isinstance(y, str):
+            y = float(y)
+            
         return (ID, (x, y))
+
+    if 'task1.4' in js:
+        js['task4'] = js['task1.4']
+     
     axes = js['task4']['output']['axes']
     tpp_x = [get_coords(tpp) for tpp in axes['x-axis']]
     tpp_x = {ID: coords for ID, coords in tpp_x if ID is not None}
@@ -88,6 +98,7 @@ def eval_task4(gt_folder, result_folder, img_folder):
     print('Average F-Measure:', f_measure)
 
 if __name__ == '__main__':
+    # eval_task4(sys.argv[1], sys.argv[2], sys.argv[3])
     try:
         eval_task4(sys.argv[1], sys.argv[2], sys.argv[3])
     except Exception as e:
